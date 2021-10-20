@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "meso-src",
+    "slug": "meso-src",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "meso-src"
+}
