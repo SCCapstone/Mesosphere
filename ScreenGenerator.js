@@ -1,4 +1,5 @@
-import React, { Component, View, Text } from 'react'
+import React, { Component } from 'react'
+import { StyleSheet, Text, View } from 'react-native';
 
 export class ScreenGenerator extends Component {
     output = "None";
@@ -11,8 +12,17 @@ export class ScreenGenerator extends Component {
     }
 
     render() {
-        return this.output;
+        return <View style={styles.container}><Text>{this.output}</Text></View>
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });
 
 export default ScreenGenerator
