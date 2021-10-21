@@ -5,7 +5,7 @@ import ScreenGenerator from './ScreenGenerator';
 
 export default function App() {
   var Gen = new ScreenGenerator();
-  Gen.generateScreen("Hey nobody change this line or we\'ll get a conflict! >:(");
+  Gen.generateScreen("Hey nobody change this line or we\'ll get a conflict! >:( ");
   //return;
   return (
     <View style={styles.container}>
