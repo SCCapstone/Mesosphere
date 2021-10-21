@@ -5,7 +5,6 @@ import ScreenGenerator from './ScreenGenerator';
 
 export default function App() {
   var Gen = new ScreenGenerator();
-  Gen.generateScreen("Hey! >:(");
   //return;
   return (
     <View style={styles.container}><Text>{Gen.render()}</Text></View>
