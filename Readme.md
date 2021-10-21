@@ -1,14 +1,10 @@
 # Mesosphere
 
-This first paragraph should be a short description of the app. You can add links
-to your wiki pages that have more detailed descriptions.
+Mesosphere is a P2P social media network that uses IDs to connect people and build networks via personal connections. Every individual is their own node and voluntarily builds networks of nodes in passing by others and expanding their networks. You only participate in networks and are exposed to nodes you choose. Data you post is stored and accessed via your phone, offloading the role of a central server across the entire network per each node on demand. Mesosphere will be aimed at iOS & andriod, and released on andriod (.apk) initially.
 
-Your audience for the Readme.md are other developers who are joining your team.
-Specifically, the file should contain detailed instructions that any developer
-can follow to install, compile, run, and test your project. These are not only
-useful to new developers, but also to you when you have to re-install everything
-because your old laptop crashed. Also, the teachers of this class will be
-following your instructions.
+For more information, see https://github.com/SCCapstone/Mesosphere/wiki/Project-Description
+
+
 
 ## External Requirements
 
