@@ -5,7 +5,6 @@ import ScreenGenerator from './ScreenGenerator';
 
 export default function App() {
   var Gen = new ScreenGenerator();
-  Gen.generateScreen("I changed this line");
   //return;
   return (
     <View style={styles.container}>
