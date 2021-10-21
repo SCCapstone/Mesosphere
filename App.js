@@ -8,7 +8,10 @@ export default function App() {
   Gen.generateScreen("I changed this line");
   //return;
   return (
-    <View style={styles.container}><Text>{Gen.render()}</Text></View>
+    <View style={styles.container}>
+      <Text>{Gen.render()}</Text>
+      <Text>My very own commit!</Text>
+    </View>
   );
 }
 
