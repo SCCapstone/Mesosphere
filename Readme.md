@@ -49,9 +49,9 @@ Explain how to run the automated tests.
 
 # Authors
 
-Adam Gazdecki (gazdecki@email.sc.edu)
-Carleigh Gregory (cjg3@email.sc.edu)
-Cole Lewis (lewiscg@email.sc.edu)
-Divine Walker (divinew@email.sc.edu)
-Kevin Prince (ktprince@email.sc.edu)
+Adam Gazdecki (gazdecki@email.sc.edu)  
+Carleigh Gregory (cjg3@email.sc.edu)  
+Cole Lewis (lewiscg@email.sc.edu)  
+Divine Walker (divinew@email.sc.edu)  
+Kevin Prince (ktprince@email.sc.edu)  
 
