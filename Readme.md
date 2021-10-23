@@ -14,28 +14,21 @@ In order to build this project you first have to install:
 * [Expo CLI](https://docs.expo.dev/)  
   * npm install --global expo-cli  
 
-To run the project, run 'expo start'
-
 ## Setup
 
-Here you list all the one-time things the developer needs to do after cloning
-your repo. Sometimes there is no need for this section, but some apps require
-some first-time configuration from the developer, for example: setting up a
-database for running your webapp locally.
+After cloning the repo and installing the above software, users should run 'npm install,' which should install additional dependencies based on our package.json file (there are none at the moment).
 
 ## Running
 
-Specify the commands for a developer to run the app from the cloned repo.
+Then, to run the project, run 'expo start' in the terminal.  This will bring the user to the expo manager page.  From there, "Run in web browser" can be selected to the view the app in browser.  Or, users may install the Expo Go app (https://expo.dev/client) to run it on their local mobile device (this requires an expo account and to be logged in on both the host and mobile device).
 
 # Deployment
-
-Webapps need a deployment section that explains how to get it deployed on the 
-Internet. These should be detailed enough so anyone can re-deploy if needed
-. Note that you **do not put passwords in git**. 
 
 Mobile apps will also sometimes need some instructions on how to build a
 "release" version, maybe how to sign it, and how to run that binary in an
 emulator or in a physical phone.
+
+We don't have an apk yet.  Once we've got a framework, we'll eject from expo and see what it takes to make one.  This sction TBD.
 
 # Testing
 
@@ -56,4 +49,9 @@ Explain how to run the automated tests.
 
 # Authors
 
-Your names and emails
+Adam Gazdecki (gazdecki@email.sc.edu)
+Carleigh Gregory (cjg3@email.sc.edu)
+Cole Lewis (lewiscg@email.sc.edu)
+Divine Walker (divinew@email.sc.edu)
+Kevin Prince (ktprince@email.sc.edu)
+
