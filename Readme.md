@@ -4,6 +4,7 @@ Mesosphere is a P2P social media network that uses IDs to connect people and bui
 
 For more information, see https://github.com/SCCapstone/Mesosphere/wiki/Project-Description
 
+We will be programming in accordance with [JavaScript Standard Style](https://standardjs.com/index.html).
 
 
 ## External Requirements
