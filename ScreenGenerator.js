@@ -1,28 +1,37 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native'
+import { PAGES } from './Utility'
 
 export class ScreenGenerator extends Component {
-    output = "None";
-    constructor() {
-        super();
-    }
+  constructor () {
+    super()
+    this.page = -1
+    this.output = <View style={styles.container}><Text>No screen selected.</Text></View>
+  }
 
-    generateScreen(input) {
-        this.output = input;
-    }
+  selectScreen (input) {
+    this.page = input
+    this.generateScreen()
+  }
 
-    render() {
-        return <View style={styles.container}><Text>{this.output}</Text></View>
+  generateScreen () {
+    if (this.page === PAGES.LOGIN) {
+      this.output = <View style={styles.container}><Text>Welcome to the login screen.</Text></View>
     }
+  }
+
+  render () {
+    return this.output
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
 
 export default ScreenGenerator
