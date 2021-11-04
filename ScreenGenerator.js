@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 export class ScreenGenerator extends Component {
   constructor () {
     super()
-    // output = "None";
+    this.output = 'None'
   }
 
   generateScreen (input) {
