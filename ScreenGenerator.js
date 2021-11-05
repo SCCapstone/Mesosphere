@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { PAGES } from './Utility'
+import { Text, View, Image } from 'react-native'
+import { PAGES, styles, getScreen, returnScreen, currScreen$ } from './Utility'
+import { loginScreen, newUserPrompt, accountPage } from './User'
+import { atom, observe } from 'elementos'
+import logo from './assets/MesoSphere.png'
+
 
 export class ScreenGenerator extends Component {
   constructor () {
     super()
     this.page = -1
-    this.output = <View style={styles.container}><Text>No screen selected.</Text></View>
+    this.output$ = atom(<View style={styles.container}><Text>No screen selected.</Text></View>)
   }
 
   selectScreen (input) {
@@ -15,23 +19,29 @@ export class ScreenGenerator extends Component {
   }
 
   generateScreen () {
+    console.log("Generating: " + this.page)
     if (this.page === PAGES.LOGIN) {
-      this.output = <View style={styles.container}><Text>Welcome to the login screen.</Text></View>
+      this.output$.actions.set(
+        <View style={styles.container}>
+          <Image source={logo} style={styles.logo} />
+          {loginScreen()}
+        </View>
+      )
+    } else if (this.page === PAGES.MAKEACC) {
+        this.output$.actions.set(<View style={styles.container}>{newUserPrompt()}</View>)
+        
+    } else if (this.page === PAGES.ACCOUNTPAGE) {
+        this.output$.actions.set(<View style={styles.container}>{accountPage()}</View>)
     }
   }
 
+  returnOutputAtom() {
+      return this.output$;
+  }
+
   render () {
-    return this.output
+    return this.output$.get()
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
 
 export default ScreenGenerator
