@@ -17,7 +17,7 @@ export default function App () {
       update();
       oldscreen = screen;
     }
-    console.log("Just for fun.")
+    //console.log("Just for fun.")
   })
 
   function update() {

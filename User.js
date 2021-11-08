@@ -27,8 +27,8 @@ export function newUserPrompt () {
   )
 }
 
-const username$ = atom();
-const password$ = atom();
+const username$ = atom('');
+const password$ = atom('');
 
 export function loginScreen () {
 
@@ -64,7 +64,8 @@ export function loginScreen () {
 }
 
 async function checkLogin (username, password) {
-  if (await getData(username) != null) {
+    username = String(username);
+    if (await getData(username) != null) {
     console.log('User exists!  Checking password...')
     const temp = await getData(username)
     const u = new User(temp.username, temp.password, temp.realName, temp.DOB, temp.biography)
@@ -73,7 +74,7 @@ async function checkLogin (username, password) {
     } else {
       console.log('Password mismatch.')
     }
-  } else {
+    } else {
     console.log('User does not exist!  Moving to create account screen...')
     setScreen(PAGES.MAKEACC)
   }

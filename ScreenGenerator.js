@@ -10,7 +10,7 @@ export class ScreenGenerator extends Component {
   constructor () {
     super()
     this.page = -1
-    this.output$ = atom(<View style={styles.container}><Text>No screen selected.</Text></View>)
+    this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
   }
 
   selectScreen (input) {
@@ -21,26 +21,21 @@ export class ScreenGenerator extends Component {
   generateScreen () {
     console.log("Generating: " + this.page)
     if (this.page === PAGES.LOGIN) {
-      this.output$.actions.set(
+      this.output = (
         <View style={styles.container}>
           <Image source={logo} style={styles.logo} />
           {loginScreen()}
-        </View>
-      )
+        </View>)
     } else if (this.page === PAGES.MAKEACC) {
-        this.output$.actions.set(<View style={styles.container}>{newUserPrompt()}</View>)
+        this.output = (<View style={styles.container}>{newUserPrompt()}</View>)
         
     } else if (this.page === PAGES.ACCOUNTPAGE) {
-        this.output$.actions.set(<View style={styles.container}>{accountPage()}</View>)
+        this.output = (<View style={styles.container}>{accountPage()}</View>)
     }
   }
 
-  returnOutputAtom() {
-      return this.output$;
-  }
-
   render () {
-    return this.output$.get()
+    return this.output
   }
 }
 
