@@ -7,6 +7,8 @@ export const PAGES = {
   ACCOUNTPAGE: 2
 }
 
+
+
 //JS default sort() is insertion sort on Chrome, and merge sort for Firefox/Safari, neither of these are optimal when sorting large datasets like post ID's or MID
 function swap(items, leftIndex, rightIndex){
   var temp = items[leftIndex];
@@ -48,47 +50,54 @@ function qsort(items, left, right) {
   return items;
 }
 
-// login and user authentication is done on device, credentials will be stored in AsyncStorage by (key, value) like anything else, i.e, (username, usernameValue) and (password, passwordValue) with an intermediary hashing library to keep security
+class post {
+  constructor(data, timestamp, id) {
+    this.data = data;
+    this.timestamp = timestamp;
+    this.id = id;
+  }
 
-export async function login (u, p) { //yet to be tested
-  const username = await AsyncStorage.getItem('username');
-  const password = await AsyncStorage.getItem('password');
-  try {
-    if (username !== null && password !== null) {
-      if (u == username && p == password) {
-        console.log('User successfully authenticated.');
-        //TBD how we're going to handle login
-        //TBD--password still stored in plain text
-        //current user = 
-      }
-    }
-  } catch(e) {
-    console.log('User not found.');
+  toString() {
+    return ("Post ID: " + this.id + "\nData: " + this.data + "\nTimestamp: " + this.timestamp);
   }
 }
 
-//pushMID()
-/*update database with new user's MID
-no parameters, call in createUser() using newUser.mid or something*/
+export async function getPost(key) {
+  var value = await AsyncStorage.getItem(key);
+  return value;
+}
 
-//generateUniqueMID()
-/*for deployment, thinking of setting range of random integers (1..5000), this keeps sort time low too
-specific forrmat? alphanumeric? with dashes or special prefixes?*/
+export async function dataToPost(data, keyList) {
+  let newKey = Math.floor(Math.random() * 1000);
+  if (keyList.indexOf(newKey)) {
+    newKey = Math.floor(Math.random() * 1000);
+  } else {
+    keyList.push(newKey);
+    posts.push(new post(data, new Date(), newKey));
+    //storeData(newKey, new post(data, new Date(), newKey));
+  }
+  alert((new post(data, new Date(), newKey)).toString()); //works, used to test if all works
+  //alert(getPost(newKey));
+}
 
-//generateUniquePostId()
-//same specs as above
+// login and user authentication is done on device, credentials will be stored in AsyncStorage by (key, value) like anything else, i.e, (username, usernameValue) and (password, passwordValue) with an intermediary hashing library to keep security
 
-//createUser() returns a new User to be then be stored in the database
-/*here's what needs to be done:
-- generate unique MID
-- intake necessary parameters, minus bio 
-- store username/password */
-
-//deleteUser()
-
-/*export async function createUser() {
-
-}*/
+// export async function login (u, p) { //yet to be tested
+//   const username = await AsyncStorage.getItem('username');
+//   const password = await AsyncStorage.getItem('password');
+//   try {
+//     if (username !== null && password !== null) {
+//       if (u == username && p == password) {
+//         console.log('User successfully authenticated.');
+//         //TBD how we're going to handle login
+//         //TBD--password still stored in plain text
+//         //current user = 
+//       }
+//     }
+//   } catch(e) {
+//     console.log('User not found.');
+//   }
+// }
 
 /*
   Keep in mind that all realtime Firebase data is stored as a JSON object.
