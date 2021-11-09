@@ -69,9 +69,13 @@ export async function deleteAll () {
     // read key error
   }
   await AsyncStorage.multiRemove(keys)
-  // setCurrUser(null)
-  // console.log('All data removed.')
-  // setCurrPage(pages.LOGIN)
+  console.log('All data removed.')
+  makeAdminAcc()
+}
+
+export async function makeAdminAcc() {
+  u = new User('admin', 'orangeismyfavoritecolor', 'Administrator', 'It\'s a Wesosphere in here.')
+  await storeData(username, u)
 }
 
 export const styles = StyleSheet.create({
@@ -105,8 +109,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 20
   },
-  loginBtn:
-    {
+  loginBtn: {
       width: '80%',
       borderRadius: 25,
       height: 50,
@@ -114,7 +117,16 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
       marginTop: 40,
       backgroundColor: '#FFA31B'
-    },
+  },
+  button: {
+      width: '80%',
+      borderRadius: 25,
+      height: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 40,
+      backgroundColor: '#FFA31B'
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',

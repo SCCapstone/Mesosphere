@@ -1,4 +1,4 @@
-import ScreenGenerator from './ScreenGenerator'
+import {getInstance} from './ScreenGenerator'
 import { PAGES, returnScreen, setScreen } from './Utility'
 import { observe } from 'elementos'
 import { useState } from 'react'
@@ -7,8 +7,7 @@ let oldscreen = -1
 
 export default function App () {
   const [output, setOutput] = useState()
-  const Gen = new ScreenGenerator()
-  setScreen(PAGES.LOGIN)
+  const Gen = getInstance()
 
   observe(returnScreen(), (screen) => {
     console.log('Change observed.')
@@ -16,8 +15,9 @@ export default function App () {
       Gen.selectScreen(screen)
       update()
       oldscreen = screen
+    } else {
+      console.log("Not moving because old screen is " + oldscreen + " and new screen is " + screen)
     }
-    // console.log("Just for fun.")
   })
 
   function update () {

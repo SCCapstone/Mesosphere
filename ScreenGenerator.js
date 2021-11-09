@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Text, View, Image } from 'react-native'
-import { PAGES, styles, getScreen, returnScreen, currScreen$ } from './Utility'
-import { loginScreen, newUserPrompt, accountPage } from './User'
-import { atom, observe } from 'elementos'
+import { PAGES, styles, setScreen, } from './Utility'
+import { loginScreen, newUserPrompt, accountPage, makeAdminAcc } from './User'
 import logo from './assets/MesoSphere.png'
 
-export class ScreenGenerator extends Component {
+export class ScreenGenerator{
   constructor () {
-    super()
     this.page = -1
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
+    makeAdminAcc()
+    setScreen(PAGES.LOGIN)
   }
 
   selectScreen (input) {
@@ -36,6 +36,16 @@ export class ScreenGenerator extends Component {
   render () {
     return this.output
   }
+}
+
+var instance
+
+export function getInstance() {
+    if(instance == null) {
+        instance = new ScreenGenerator()
+        console.log("New SG generated.")
+    }
+    return instance;
 }
 
 export default ScreenGenerator

@@ -1,23 +1,30 @@
 import React, { Component, useState } from 'react'
-import { TouchableOpacity, Text, TextInput, View } from 'react-native'
-import { storeData, getData, styles, setScreen, PAGES } from './Utility'
+import { Alert, TouchableOpacity, Text, TextInput, View } from 'react-native'
+import { deleteAll, storeData, getData, styles, getUser, setScreen, setUser, PAGES  } from './Utility'
 import { atom } from 'elementos'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export class User extends Component {
-  constructor (username, password, realName, DOB, biography) {
-    super()
+export class User {
+  constructor (username, password, realName, biography) {
     this.username = username
     this.password = password
     this.realName = realName
-    this.DOB = DOB
     this.biography = biography
+  }
+
+  getUsername() {
+      return this.username;
   }
 }
 
 export function accountPage () {
+  let u = getUser()
   return (
-    <Text>Welcome to the account page.</Text>
+    <>
+      <Text>Welcome to the account page.</Text>
+      <Text>The current user is {u.getUsername()}</Text>
+      {adminCheck()}
+    </>
   )
 }
 
@@ -25,7 +32,6 @@ export function newUserPrompt () {
   const username$ = atom('')
   const password$ = atom('')
   const dispname$ = atom('')
-  const dob$ = atom('')
   const biography$ = atom('')
   return (
     <>
@@ -33,8 +39,9 @@ export function newUserPrompt () {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder='Username.'
+          placeholder='Username'
           placeholderTextColor='#003f5c'
+          returnKeyType="done"
           onChangeText={(username) => username$.actions.set(username)}
         />
       </View>
@@ -44,6 +51,7 @@ export function newUserPrompt () {
           placeholder='Password.'
           placeholderTextColor='#003f5c'
           secureTextEntry
+          returnKeyType="done"
           onChangeText={(password) => password$.actions.set(password)}
         />
       </View>
@@ -52,15 +60,8 @@ export function newUserPrompt () {
           style={styles.TextInput}
           placeholder='Display Name.'
           placeholderTextColor='#003f5c'
+          returnKeyType="done"
           onChangeText={(dispname) => dispname$.actions.set(dispname)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder='Date of Birth.'
-          placeholderTextColor='#003f5c'
-          onChangeText={(dob) => dob$.actions.set(dob)}
         />
       </View>
       <View style={styles.inputViewBio}>
@@ -70,20 +71,20 @@ export function newUserPrompt () {
           style={styles.TextInput}
           placeholder='Enter a short biography!'
           placeholderTextColor='#003f5c'
+          returnKeyType="done"
+          blurOnSubmit={true}
           onChangeText={(biography) => biography$.actions.set(biography)}
         />
       </View>
       <TouchableOpacity
         style={styles.loginBtn}
-        // onPress={() => checkLogin(String(username$.get()), String(password$.get()))}
+        onPress={() => makeAcc(String(username$.get()), String(password$.get()), String(dispname$.get()), String(biography$.get()))}
       >
         <Text style={styles.loginText}>CREATE ACCOUNT</Text>
-
       </TouchableOpacity>
     </>
   )
 }
-
 export function loginScreen () {
   const username$ = atom('')
   const password$ = atom('')
@@ -94,6 +95,7 @@ export function loginScreen () {
           style={styles.TextInput}
           placeholder='Username.'
           placeholderTextColor='#003f5c'
+          returnKeyType="done"
           onChangeText={(username) => username$.actions.set(username)}
         />
       </View>
@@ -104,6 +106,7 @@ export function loginScreen () {
           placeholder='Password.'
           placeholderTextColor='#003f5c'
           secureTextEntry
+          returnKeyType="done"
           onChangeText={(password) => password$.actions.set(password)}
         />
       </View>
@@ -122,17 +125,57 @@ async function checkLogin (username, password) {
   // username = String(username);
   if (await getData(username) != null) {
     console.log('User exists!  Checking password...')
-    const temp = await getData(username)
-    const u = new User(temp.username, temp.password, temp.realName, temp.DOB, temp.biography)
+    let temp = await getData(username)
+    let u = new User(temp.username, temp.password, temp.realName, temp.biography)
     if (password === u.password) {
       console.log('Password match!  Logging in...')
+      setUser(u)
+      setScreen(PAGES.ACCOUNTPAGE)
     } else {
       console.log('Password mismatch.')
+      Alert.alert(
+          "Incorrect Password",
+          "The password you entered was incorrect.",
+          { text: "OK"}
+      )
     }
   } else {
     console.log('User does not exist!  Moving to create account screen...')
     setScreen(PAGES.MAKEACC)
   }
+}
+
+async function makeAcc(username, password, realName, bio) {
+    u = new User(username, password, realName, bio)
+    await storeData(username, u)
+    setUser(u)
+    setScreen(PAGES.ACCOUNTPAGE)
+}
+
+export async function makeAdminAcc() {
+    u = new User('admin', 'orangeismyfavoritecolor', 'Administrator', 'It\'s a Wesosphere in here.')
+    await storeData('admin', u)
+  }
+
+function adminCheck() {
+    let u = getUser()
+    if(u != null && u.getUsername() == 'admin') {
+    return (
+      <TouchableOpacity
+      onPress={() => {adminButton()}}
+      style={styles.button}
+    >
+      <Text style={styles.buttonText}>Delete ALL Data</Text>
+    </TouchableOpacity>
+    )
+    }
+    return;
+  }
+
+async function adminButton() {
+  await deleteAll()
+  await makeAdminAcc()
+  setScreen(PAGES.LOGIN)
 }
 
 export default User
