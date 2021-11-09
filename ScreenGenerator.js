@@ -5,7 +5,6 @@ import { loginScreen, newUserPrompt, accountPage } from './User'
 import { atom, observe } from 'elementos'
 import logo from './assets/MesoSphere.png'
 
-
 export class ScreenGenerator extends Component {
   constructor () {
     super()
@@ -19,18 +18,18 @@ export class ScreenGenerator extends Component {
   }
 
   generateScreen () {
-    console.log("Generating: " + this.page)
+    console.log('Generating: ' + this.page)
     if (this.page === PAGES.LOGIN) {
       this.output = (
         <View style={styles.container}>
           <Image source={logo} style={styles.logo} />
           {loginScreen()}
-        </View>)
+        </View>
+      )
     } else if (this.page === PAGES.MAKEACC) {
-        this.output = (<View style={styles.container}>{newUserPrompt()}</View>)
-        
+      this.output = (<View style={styles.container}>{newUserPrompt()}</View>)
     } else if (this.page === PAGES.ACCOUNTPAGE) {
-        this.output = (<View style={styles.container}>{accountPage()}</View>)
+      this.output = (<View style={styles.container}>{accountPage()}</View>)
     }
   }
 

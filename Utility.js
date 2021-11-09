@@ -9,27 +9,27 @@ export const PAGES = {
 }
 
 const currUser$ = atom(null)
-const currScreen$ = atom(PAGES.LOGIN)
+const currScreen$ = atom(null)
 
-    export function setUser(u) {
-        currUser$.actions.set(u);
-    }
+export function setUser (u) {
+  currUser$.actions.set(u)
+}
 
-    export function setScreen(s) {
-        currScreen$.actions.set(s);
-    }
+export function setScreen (s) {
+  currScreen$.actions.set(s)
+}
 
-    export function getUser() {
-        return currUser$.get();
-    }
+export function getUser () {
+  return currUser$.get()
+}
 
-    export function getScreen() {
-        return currScreen$.get();
-    }
+export function getScreen () {
+  return currScreen$.get()
+}
 
-    export function returnScreen() {
-        return currScreen$;
-    }
+export function returnScreen () {
+  return currScreen$
+}
 
 export const storeData = async (key, value) => {
   try {
@@ -82,11 +82,21 @@ export const styles = StyleSheet.create({
     marginBottom: 10
   },
   inputView: {
-    backgroundColor: '#FFC46E',
+    backgroundColor: '#FFD89F',
     borderRadius: 30,
     width: '70%',
     height: 45,
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop: 10,
+    alignItems: 'center'
+  },
+  inputViewBio: {
+    backgroundColor: '#FFD89F',
+    borderRadius: 30,
+    width: '70%',
+    height: 80,
+    marginBottom: 10,
+    marginTop: 10,
     alignItems: 'center'
   },
   TextInput: {
