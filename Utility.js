@@ -104,22 +104,22 @@ export const styles = StyleSheet.create({
     marginLeft: 20
   },
   loginBtn: {
-      width: '80%',
-      borderRadius: 25,
-      height: 50,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 40,
-      backgroundColor: '#FFA31B'
+    width: '80%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    backgroundColor: '#FFA31B'
   },
   button: {
-      width: '80%',
-      borderRadius: 25,
-      height: 50,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 40,
-      backgroundColor: '#FFA31B'
+    width: '80%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    backgroundColor: '#FFA31B'
   },
   container: {
     flex: 1,

@@ -1,4 +1,4 @@
-import {getInstance} from './ScreenGenerator'
+import { getInstance } from './ScreenGenerator'
 import { returnScreen } from './Utility'
 import { observe } from 'elementos'
 import { useState } from 'react'
@@ -16,7 +16,7 @@ export default function App () {
       update()
       oldscreen = screen
     } else {
-      console.log("Not moving because old screen is " + oldscreen + " and new screen is " + screen)
+      console.log('Not moving because old screen is ' + oldscreen + ' and new screen is ' + screen)
     }
   })
 
