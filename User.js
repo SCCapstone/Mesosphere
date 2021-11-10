@@ -206,7 +206,7 @@ async function makeAcc (username, password, realName, bio) {
 }
 
 export async function makeAdminAcc () {
-  const u = new User('admin', 'orangeismyfavoritecolor', 'Administrator', 'It\'s a Wesosphere in here.')
+  const u = new User('admin', 'orangeismyfavoritecolor', 'Administrator', 'It\'s a Messosphere in here.')
   await storeData('admin', u)
 }
 
