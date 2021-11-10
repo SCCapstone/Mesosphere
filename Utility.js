@@ -70,12 +70,6 @@ export async function deleteAll () {
   }
   await AsyncStorage.multiRemove(keys)
   console.log('All data removed.')
-  makeAdminAcc()
-}
-
-export async function makeAdminAcc() {
-  u = new User('admin', 'orangeismyfavoritecolor', 'Administrator', 'It\'s a Wesosphere in here.')
-  await storeData(username, u)
 }
 
 export const styles = StyleSheet.create({

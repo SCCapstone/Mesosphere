@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react'
 import { Alert, TouchableOpacity, Text, TextInput, View } from 'react-native'
-import { deleteAll, storeData, getData, styles, getUser, setScreen, setUser, PAGES  } from './Utility'
+import { deleteAll, storeData, getData, removeValue, styles, getUser, setScreen, setUser, PAGES  } from './Utility'
 import { atom } from 'elementos'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -21,10 +21,23 @@ export function accountPage () {
   let u = getUser()
   return (
     <>
-      <Text>Welcome to the account page.</Text>
-      <Text>The current user is {u.getUsername()}</Text>
+      <Text>Welcome back, {u.realName}</Text>
       {adminCheck()}
-    </>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => {setUser(null);
+                        setScreen(PAGES.LOGIN)
+                      }}
+      >
+        <Text style={styles.loginText}>LOGOUT</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => deleteCurrUser()}
+      >
+        <Text style={styles.loginText}>Delete My Data</Text>
+      </TouchableOpacity>
+      </>
   )
 }
 
@@ -82,6 +95,12 @@ export function newUserPrompt () {
       >
         <Text style={styles.loginText}>CREATE ACCOUNT</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => setScreen(PAGES.LOGIN)}
+      >
+        <Text style={styles.loginText}>CANCEL</Text>
+      </TouchableOpacity>
     </>
   )
 }
@@ -117,6 +136,13 @@ export function loginScreen () {
         <Text style={styles.loginText}>LOGIN</Text>
 
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => setScreen(PAGES.MAKEACC)}
+      >
+        <Text style={styles.loginText}>REGISTER</Text>
+
+      </TouchableOpacity>
     </>
   )
 }
@@ -141,7 +167,11 @@ async function checkLogin (username, password) {
     }
   } else {
     console.log('User does not exist!  Moving to create account screen...')
-    setScreen(PAGES.MAKEACC)
+    Alert.alert(
+      "Incorrect Username",
+      "The username you entered was incorrect.",
+      { text: "OK"}
+  )
   }
 }
 
@@ -173,8 +203,19 @@ function adminCheck() {
   }
 
 async function adminButton() {
+  console.log("Removing everything!")
   await deleteAll()
+  console.log("Data removed.  Recreating admin acc...")
   await makeAdminAcc()
+  console.log("Done.  Moving to login...")
+  setUser(null)
+  setScreen(PAGES.LOGIN)
+}
+
+async function deleteCurrUser() {
+  let u = getUser()
+  removeValue(u.getUsername())
+  setUser(null)
   setScreen(PAGES.LOGIN)
 }
 

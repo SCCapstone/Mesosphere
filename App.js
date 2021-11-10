@@ -1,5 +1,5 @@
 import {getInstance} from './ScreenGenerator'
-import { PAGES, returnScreen, setScreen } from './Utility'
+import { returnScreen } from './Utility'
 import { observe } from 'elementos'
 import { useState } from 'react'
 
