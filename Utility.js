@@ -9,9 +9,9 @@ export const PAGES = {
 
 //database is a reference to firebaseConfig that lets us query the database directly
 
-const PEER_ID = 0
-
-// JS default sort() is insertion sort on Chrome, and merge sort for Firefox/Safari, neither of these are optimal when sorting large datasets like post ID's or MID
+/* Data manipulation methods:
+  quicksort is faster than default JS sort algorithms
+*/
 function swap (items, leftIndex, rightIndex) {
   const temp = items[leftIndex]
   items[leftIndex] = items[rightIndex]
@@ -38,7 +38,7 @@ function partition (items, left, right) {
   return i
 }
 
-function qsort (items, left, right) { // main call will be qsort(arr, 0, arr.length - 1)
+function qsort (items, left, right) { // main call will be qsort(arr, 0, arr.length - 1) when generically sorting an entire array
   let index
   if (items.length > 1) {
     index = partition(items, left, right)
@@ -72,3 +72,26 @@ function binarySearch (sortedArray, key) {
   return -1
 }
 
+/*p2p data flow will be structured as follows:
+  Post rendering will be done at-demand.
+  When a post is rendered on the screen (in feed or specifically searching),
+  a data stream will be opened to grab it from the origin.
+  A connection will be made so that the data can be transmitted.
+  For performance's sake, this will have to be temporary, so the post will be stored after transmission on the viewer device in app memory.
+*/
+//WebRTC methods//
+
+let localConnection;
+let remoteConnection;
+let sendChannel;
+let receiveChannel;
+
+// until I can get Firebase working, https://switchboard.rtc.io COULD work as a decent signalling server
+
+var dataSettings = [
+  {
+    iceServers: [{url: 'stun.l.google.com:19302'}]
+  }
+];
+var dataChannels = {};
+var pendingDataChannels = {};
