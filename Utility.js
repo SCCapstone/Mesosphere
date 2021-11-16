@@ -1,13 +1,19 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { database } from './firebaseConfig.js';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { database } from './firebaseConfig.js'
+import Libp2p from 'libp2p'
+import WebSockets from 'libp2p-websockets'
+import WebRTCStar from 'libp2p-webrtc-star'
+import KadDHT from 'libp2p-kad-dht' // to be used in best case
+import Bootstrap from 'libp2p-bootstrap'
 // import {} from './Post'
+
 export const PAGES = {
   LOGIN: 0,
   USERINFO: 1,
   ACCOUNTPAGE: 2
 }
 
-//database is a reference to firebaseConfig that lets us query the database directly, all database functions should use it in this file
+// database is a reference to firebaseConfig that lets us query the database directly, all database functions should use it in this file
 
 /* Data manipulation methods:
   quicksort is faster than default JS sort algorithms
@@ -72,10 +78,10 @@ function binarySearch (sortedArray, key) {
   return -1
 }
 
-function generateUniqueMID() {
-  let MID = Math.floor(Math.random() * 99999);
-  //query MIDs from firebase, document is 'main', collection is 'IDS', an array called MIDS is stored there
-  //for prototype code, call it arr
+function generateUniqueMID () {
+  const MID = Math.floor(Math.random() * 99999)
+  // query MIDs from firebase, document is 'main', collection is 'IDS', an array called MIDS is stored there
+  // for prototype code, call it arr
   /*
   if (arr.indexOf(MID) == -1) { //unique value not found in array
     //push the number to MIDS array
@@ -93,9 +99,9 @@ function generateUniqueMID() {
   */
 }
 
-//alternatively, instead of querying random numbers from an ever-changing database, what if we hash the length of the array with something so that the value is always unique? postIDs are never deleted so the array will never be the decremented in size after a post is made.
+// alternatively, instead of querying random numbers from an ever-changing database, what if we hash the length of the array with something so that the value is always unique? postIDs are never deleted so the array will never be the decremented in size after a post is made.
 
-/*Data flow will have to work on-demand.
+/* Data flow will have to work on-demand.
 Each device will need to be constantly open and able to accept connections from peers
 (note: consider calling 'friends' on the app 'peers')
 post ids will act as pointers
@@ -116,37 +122,77 @@ I envision how it will work is:
       when a new post is created, the User's postList[] is updated to hold the new post id,
       peers will have to manually update (refresh) or set update to time interval to update
       list of postIDs
-
-    
-
-
 */
 
-/*Firebase configuration is setup in this directory with
+/* Firebase configuration is setup in this directory with
   database.rules.json
   .firebaserc
   firebase.json
   firebaseConfig.js
 */
 
-//WebRTC methods//
+// //WebRTC methods//
 
-let localConnection;
-let remoteConnection;
-let sendChannel;
-let receiveChannel;
+// let localConnection;
+// let remoteConnection;
+// let sendChannel;
+// let receiveChannel;
 
-// until I can get Firebase working, https://switchboard.rtc.io COULD work as a decent signalling server
+// // until I can get Firebase working, https://switchboard.rtc.io COULD work as a decent signalling server
 
-var dataSettings = [
-  {
-    iceServers: [{url: 'stun.l.google.com:19302'}]
-  }
-];
-var dataChannels = {};
-var pendingDataChannels = {};
+// var dataSettings = [
+//   {
+//     iceServers: [{url: 'stun.l.google.com:19302'}]
+//   }
+// ];
+// var dataChannels = {};
+// var pendingDataChannels = {};
 
-/*alternatively, we could attempt for a TRUE serverless architecture using libp2p, although this is
+/* alternatively, we could attempt for a TRUE serverless architecture using libp2p, although this is
  not incredibly well documented and may require an extra step (browserify) to allow for node
  modules to be used on the browser, or Android
  */
+
+const THIS_PEER_ID = AsyncStorage.getItem('MID') // or whatever we do to reference stored MID
+
+export async function initNode () {
+  const node = await Libp2p.create({
+    addresses: {
+      // signalling server address(es), libp2p will attempt to dial the server to coordinate connection from fellow peers
+      listen: [ // keep in mind below are public, testing servers, STILL NEED TO CONNECT TO FIREBASE
+        '/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
+        '/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star'
+      ]
+    },
+    modules: {
+      transport: [WebSockets, WebRTCStar],
+      peerDiscovery: [Bootstrap],
+      dht: KadDHT
+    },
+    config: {
+      peerDiscovery: {
+        [Bootstrap.tag]: {
+          enabled: true,
+          list: [
+            "/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN",
+            "/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
+            "/dnsaddr/bootstrap.libp2p.io/p2p/QmZa1sAxajnQjVM8WjWXoMbmPd7NsWhfKsPkErzpm9wGkp",
+            "/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa",
+            "/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt",
+          ],
+        },
+      },
+      dht: {
+        enabled: true,
+      },
+    },
+  });
+
+  node.on('peer:discovery', (peer) => {
+    alert('Discovered %s', peer.id) //discovered peer
+  })
+  node.connectionManager.on('peer:connect', (connection) => {
+    alert('Connected to %s', connection.remotePeer) //connected peer
+  })
+  await node.start()
+}

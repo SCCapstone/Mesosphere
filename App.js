@@ -1,5 +1,5 @@
 import ScreenGenerator from './ScreenGenerator'
-import { PAGES } from './Utility'
+import { PAGES, initNode } from './Utility'
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { Button, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -7,30 +7,32 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { atom, observe, derived } from 'elementos'
 
 export default function App () {
+  const message$ = atom('')
 
-  const message$ = atom('');
-
-  function postPrompt() {
+  function postPrompt () {
     return (
       <View>
         <Text>Enter a message below!</Text>
-        <TextInput 
+        <TextInput
           multiline
           numberOfLines={4}
           placeholder='message'
           onChangeText={(input) => message$.actions.set(input)}
         />
         <Pressable
-          onPress={() => translate() }
+          onPress={() => translate()}
           style={styles.loginBtn}
-        ><Text>Post!</Text></Pressable>
+        ><Text>Post!</Text>
+        </Pressable>
       </View>
-    );
+    )
   }
 
-  function translate() {
-    alert(message$.get());
+  function translate () {
+    alert(message$.get())
   }
+
+  initNode()
 
   return (
     <View style={styles.container}>
