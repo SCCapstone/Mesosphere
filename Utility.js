@@ -5,6 +5,8 @@ import WebSockets from 'libp2p-websockets'
 import WebRTCStar from 'libp2p-webrtc-star'
 import KadDHT from 'libp2p-kad-dht' // to be used in best case
 import Bootstrap from 'libp2p-bootstrap'
+import { sha256, sha224 } from 'js-sha256';
+
 //
 import Peer from 'peerjs'
 // import {} from './Post'
@@ -81,24 +83,21 @@ function binarySearch (sortedArray, key) {
 }
 
 function generateUniqueMID () {
-  const MID = Math.floor(Math.random() * 99999)
   // query MIDs from firebase, document is 'main', collection is 'IDS', an array called MIDS is stored there
   // for prototype code, call it arr
-  /*
-  if (arr.indexOf(MID) == -1) { //unique value not found in array
-    //push the number to MIDS array
-  } else { //value does exist
-    generateUniqueMID()
-  } //recursive approach, is this viable?
+  var arr = []
+  let ID = "meso-" + String(sha224(arr.length + 1)) //will always be random since we're hashing array length in an immutable array, using 224 for smaller footprint
+  arr.push(ID)
+  AsyncStorage.setItem('MID', ID)
+}
 
-  while (arr.indexOf(MID) == -1) { //alternatively, keep generating new IDs until a valid one is found
-    MID = Math.floor(Math.random() * 99999);
-    if (arr.indexOf(MID) != -1) {
-      //push MID to MIDS array
-      break;
-    }
-  }
-  */
+function generatePostID () {
+  // query MIDs from firebase, document is 'main', collection is 'IDS', an array called MIDS is stored there
+  // for prototype code, call it arrPosts
+  var arrPosts = []
+  let ID = sha224(arr.length + (Math.random() * 10))
+  arr.push(ID) //nothing fancy needed, using a random number for some more noise
+  return ID //this value is to be used when creating a new post! also should be added to the current User's array of post IDs
 }
 
 // alternatively, instead of querying random numbers from an ever-changing database, what if we hash the length of the array with something so that the value is always unique? postIDs are never deleted so the array will never be the decremented in size after a post is made.
@@ -106,7 +105,7 @@ function generateUniqueMID () {
 /* Data flow will have to work on-demand.
 Each device will need to be constantly open and able to accept connections from peers
 (note: consider calling 'friends' on the app 'peers')
-post ids will act as pointers
+post ids will act as pointers to content
 I envision how it will work is:
   peer requests post via post id ->
   peer sends post id over network ->
