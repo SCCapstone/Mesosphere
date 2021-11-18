@@ -72,6 +72,10 @@ export async function deleteAll () {
   console.log('All data removed.')
 }
 
+export async function initP2P() {
+
+}
+
 export const styles = StyleSheet.create({
   logo: {
     width: 200,
@@ -113,13 +117,87 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFA31B'
   },
   button: {
-    width: '80%',
+    width: '25%',
     borderRadius: 25,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
+    marginBottom: 0,
     backgroundColor: '#FFA31B'
+  },
+  bottomButtomBar: {
+    position: 'absolute',
+    width: '100%',
+    borderRadius: 0,
+    height: '15%',
+    bottom: 0,
+    borderWidth: 0,
+    borderColor: '#FFA31B',
+  },
+  userButton: {
+    position: 'absolute',
+    width: '25%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderRadius: 2,
+    backgroundColor: '#FFD89F'
+  },
+  userButtonSelected: {
+    position: 'absolute',
+    width: '25%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderRadius: 2,
+    borderColor: '#FFA31B',
+    backgroundColor: '#FFFFFF'
+  },
+  networkButton: {
+    position: 'absolute',
+    width: '25%',
+    left: '25%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderRadius: 2,
+    backgroundColor: '#FFD89F'
+  },
+  friendButton: {
+    position: 'absolute',
+    width: '25%',
+    left: '50%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderRadius: 2,
+    backgroundColor: '#FFD89F'
+  },
+  postButton: {
+    position: 'absolute',
+    left: '75%',
+    width: '25%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderRadius: 2,
+    backgroundColor: '#FFD89F'
+  },
+  bottomButtonText: {
+    position: 'absolute',
+    bottom: 0,
+  },
+  bottomButtonIcon: {
+    position: 'absolute',
+    width: '60%',
+    height: '60%',
+    resizeMode: 'contain',
+    bottom: '30%'
   },
   container: {
     flex: 1,
