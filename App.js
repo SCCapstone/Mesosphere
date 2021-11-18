@@ -1,5 +1,6 @@
 import ScreenGenerator from './ScreenGenerator'
 import { PAGES, initNode } from './Utility'
+import { returnDatabaseMIDS } from './firebaseConfig'
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { Button, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -42,6 +43,9 @@ export default function App () {
           style={styles.loginBtn}
         ><Text>Connect!</Text>
         </Pressable>
+
+        <Text>Database MIDs: {  }</Text>
+
       </View>
     )
   }
@@ -50,11 +54,10 @@ export default function App () {
     alert(message$.get())
   }
 
-  initNode()
-
   return (
     <View style={styles.container}>
       {postPrompt()}
+      {returnDatabaseMIDS()}
     </View>
   )
 }

@@ -8,7 +8,6 @@ import Bootstrap from 'libp2p-bootstrap'
 import { sha256, sha224 } from 'js-sha256';
 
 //
-import Peer from 'peerjs'
 // import {} from './Post'
 
 export const PAGES = {
@@ -16,6 +15,8 @@ export const PAGES = {
   USERINFO: 1,
   ACCOUNTPAGE: 2
 }
+
+
 
 // database is a reference to firebaseConfig that lets us query the database directly, all database functions should use it in this file
 
@@ -132,7 +133,9 @@ I envision how it will work is:
   firebaseConfig.js
 */
 
-const THIS_PEER_ID = AsyncStorage.getItem('MID') // or whatever we do to reference stored MID
+//collection 'main', document 'IDS'
+
+//const THIS_PEER_ID = AsyncStorage.getItem('MID') // or whatever we do to reference stored MID
 
 // export async function initNode () {
 //   const node = await Libp2p.create({
