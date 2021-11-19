@@ -28,21 +28,21 @@ const IDSRef = doc(database, "main", "IDS")
 
 export async function returnDatabaseMIDS() {
   const IDSSnap = await getDoc(IDSRef)
+
   var MIDS = []
   if (IDSSnap.exists()) {
-    console.log("MIDS: ", IDSSnap.data().MIDS)
-    console.log("Post IDs: ", IDSSnap.data().postIDs)
-    MIDS.push(IDSSnap.data().MIDS) 
-  } //returns both data fields to console correctly
+    console.log(IDSSnap.data().MIDS)
+  } //returns data field to console correctly
 }
-// const getDatabaseMIDS = async () => {
-//   const data = await getDoc(docRef)
-//   var MIDS = []
-//   if (data.exists()) {
-//     MIDS.push([data.data().MIDS])
-//   } else {
-//     console.log('empty')
-//   }
+
+// export async function returnTestData() {
+//   const q = query(collection(database, "cities"), where("capital", "==", true));
+
+//   const querySnapshot = await getDocs(q);
+//   querySnapshot.forEach((doc) => {
+//     // doc.data() is never undefined for query doc snapshots
+//     console.log(doc.id, " => ", doc.data());
+//   });
 // }
 
 export { database }
