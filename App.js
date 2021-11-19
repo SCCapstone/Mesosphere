@@ -1,6 +1,6 @@
 import ScreenGenerator from './ScreenGenerator'
 import { PAGES, initNode } from './Utility'
-import { returnDatabaseMIDS, returnTestData} from './firebaseConfig'
+import { returnDatabaseMIDS, returnTestData, pushMIDToDatabase} from './firebaseConfig'
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { Button, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -53,7 +53,8 @@ export default function App () {
   function translate () {
     alert(message$.get())
   }
-  returnDatabaseMIDSToConsole()
+  returnDatabaseMIDS()
+  pushMIDToDatabase(12)
 
   return (
     <View style={styles.container}>

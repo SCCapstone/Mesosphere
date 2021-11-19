@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
 // import { getDatabase, ref, set, onValue } from 'firebase/database';
-import { getFirestore, collection, doc, getDoc, getDocs, setDoc, get, query, where } from 'firebase/firestore/lite'
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, get, query, where, updateDoc, arrayUnion} from 'firebase/firestore/lite'
+import { transaction } from 'elementos'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -44,5 +45,17 @@ export async function returnDatabaseMIDS() {
 //     console.log(doc.id, " => ", doc.data());
 //   });
 // }
+
+export async function pushMIDToDatabase(MID) { //functional
+  await updateDoc(IDSRef, {
+    MIDS: arrayUnion(MID)
+  })
+}
+
+export async function pushPostIDToDatabase(postID) { //functional
+  await updateDoc(IDSRef, {
+    postIDs: arrayUnion(postID)
+  })
+}
 
 export { database }
