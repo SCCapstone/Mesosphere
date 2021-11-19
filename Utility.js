@@ -5,7 +5,8 @@ import { atom } from 'elementos'
 export const PAGES = {
   LOGIN: 0,
   MAKEACC: 1,
-  ACCOUNTPAGE: 2
+  ACCOUNTPAGE: 2,
+  FRIENDS: 3
 }
 
 const currUser$ = atom(null)
@@ -177,6 +178,18 @@ export const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: '#FFD89F'
   },
+  friendButtonSelected: {
+    position: 'absolute',
+    width: '25%',
+    left: '50%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderRadius: 2,
+    borderColor: '#FFA31B',
+    backgroundColor: '#FFFFFF'
+  },
   postButton: {
     position: 'absolute',
     left: '75%',
@@ -204,5 +217,11 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
+  friendsLogo: {
+    top: -300,
+    alignItems: 'center',
+    width: 100,
+    height: 100,
+  },
 })
