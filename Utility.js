@@ -172,10 +172,10 @@ export async function initNode () { //can be extracted
   })
 
   node.on('peer:discovery', (peer) => {
-    alert('Discovered %s', peer.id) // discovered peer
+    console.log('Discovered %s', peer.id) // discovered peer
   })
   node.connectionManager.on('peer:connect', (connection) => {
-    alert('Connected to %s', connection.remotePeer) // connected peer
+    console.log('Connected to %s', connection.remotePeer) // connected peer
   })
   await node.start()
 }
