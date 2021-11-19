@@ -137,45 +137,45 @@ I envision how it will work is:
 
 //const THIS_PEER_ID = AsyncStorage.getItem('MID') // or whatever we do to reference stored MID
 
-// export async function initNode () {
-//   const node = await Libp2p.create({
-//     addresses: {
-//       // signalling server address(es), libp2p will attempt to dial the server to coordinate connection from fellow peers
-//       listen: [ // keep in mind below are public, testing servers, STILL NEED TO CONNECT TO FIREBASE
-//         '/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
-//         '/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
-//         '/ip4/127.0.0.1/tcp/8000/ws',
-//       ]
-//     },
-//     modules: {
-//       transport: [WebSockets, WebRTCStar],
-//       peerDiscovery: [Bootstrap],
-//       dht: KadDHT
-//     },
-//     config: {
-//       peerDiscovery: {
-//         [Bootstrap.tag]: {
-//           enabled: true,
-//           list: [
-//             '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
-//             '/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb',
-//             '/dnsaddr/bootstrap.libp2p.io/p2p/QmZa1sAxajnQjVM8WjWXoMbmPd7NsWhfKsPkErzpm9wGkp',
-//             '/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa',
-//             '/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt'
-//           ]
-//         }
-//       },
-//       dht: {
-//         enabled: true
-//       }
-//     }
-//   })
+export async function initNode () { //can be extracted
+  const node = await Libp2p.create({
+    addresses: {
+      // signalling server address(es), libp2p will attempt to dial the server to coordinate connection from fellow peers
+      listen: [ // keep in mind below are public, testing servers, STILL NEED TO CONNECT TO FIREBASE
+        '/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
+        '/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
+        '/ip4/127.0.0.1/tcp/8000/ws',
+      ]
+    },
+    modules: {
+      transport: [WebSockets, WebRTCStar],
+      peerDiscovery: [Bootstrap],
+      dht: KadDHT
+    },
+    config: {
+      peerDiscovery: {
+        [Bootstrap.tag]: {
+          enabled: true,
+          list: [
+            '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
+            '/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb',
+            '/dnsaddr/bootstrap.libp2p.io/p2p/QmZa1sAxajnQjVM8WjWXoMbmPd7NsWhfKsPkErzpm9wGkp',
+            '/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa',
+            '/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt'
+          ]
+        }
+      },
+      dht: {
+        enabled: true
+      }
+    }
+  })
 
-//   node.on('peer:discovery', (peer) => {
-//     alert('Discovered %s', peer.id) // discovered peer
-//   })
-//   node.connectionManager.on('peer:connect', (connection) => {
-//     alert('Connected to %s', connection.remotePeer) // connected peer
-//   })
-//   await node.start()
-// }
+  node.on('peer:discovery', (peer) => {
+    alert('Discovered %s', peer.id) // discovered peer
+  })
+  node.connectionManager.on('peer:connect', (connection) => {
+    alert('Connected to %s', connection.remotePeer) // connected peer
+  })
+  await node.start()
+}
