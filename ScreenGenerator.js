@@ -1,28 +1,111 @@
-import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { Text, View, Image, TouchableOpacity } from 'react-native'
+import { PAGES, styles, setScreen, initP2P } from './Utility'
+import { loginScreen, newUserPrompt, accountPage, makeAdminAcc } from './User'
+import { friendsPage } from './Friends'
+import logo from './assets/MesoSphere.png'
 
-export class ScreenGenerator extends Component {
-    output = "None";
-    constructor() {
-        super();
-    }
+export class ScreenGenerator {
+  constructor() {
+    this.page = -1
+    this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
+    setScreen(PAGES.FRIENDS)
+    initP2P();
+  }
 
-    generateScreen(input) {
-        this.output = input;
-    }
+  selectScreen(input) {
+    this.page = input
+    this.generateScreen()
+  }
 
-    render() {
-        return <View style={styles.container}><Text>{this.output}</Text></View>
+
+  generateScreen() {
+    console.log('Generating: ' + this.page)
+    if (this.page === PAGES.LOGIN) {
+      this.output = (
+        <View style={styles.container}>
+          <Image source={logo} style={styles.logo} />
+          {loginScreen()}
+        </View>
+      )
+    } else if (this.page === PAGES.MAKEACC) {
+      this.output = (<View style={styles.container}>{newUserPrompt()}</View>)
+    } else if (this.page === PAGES.ACCOUNTPAGE) {
+      this.output = (
+        <View style={styles.container}>
+          {accountPage()}
+          {this.generateBottomBar(1)}
+        </View>
+      )
+    } else if (this.page === PAGES.FRIENDS) {
+      this.output = (
+        <View style={styles.container}>
+          {friendsPage()}
+          {this.generateBottomBar(3)}
+        </View>
+      )
     }
+  }
+
+  generateBottomBar(currentSlice) {
+    if (currentSlice == 1) {
+      return (
+        <View style={styles.bottomButtomBar}>
+          <TouchableOpacity style={styles.userButtonSelected}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>User</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.networkButton}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>Network</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.friendButton}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>Friends</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.postButton}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>Post</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    } else if (currentSlice == 3) {
+      return (
+        <View style={styles.bottomButtomBar}>
+          <TouchableOpacity style={styles.userButton}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>User</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.networkButton}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>Network</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.friendButtonSelected}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>Friends</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.postButton}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>Post</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+  }
+
+  render() {
+    return this.output
+  }
 }
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
+let instance
+
+export function getInstance() {
+  if (instance == null) {
+    instance = new ScreenGenerator()
+    console.log('New SG generated.')
+  }
+  return instance
+}
 
 export default ScreenGenerator
