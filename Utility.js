@@ -12,23 +12,23 @@ export const PAGES = {
 const currUser$ = atom(null)
 const currScreen$ = atom(null)
 
-export function setUser (u) {
+export function setUser(u) {
   currUser$.actions.set(u)
 }
 
-export function setScreen (s) {
+export function setScreen(s) {
   currScreen$.actions.set(s)
 }
 
-export function getUser () {
+export function getUser() {
   return currUser$.get()
 }
 
-export function getScreen () {
+export function getScreen() {
   return currScreen$.get()
 }
 
-export function returnScreen () {
+export function returnScreen() {
   return currScreen$
 }
 
@@ -54,7 +54,7 @@ export const getData = async (key) => {
   }
 }
 
-export async function removeValue (key) {
+export async function removeValue(key) {
   try {
     await AsyncStorage.removeItem(key)
   } catch (e) {
@@ -62,7 +62,7 @@ export async function removeValue (key) {
   }
 }
 
-export async function deleteAll () {
+export async function deleteAll() {
   let keys = []
   try {
     keys = await AsyncStorage.getAllKeys()
@@ -219,9 +219,16 @@ export const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   friendsLogo: {
-    top: -300,
+    top: '-30%',
     alignItems: 'center',
     width: 100,
     height: 100,
+  },
+  friendsLabel: {
+    top: '-30%',
+    left: '2%',
+    alignItems:'center',
+    height: 100,
+    width: 100,
   },
 })
