@@ -79,15 +79,17 @@ function binarySearch (sortedArray, key) {
   return -1
 }
 
-function generateUniqueMID () {
-  const ID = 'meso-' + String(sha224(returnMIDSDatabaseLength + 1)) // will always be random since we're hashing array length in an immutable array, using 224 for smaller footprint
-  ID.substring(0, 11) //cut down size to something more manageable, will this affect collision?
+export function generateUniqueMID () {
+  let magicNumber = returnMIDSDatabaseLength + (Math.random() * 9)
+  var ID = "meso-" + String(sha224(magicNumber)).substring(0,11) // will always be random since we're hashing array length in an immutable array, using 224 for smaller footprint
+  AsyncStorage.setItem("MID", ID)
   pushMIDToDatabase(ID)
-  AsyncStorage.setItem('MID', ID)
+  return ID
 }
 
-function generatePostID () {
-  const ID = sha224(returnPostIDDatabaseLength.length + (Math.random() * 10))
+export function generatePostID () {
+  let magicNumber = returnMIDSDatabaseLength + (Math.random() * 999)
+  var ID = String(sha224(magicNumber))
   pushPostIDToDatabase(ID)
   return ID // this value is to be used when creating a new post! also should be added to the current User's array of post IDs
 }

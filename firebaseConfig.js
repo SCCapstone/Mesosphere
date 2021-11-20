@@ -2,7 +2,6 @@ import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
 // import { getDatabase, ref, set, onValue } from 'firebase/database';
 import { getFirestore, collection, doc, getDoc, getDocs, setDoc, get, query, where, updateDoc, arrayUnion } from 'firebase/firestore/lite'
-import { transaction } from 'elementos'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -23,34 +22,30 @@ const database = getFirestore(app)
   */
 // collection 'main'
 // document 'IDS'
-// two fields in 'IDS' named "MIDS" and "postIDs"
+// two fields in 'IDS' named "MesosphereIDs" and "postIDs"
 
 const IDSRef = doc(database, 'main', 'IDS')
 
 export async function returnMIDSDatabaseLength() {
   const IDSSnap = await getDoc(IDSRef)
-
-  const MIDS = []
   if (IDSSnap.exists()) {
-    console.log(IDSSnap.data().MIDS)
+    console.log(IDSSnap.data().MesosphereIDs)
   }
-  return IDSSnap.data().MIDS.length
+  return IDSSnap.data().MesosphereIDs.length
 }
 
 export async function returnPostIDDatabaseLength() {
   const IDSSnap = await getDoc(IDSRef)
-
-  const MIDS = []
   if (IDSSnap.exists()) {
-    console.log(IDSSnap.data().MIDS)
+    console.log(IDSSnap.data().postIDs)
   }
-  return IDSSnap.data().MIDS.length
+  return IDSSnap.data().postIDs.length
 }
 
 
 export async function pushMIDToDatabase (MID) { // functional
   await updateDoc(IDSRef, {
-    MIDS: arrayUnion(MID)
+    MesosphereIDs: arrayUnion(MID)
   })
 }
 

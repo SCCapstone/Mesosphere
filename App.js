@@ -1,6 +1,6 @@
 import ScreenGenerator from './ScreenGenerator'
-import { PAGES, initNode } from './Utility'
-import { returnDatabaseMIDS, returnTestData, pushMIDToDatabase } from './firebaseConfig'
+import { PAGES, initNode, generatePostID, generateUniqueMID } from './Utility'
+import { } from './firebaseConfig'
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { Button, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -44,7 +44,8 @@ export default function App () {
         ><Text>Connect!</Text>
         </Pressable>
 
-        <Text>Database MIDs: {}</Text>
+        <Text>Database MIDs: {generateUniqueMID()}</Text>
+        <Text>Post ID: {generatePostID()}</Text>
 
       </View>
     )
