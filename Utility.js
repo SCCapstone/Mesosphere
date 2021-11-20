@@ -1,22 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { database } from './firebaseConfig.js'
+import { database, pushPostIDToDatabase } from './firebaseConfig.js'
 import Libp2p from 'libp2p'
 import WebSockets from 'libp2p-websockets'
 import WebRTCStar from 'libp2p-webrtc-star'
 import KadDHT from 'libp2p-kad-dht' // to be used in best case
 import Bootstrap from 'libp2p-bootstrap'
-import { sha256, sha224 } from 'js-sha256';
-
-//
-// import {} from './Post'
+import { sha256, sha224 } from 'js-sha256'
+import { returnMIDSDatabaseLength, returnPostIDDatabaseLength, pushMIDToDatabase } from './firebaseConfig.js'
 
 export const PAGES = {
   LOGIN: 0,
   USERINFO: 1,
   ACCOUNTPAGE: 2
 }
-
-
 
 // database is a reference to firebaseConfig that lets us query the database directly, all database functions should use it in this file
 
@@ -84,21 +80,16 @@ function binarySearch (sortedArray, key) {
 }
 
 function generateUniqueMID () {
-  // query MIDs from firebase, document is 'main', collection is 'IDS', an array called MIDS is stored there
-  // for prototype code, call it arr
-  var arr = []
-  let ID = "meso-" + String(sha224(arr.length + 1)) //will always be random since we're hashing array length in an immutable array, using 224 for smaller footprint
-  arr.push(ID)
+  const ID = 'meso-' + String(sha224(returnMIDSDatabaseLength + 1)) // will always be random since we're hashing array length in an immutable array, using 224 for smaller footprint
+  ID.substring(0, 11) //cut down size to something more manageable, will this affect collision?
+  pushMIDToDatabase(ID)
   AsyncStorage.setItem('MID', ID)
 }
 
 function generatePostID () {
-  // query MIDs from firebase, document is 'main', collection is 'IDS', an array called MIDS is stored there
-  // for prototype code, call it arrPosts
-  var arrPosts = []
-  let ID = sha224(arr.length + (Math.random() * 10))
-  arr.push(ID) //nothing fancy needed, using a random number for some more noise
-  return ID //this value is to be used when creating a new post! also should be added to the current User's array of post IDs
+  const ID = sha224(returnPostIDDatabaseLength.length + (Math.random() * 10))
+  pushPostIDToDatabase(ID)
+  return ID // this value is to be used when creating a new post! also should be added to the current User's array of post IDs
 }
 
 // alternatively, instead of querying random numbers from an ever-changing database, what if we hash the length of the array with something so that the value is always unique? postIDs are never deleted so the array will never be the decremented in size after a post is made.
@@ -133,18 +124,14 @@ I envision how it will work is:
   firebaseConfig.js
 */
 
-//collection 'main', document 'IDS'
-
-//const THIS_PEER_ID = AsyncStorage.getItem('MID') // or whatever we do to reference stored MID
-
-export async function initNode () { //can be extracted
+export async function initNode () { // can be extracted
   const node = await Libp2p.create({
     addresses: {
       // signalling server address(es), libp2p will attempt to dial the server to coordinate connection from fellow peers
       listen: [ // keep in mind below are public, testing servers, STILL NEED TO CONNECT TO FIREBASE
         '/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
         '/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
-        '/ip4/127.0.0.1/tcp/8000/ws',
+        '/ip4/127.0.0.1/tcp/8000/ws'
       ]
     },
     modules: {

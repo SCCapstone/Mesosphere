@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
 // import { getDatabase, ref, set, onValue } from 'firebase/database';
-import { getFirestore, collection, doc, getDoc, getDocs, setDoc, get, query, where, updateDoc, arrayUnion} from 'firebase/firestore/lite'
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, get, query, where, updateDoc, arrayUnion } from 'firebase/firestore/lite'
 import { transaction } from 'elementos'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
@@ -21,38 +21,40 @@ const database = getFirestore(app)
   - Mesosphere IDs
   - Post IDs
   */
-//collection 'main'
-//document 'IDS'
-//two fields in 'IDS' named "MIDS" and "postIDs"
+// collection 'main'
+// document 'IDS'
+// two fields in 'IDS' named "MIDS" and "postIDs"
 
-const IDSRef = doc(database, "main", "IDS")
+const IDSRef = doc(database, 'main', 'IDS')
 
-export async function returnDatabaseMIDS() {
+export async function returnMIDSDatabaseLength() {
   const IDSSnap = await getDoc(IDSRef)
 
-  var MIDS = []
+  const MIDS = []
   if (IDSSnap.exists()) {
     console.log(IDSSnap.data().MIDS)
-  } //returns data field to console correctly
+  }
+  return IDSSnap.data().MIDS.length
 }
 
-// export async function returnTestData() {
-//   const q = query(collection(database, "cities"), where("capital", "==", true));
+export async function returnPostIDDatabaseLength() {
+  const IDSSnap = await getDoc(IDSRef)
 
-//   const querySnapshot = await getDocs(q);
-//   querySnapshot.forEach((doc) => {
-//     // doc.data() is never undefined for query doc snapshots
-//     console.log(doc.id, " => ", doc.data());
-//   });
-// }
+  const MIDS = []
+  if (IDSSnap.exists()) {
+    console.log(IDSSnap.data().MIDS)
+  }
+  return IDSSnap.data().MIDS.length
+}
 
-export async function pushMIDToDatabase(MID) { //functional
+
+export async function pushMIDToDatabase (MID) { // functional
   await updateDoc(IDSRef, {
     MIDS: arrayUnion(MID)
   })
 }
 
-export async function pushPostIDToDatabase(postID) { //functional
+export async function pushPostIDToDatabase (postID) { // functional
   await updateDoc(IDSRef, {
     postIDs: arrayUnion(postID)
   })

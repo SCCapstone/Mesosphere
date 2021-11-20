@@ -1,6 +1,6 @@
 import ScreenGenerator from './ScreenGenerator'
 import { PAGES, initNode } from './Utility'
-import { returnDatabaseMIDS, returnTestData, pushMIDToDatabase} from './firebaseConfig'
+import { returnDatabaseMIDS, returnTestData, pushMIDToDatabase } from './firebaseConfig'
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { Button, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -11,18 +11,18 @@ export default function App () {
   const message$ = atom('')
   const otherPeerID$ = atom(0)
   const myPeerID$ = atom(Math.floor(Math.random() * 999))
-  var peers = []
-  var received = [] //data received from other peer
+  const peers = []
+  const received = [] // data received from other peer
 
-  //testing text transmission over p2p w/ bootstrap
+  // testing text transmission over p2p w/ bootstrap
 
   function postPrompt () {
     return (
       <View>
-        <Text>Your Peer ID is: { myPeerID$.get() }</Text>
+        <Text>Your Peer ID is: {myPeerID$.get()}</Text>
         <Text>Enter a message below!</Text>
         <TextInput
-          multiline={true}
+          multiline
           numberOfLines={4}
           placeholder='message'
           onChangeText={(input) => message$.actions.set(input)}
@@ -33,13 +33,13 @@ export default function App () {
           style={styles.loginBtn}
         ><Text>Post!</Text>
         </Pressable>
-        <br></br>
+        <br />
         <TextInput
           placeholder='other peer id'
           onChangeText={(input) => otherPeerID$.actions.set(input)}
         />
         <Pressable
-          //onPress={() => translate()} connect to peer
+          // onPress={() => translate()} connect to peer
           style={styles.loginBtn}
         ><Text>Connect!</Text>
         </Pressable>
@@ -53,8 +53,6 @@ export default function App () {
   function translate () {
     alert(message$.get())
   }
-  returnDatabaseMIDS()
-  pushMIDToDatabase(12)
 
   return (
     <View style={styles.container}>
