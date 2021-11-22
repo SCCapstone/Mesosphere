@@ -1,7 +1,7 @@
 import React from 'react' 
 import {TouchableOpacity, Button, Text, Image, View, StyleSheet} from 'react-native'
-import {storeData, getData, styles, getUser, setScreen, setUser, PAGES} from './Utility'
-import {atom} from 'elementos'
+import {storeData, getData, getUser, setScreen, setUser, PAGES} from './Utility'
+//import { atom } from 'elementos'
 
 
 
@@ -11,38 +11,62 @@ import {atom} from 'elementos'
 // Posts generate unique IDs after checking with firebase
 // Posts have associated score variables
 // Post data is to be stored locally
+//
+// Also can create a counter type of interaction to incorporate 'score' variable
+//
+// Current tasks
+// Format the screen
 
 export class Post {
-// code here
+ constructor (post) {
+ 	this.post = post
+ }
+ getPost() {
+ 	return this.post
+ }
 }
 
 export function postPage() {
-  const u = getUser()
+  //const u = getUser()
   return (
-    <>
+	  <View>
 	  <Text>What is on your mind today, node? </Text>
-	  <TouchableOpacity
-	    style={styles.postBtn}
+	  <TouchableOpacity onPress={() => alert('Still being implemented!')} 
+	  	style={styles.postBtn} >
 	    <Text style={styles.buttonText}> Click to post! </Text>
-	    //onPress={() => {
-	    //on the button press, they should be able to post
-		    //within this post option they have the option to add image
-	    
-	    }}	  
-	  >  
-  );
+	  
+	    </TouchableOpacity>
+	  </View>
+  )
+}
+/*export function postScreen() {
+  return(
+  	<View>
+	<TextInput style={styles.}>
+
+
+
+	</View>
+  )
+
+}
+*/
 const styles = StyleSheet.create({
   postBtn: {
-  	bgndColor: "black",
-	padding: 15
+  	backgroundColor: "black",
+	padding: 15,
 	borderRadius: 5,
+	alignItems: 'center'
   },
   buttonText: {
-  	fontSize: 17
-	color: '#fff',
+  	fontSize: 20,
+	color: '#003f5c',
+  },
+  text: {
+  	color: '#003f5c',
+	fontSize: 15
   }
 });
-}
 export function textContent() {}
 export function imageContent() {}
 export function videoContent() {}
