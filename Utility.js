@@ -80,7 +80,7 @@ function binarySearch (sortedArray, key) {
 }
 
 export function generateUniqueMID () {
-  let magicNumber = returnMIDSDatabaseLength + (Math.random() * 9)
+  let magicNumber = returnMIDSDatabaseLength
   var ID = "meso-" + String(sha224(magicNumber)).substring(0,11) // will always be random since we're hashing array length in an immutable array, using 224 for smaller footprint
   AsyncStorage.setItem("MID", ID)
   pushMIDToDatabase(ID)
