@@ -30,7 +30,12 @@ export function postPage() {
   //const u = getUser()
   return (
 	  <View>
-	  <Text>What is on your mind today, node? </Text>
+	  <Text style={styles.text}> Time to Post! </Text>
+	  <Text style={styles.input}> Insert Text Here </Text>
+	  <TouchableOpacity onPress={() => alert('Still being implemented!')}
+	  	style={styles.imageBtn}>
+	    <Text style={styles.buttonText}> Upload Image </Text>
+	    </TouchableOpacity>
 	  <TouchableOpacity onPress={() => alert('Still being implemented!')} 
 	  	style={styles.postBtn} >
 	    <Text style={styles.buttonText}> Click to post! </Text>
@@ -39,32 +44,49 @@ export function postPage() {
 	  </View>
   )
 }
-/*export function postScreen() {
-  return(
-  	<View>
-	<TextInput style={styles.}>
 
-
-
-	</View>
-  )
-
-}
-*/
 const styles = StyleSheet.create({
   postBtn: {
-  	backgroundColor: "black",
-	padding: 15,
-	borderRadius: 5,
+  	backgroundColor: "#FFA31B",
+	height: 50,
+	width: '20%',
+	marginTop: 40,
+	borderRadius: 25,
+	justifyContent: 'center',
+	alignItems: 'center'
+  },
+  imageBtn: {
+	backgroundColor: "#FFA31B",
+  	width: '20%',
+	borderRadius: 25,
+	height: 50,
+	marginTop: 40,
+	justifyContent: 'center',
 	alignItems: 'center'
   },
   buttonText: {
-  	fontSize: 20,
-	color: '#003f5c',
+	fontSize: 20,
+	fontWeight: 'bold',
+	color: 'white',
+	justifyContent: 'center',
+	alignItems: 'center'
   },
   text: {
   	color: '#003f5c',
-	fontSize: 15
+	fontSize: 25,
+	justifyContent: 'center',
+	alignItems: 'center'
+  },
+  input: {
+	marginTop: 8,
+	marginBottom: 10,
+	height: 120,
+	width: '20%',
+	borderColor: "#888",
+	borderRadius: 30,
+	borderWidth: 2,
+	justifyContent: 'center',
+	alignItems: 'center'
   }
 });
 export function textContent() {}
