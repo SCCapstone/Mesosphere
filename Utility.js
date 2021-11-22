@@ -72,10 +72,6 @@ export async function deleteAll () {
   console.log('All data removed.')
 }
 
-export async function initP2P() {
-
-}
-
 export const styles = StyleSheet.create({
   logo: {
     width: 200,
@@ -132,7 +128,7 @@ export const styles = StyleSheet.create({
     height: '15%',
     bottom: 0,
     borderWidth: 0,
-    borderColor: '#FFA31B',
+    borderColor: '#FFA31B'
   },
   userButton: {
     position: 'absolute',
@@ -190,7 +186,7 @@ export const styles = StyleSheet.create({
   },
   bottomButtonText: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 0
   },
   bottomButtonIcon: {
     position: 'absolute',
@@ -198,6 +194,13 @@ export const styles = StyleSheet.create({
     height: '60%',
     resizeMode: 'contain',
     bottom: '30%'
+  },
+  bigText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '5%'
   },
   container: {
     flex: 1,

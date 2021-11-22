@@ -10,7 +10,6 @@ export class ScreenGenerator {
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
     makeAdminAcc()
     setScreen(PAGES.LOGIN)
-    initP2P();
   }
 
   selectScreen (input) {
@@ -31,17 +30,17 @@ export class ScreenGenerator {
       this.output = (<View style={styles.container}>{newUserPrompt()}</View>)
     } else if (this.page === PAGES.ACCOUNTPAGE) {
       this.output = (
-      <View style={styles.container}>
-        {accountPage()}
-        {this.generateBottomBar(1)}
-      </View>
+        <View style={styles.container}>
+          {accountPage()}
+          {this.generateBottomBar(1)}
+        </View>
       )
     }
   }
 
-  generateBottomBar(currentSlice) {
-    if(currentSlice == 1) {
-      return(
+  generateBottomBar (currentSlice) {
+    if (currentSlice === 1) {
+      return (
         <View style={styles.bottomButtomBar}>
           <TouchableOpacity style={styles.userButtonSelected}>
             <Image source={logo} style={styles.bottomButtonIcon} />

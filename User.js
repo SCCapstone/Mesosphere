@@ -21,7 +21,7 @@ export function accountPage () {
   const u = getUser()
   return (
     <>
-      <Text>Welcome back, {u.realName}</Text>
+      <Text style={styles.bigText}>Welcome back, {u.realName}</Text>
       {adminCheck()}
       <TouchableOpacity
         style={styles.loginBtn}
@@ -31,12 +31,6 @@ export function accountPage () {
         }}
       >
         <Text style={styles.loginText}>LOGOUT</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => deleteCurrUser()}
-      >
-        <Text style={styles.loginText}>Delete My Data</Text>
       </TouchableOpacity>
     </>
   )
@@ -216,9 +210,18 @@ function adminCheck () {
     return (
       <TouchableOpacity
         onPress={() => { adminButton() }}
-        style={styles.button}
+        style={styles.loginBtn}
       >
         <Text style={styles.buttonText}>Delete ALL Data</Text>
+      </TouchableOpacity>
+    )
+  } else if (u != null) {
+    return (
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => deleteCurrUser()}
+      >
+        <Text style={styles.loginText}>Delete My Data</Text>
       </TouchableOpacity>
     )
   }
