@@ -17,13 +17,25 @@ import {storeData, getData, getUser, setScreen, setUser, PAGES} from './Utility'
 // Current tasks
 // Format the screen
 
-export class Post {
- constructor (post) {
- 	this.post = post
+export class Post { //Post objects will be constructed from postPage() prompt
+ constructor (postID, mediaContent, textContent, score, MID) {
+ 	this.postID = postID
+	this.mediaContent = mediaContent
+	this.textContent = textContent
+	this.score = score
+	this.MID = MID
  }
  getPost() {
  	return this.post
  }
+}
+
+export function incrementScore() {
+	this.score += 1
+}
+
+export function decrementScore() {
+	this.score -= 1
 }
 
 export function postPage() {
