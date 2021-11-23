@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { database, pushPostIDToDatabase } from './firebaseConfig.js'
-import Libp2p from 'libp2p'
-import WebSockets from 'libp2p-websockets'
-import WebRTCStar from 'libp2p-webrtc-star'
-import KadDHT from 'libp2p-kad-dht' // to be used in best case
-import Bootstrap from 'libp2p-bootstrap'
+// import Libp2p from 'libp2p'
+// import WebSockets from 'libp2p-websockets'
+// import WebRTCStar from 'libp2p-webrtc-star'
+// import KadDHT from 'libp2p-kad-dht' // to be used in best case
+// import Bootstrap from 'libp2p-bootstrap'
 import { sha256, sha224 } from 'js-sha256'
 import { returnMIDSDatabaseLength, returnPostIDDatabaseLength, pushMIDToDatabase } from './firebaseConfig.js'
 
@@ -80,7 +80,7 @@ function binarySearch (sortedArray, key) {
 }
 
 export function generateUniqueMID () {
-  let magicNumber = returnMIDSDatabaseLength
+  let magicNumber = returnMIDSDatabaseLength + (Math.random() * 1)
   var ID = "meso-" + String(sha224(magicNumber)).substring(0,11) // will always be random since we're hashing array length in an immutable array, using 224 for smaller footprint
   AsyncStorage.setItem("MID", ID)
   pushMIDToDatabase(ID)
@@ -88,7 +88,7 @@ export function generateUniqueMID () {
 }
 
 export function generatePostID () {
-  let magicNumber = returnMIDSDatabaseLength + (Math.random() * 999)
+  let magicNumber = returnPostIDDatabaseLength + (Math.random() * 999)
   var ID = String(sha224(magicNumber))
   pushPostIDToDatabase(ID)
   return ID // this value is to be used when creating a new post! also should be added to the current User's array of post IDs
@@ -126,45 +126,45 @@ I envision how it will work is:
   firebaseConfig.js
 */
 
-export async function initNode () { // can be extracted
-  const node = await Libp2p.create({
-    addresses: {
-      // signalling server address(es), libp2p will attempt to dial the server to coordinate connection from fellow peers
-      listen: [ // keep in mind below are public, testing servers, STILL NEED TO CONNECT TO FIREBASE
-        '/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
-        '/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
-        '/ip4/127.0.0.1/tcp/8000/ws'
-      ]
-    },
-    modules: {
-      transport: [WebSockets, WebRTCStar],
-      peerDiscovery: [Bootstrap],
-      dht: KadDHT
-    },
-    config: {
-      peerDiscovery: {
-        [Bootstrap.tag]: {
-          enabled: true,
-          list: [
-            '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
-            '/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb',
-            '/dnsaddr/bootstrap.libp2p.io/p2p/QmZa1sAxajnQjVM8WjWXoMbmPd7NsWhfKsPkErzpm9wGkp',
-            '/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa',
-            '/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt'
-          ]
-        }
-      },
-      dht: {
-        enabled: true
-      }
-    }
-  })
+// export async function initNode () { // can be extracted
+//   const node = await Libp2p.create({
+//     addresses: {
+//       // signalling server address(es), libp2p will attempt to dial the server to coordinate connection from fellow peers
+//       listen: [ // keep in mind below are public, testing servers, STILL NEED TO CONNECT TO FIREBASE
+//         '/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
+//         '/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
+//         '/ip4/127.0.0.1/tcp/8000/ws'
+//       ]
+//     },
+//     modules: {
+//       transport: [WebSockets, WebRTCStar],
+//       peerDiscovery: [Bootstrap],
+//       dht: KadDHT
+//     },
+//     config: {
+//       peerDiscovery: {
+//         [Bootstrap.tag]: {
+//           enabled: true,
+//           list: [
+//             '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
+//             '/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb',
+//             '/dnsaddr/bootstrap.libp2p.io/p2p/QmZa1sAxajnQjVM8WjWXoMbmPd7NsWhfKsPkErzpm9wGkp',
+//             '/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa',
+//             '/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt'
+//           ]
+//         }
+//       },
+//       dht: {
+//         enabled: true
+//       }
+//     }
+//   })
 
-  node.on('peer:discovery', (peer) => {
-    console.log('Discovered %s', peer.id) // discovered peer
-  })
-  node.connectionManager.on('peer:connect', (connection) => {
-    console.log('Connected to %s', connection.remotePeer) // connected peer
-  })
-  await node.start()
-}
+//   node.on('peer:discovery', (peer) => {
+//     console.log('Discovered %s', peer.id) // discovered peer
+//   })
+//   node.connectionManager.on('peer:connect', (connection) => {
+//     console.log('Connected to %s', connection.remotePeer) // connected peer
+//   })
+//   await node.start()
+// }

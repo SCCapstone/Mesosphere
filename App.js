@@ -3,9 +3,12 @@ import { PAGES, initNode, generatePostID, generateUniqueMID } from './Utility'
 import { } from './firebaseConfig'
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
-import { Button, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View, AppRegistry, Platform} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { atom, observe, derived } from 'elementos'
+import { name as appName } from './app.json'
+AppRegistry.registerComponent(appName, () => App)
+
 
 export default function App () {
   const message$ = atom('')

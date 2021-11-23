@@ -13,7 +13,7 @@ const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS 
   measurementId: 'G-XTQEV03BPS'
 }
 const app = initializeApp(firebaseConfig)
-const analytics = getAnalytics(app)
+//const analytics = getAnalytics(app)
 const database = getFirestore(app)
 
 /* Database will store:
