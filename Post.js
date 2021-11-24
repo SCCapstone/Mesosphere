@@ -33,6 +33,7 @@ export function decrementScore() {
 	this.score -= 1
 }
 
+// Screen -- still implementing
 export function postPage() {
   //const u = getUser()
   return (
@@ -51,10 +52,26 @@ export function postPage() {
 	  </View>
   )
 }
+// where it all comes together
+// will add const media, const score, const id as created
+/*export function createPost() {
+  const post$ = atom('')
+  return(
+    <View>
+    <Text style = {styles.text}> Create your post </Text>
+	<TouchableOpacity onPress{() => textContent(String(post$.get()))}
+	  style = {styles.postBtn}> 
+	</TouchableOpacity>
+    </View>
+  )
+
+}
+*/
 export function postID() {
 // posts generate unique IDs after checking with Firebase
 }
 export function mediaContent() {}
+// will likely need to remove initial text later.
 export function textContent() {
   const post$ = atom('')
   return (
@@ -63,12 +80,8 @@ export function textContent() {
     <TextInput style={styles.TextInput}
        placeholder='Insert Text Here'
        placeholderTextColor='gray' 
-       
-      />
-    <TouchableOpacity style={styles.postBtn} 
-	  onPress={() => alert('Still being implemented!')} >
-    <Text style={styles.buttonText}> Post to Network! </Text>
-    </TouchableOpacity>	  
+       onChangeText={(post) => post$.actions.set(post)}
+      />	  	  
     </View>
   )
 }

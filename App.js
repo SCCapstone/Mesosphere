@@ -3,7 +3,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import ScreenGenerator from './ScreenGenerator'
 import { atom } from 'elementos'
-import { postPage, textContent } from './Post'
+import { postPage, textContent, createPost } from './Post'
 
 
 export default function App () {
