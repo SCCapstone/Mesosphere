@@ -1,7 +1,7 @@
 import React from 'react' 
-import {TouchableOpacity, Button, Text, Image, View, StyleSheet} from 'react-native'
+import {TouchableOpacity, Button, Text, TextInput, Image, View, StyleSheet} from 'react-native'
 import {storeData, getData, getUser, setScreen, setUser, PAGES} from './Utility'
-//import { atom } from 'elementos'
+import { atom } from 'elementos'
 
 
 
@@ -11,11 +11,6 @@ import {storeData, getData, getUser, setScreen, setUser, PAGES} from './Utility'
 // Posts generate unique IDs after checking with firebase
 // Posts have associated score variables
 // Post data is to be stored locally
-//
-// Also can create a counter type of interaction to incorporate 'score' variable
-//
-// Current tasks
-// Format the screen
 
 export class Post { //Post objects will be constructed from postPage() prompt
  constructor (postID, mediaContent, textContent, score, MID) {
@@ -54,6 +49,27 @@ export function postPage() {
 	  
 	    </TouchableOpacity>
 	  </View>
+  )
+}
+export function postID() {
+// posts generate unique IDs after checking with Firebase
+}
+export function mediaContent() {}
+export function textContent() {
+  const post$ = atom('')
+  return (
+    <View>
+    <Text style ={styles.text}> New Post </Text>
+    <TextInput style={styles.TextInput}
+       placeholder='Insert Text Here'
+       placeholderTextColor='gray' 
+       
+      />
+    <TouchableOpacity style={styles.postBtn} 
+	  onPress={() => alert('Still being implemented!')} >
+    <Text style={styles.buttonText}> Post to Network! </Text>
+    </TouchableOpacity>	  
+    </View>
   )
 }
 
@@ -99,11 +115,20 @@ const styles = StyleSheet.create({
 	borderWidth: 2,
 	justifyContent: 'center',
 	alignItems: 'center'
+  },
+  TextInput: {
+	color: '#003f5c',
+	borderWidth: 2,
+	borderRadius: 10,
+	height: 120,
+	width: '20%',
+	alignItems: 'center'
+  
   }
 });
-export function textContent() {}
-export function imageContent() {}
-export function videoContent() {}
+//export function textContent() {}
+//export function imageContent() {}
+//export function videoContent() {}
 
 
 
