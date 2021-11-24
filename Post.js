@@ -1,9 +1,7 @@
 import React from 'react' 
 import {TouchableOpacity, Button, Text, TextInput, Image, View, StyleSheet} from 'react-native'
-import {storeData, getData, getUser, setScreen, setUser, PAGES} from './Utility'
+import {generateUniqueMID, generatePostID, storeData, getData, getUser, setScreen, setUser, PAGES} from './Utility'
 import { atom } from 'elementos'
-
-
 
 // Tasks:
 // Posts must consist of plaintext and optional image components
@@ -23,19 +21,16 @@ export class Post { //Post objects will be constructed from postPage() prompt
  getPost() {
  	return this.post
  }
-}
-
-export function incrementScore() {
-	this.score += 1
-}
-
-export function decrementScore() {
-	this.score -= 1
+ incrementScore() {
+ 	this.score += 1
+ }
+ decrementScore() {
+ 	this.score -= 1
+ }
 }
 
 // Screen -- still implementing
 export function postPage() {
-  //const u = getUser()
   return (
 	  <View>
 	  <Text style={styles.text}> Time to Post! </Text>
@@ -54,36 +49,31 @@ export function postPage() {
 }
 // where it all comes together
 // will add const media, const score, const id as created
-/*export function createPost() {
+export function createPost() {
   const post$ = atom('')
   return(
     <View>
-    <Text style = {styles.text}> Create your post </Text>
-	<TouchableOpacity onPress{() => textContent(String(post$.get()))}
-	  style = {styles.postBtn}> 
-	</TouchableOpacity>
+    <Text style = {styles.text}> New Post </Text>
+    <TextInput style={styles.TextInput}
+        placeholder='Insert Text Here'
+	placeholderTextColor='Gray'
+	onChangeText={(post) => post$.actions.set(post)}
+    />
+    	<TouchableOpacity
+	  style={styles.postBtn} onPress={() => textContent(String(post$.get()))}
+	  >
+	</TouchableOpacity>  
     </View>
   )
 
 }
-*/
-export function postID() {
-// posts generate unique IDs after checking with Firebase
-}
 export function mediaContent() {}
-// will likely need to remove initial text later.
-export function textContent() {
-  const post$ = atom('')
-  return (
-    <View>
-    <Text style ={styles.text}> New Post </Text>
-    <TextInput style={styles.TextInput}
-       placeholder='Insert Text Here'
-       placeholderTextColor='gray' 
-       onChangeText={(post) => post$.actions.set(post)}
-      />	  	  
-    </View>
-  )
+async function textContent(post){
+  if(post.length > 50) {
+  	alert('Post to long. Please shorten.')
+  }
+  const u = new Post(generatePostID(),null,post,0,null)
+  return u
 }
 
 const styles = StyleSheet.create({
