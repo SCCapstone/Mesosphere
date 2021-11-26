@@ -1,95 +1,23 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { database, pushPostIDToDatabase } from './firebaseConfig.js'
 // import Libp2p from 'libp2p'
 // import WebSockets from 'libp2p-websockets'
 // import WebRTCStar from 'libp2p-webrtc-star'
 // import KadDHT from 'libp2p-kad-dht' // to be used in best case
 // import Bootstrap from 'libp2p-bootstrap'
-import { sha256, sha224 } from 'js-sha256'
-import { returnMIDSDatabaseLength, returnPostIDDatabaseLength, pushMIDToDatabase } from './firebaseConfig.js'
-
-export const PAGES = {
-  LOGIN: 0,
-  USERINFO: 1,
-  ACCOUNTPAGE: 2
-}
-
-// database is a reference to firebaseConfig that lets us query the database directly, all database functions should use it in this file
-
-/* Data manipulation methods:
-  quicksort is faster than default JS sort algorithms
-*/
-function swap (items, leftIndex, rightIndex) {
-  const temp = items[leftIndex]
-  items[leftIndex] = items[rightIndex]
-  items[rightIndex] = temp
-}
-
-function partition (items, left, right) {
-  const pivot = items[Math.floor((right + left) / 2)]
-  let i = left
-  let j = right
-  while (i <= j) {
-    while (items[i] < pivot) {
-      i++
-    }
-    while (items[j] > pivot) {
-      j--
-    }
-    if (i <= j) {
-      swap(items, i, j)
-      i++
-      j--
-    }
-  }
-  return i
-}
-
-function qsort (items, left, right) { // main call will be qsort(arr, 0, arr.length - 1) when generically sorting an entire array
-  let index
-  if (items.length > 1) {
-    index = partition(items, left, right)
-    if (left < index - 1) {
-      qsort(items, left, index - 1)
-    }
-    if (index > right) {
-      qsort(items, index, right)
-    }
-  }
-  return items
-}
-
-function binarySearch (sortedArray, key) {
-  let start = 0
-  let end = sortedArray.length - 1
-  while (start <= end) {
-    const middle = Math.floor((start + end) / 2)
-    if (sortedArray[middle] === key) {
-      // item exists
-      return middle
-    } else if (sortedArray[middle] < key) {
-      // keep searching right
-      start = middle + 1
-    } else {
-      // search left
-      end = middle - 1
-    }
-  }
-  // Item is not in array
-  return -1
-}
+import { sha224 } from 'js-sha256'
+import { returnMIDSDatabaseLength, returnPostIDDatabaseLength, pushMIDToDatabase, pushPostIDToDatabase } from './firebaseConfig.js'
 
 export function generateUniqueMID () {
-  let magicNumber = returnMIDSDatabaseLength + (Math.random() * 1)
-  var ID = "meso-" + String(sha224(magicNumber)).substring(0,11) // will always be random since we're hashing array length in an immutable array, using 224 for smaller footprint
-  AsyncStorage.setItem("MID", ID)
+  const magicNumber = returnMIDSDatabaseLength + (Math.random() * 1)
+  const ID = 'meso-' + String(sha224(magicNumber)).substring(0, 11) // will always be random since we're hashing array length in an immutable array, using 224 for smaller footprint
+  AsyncStorage.setItem('MID', ID)
   pushMIDToDatabase(ID)
   return ID
 }
 
 export function generatePostID () {
-  let magicNumber = returnPostIDDatabaseLength + (Math.random() * 999)
-  var ID = String(sha224(magicNumber))
+  const magicNumber = returnPostIDDatabaseLength + (Math.random() * 1)
+  const ID = String(sha224(magicNumber))
   pushPostIDToDatabase(ID)
   return ID // this value is to be used when creating a new post! also should be added to the current User's array of post IDs
 }

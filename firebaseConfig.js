@@ -1,7 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getAnalytics } from 'firebase/analytics'
-// import { getDatabase, ref, set, onValue } from 'firebase/database';
-import { getFirestore, collection, doc, getDoc, getDocs, setDoc, get, query, where, updateDoc, arrayUnion } from 'firebase/firestore/lite'
+import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore/lite'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -13,7 +11,6 @@ const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS 
   measurementId: 'G-XTQEV03BPS'
 }
 const app = initializeApp(firebaseConfig)
-//const analytics = getAnalytics(app)
 const database = getFirestore(app)
 
 /* Database will store:
@@ -26,7 +23,7 @@ const database = getFirestore(app)
 
 const IDSRef = doc(database, 'main', 'IDS')
 
-export async function returnMIDSDatabaseLength() {
+export async function returnMIDSDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
   if (IDSSnap.exists()) {
     console.log(IDSSnap.data().MesosphereIDs)
@@ -34,14 +31,13 @@ export async function returnMIDSDatabaseLength() {
   return IDSSnap.data().MesosphereIDs.length
 }
 
-export async function returnPostIDDatabaseLength() {
+export async function returnPostIDDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
   if (IDSSnap.exists()) {
     console.log(IDSSnap.data().postIDs)
   }
   return IDSSnap.data().postIDs.length
 }
-
 
 export async function pushMIDToDatabase (MID) { // functional
   await updateDoc(IDSRef, {

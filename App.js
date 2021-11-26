@@ -2,20 +2,15 @@ import ScreenGenerator from './ScreenGenerator'
 import { PAGES, initNode, generatePostID, generateUniqueMID } from './Utility'
 import { } from './firebaseConfig'
 import { StatusBar } from 'expo-status-bar'
-import React, { useState } from 'react'
-import { Pressable, StyleSheet, Text, TextInput, View, AppRegistry, Platform} from 'react-native'
+import React from 'react'
+import { Pressable, StyleSheet, Text, TextInput, View, AppRegistry, Platform } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { atom, observe, derived } from 'elementos'
-import { name as appName } from './app.json'
-AppRegistry.registerComponent(appName, () => App)
-
 
 export default function App () {
   const message$ = atom('')
   const otherPeerID$ = atom(0)
   const myPeerID$ = atom(Math.floor(Math.random() * 999))
-  const peers = []
-  const received = [] // data received from other peer
 
   // testing text transmission over p2p w/ bootstrap
 
@@ -32,10 +27,12 @@ export default function App () {
           style={styles.textinput}
         />
         <Pressable
-          onPress={() => translate()}
+          onPress={() => alert(message$.get())}
           style={styles.loginBtn}
         ><Text>Post!</Text>
         </Pressable>
+        <br />
+        <Text>Messages: {}</Text>
         <br />
         <TextInput
           placeholder='other peer id'
@@ -46,22 +43,13 @@ export default function App () {
           style={styles.loginBtn}
         ><Text>Connect!</Text>
         </Pressable>
-
-        <Text>Database MIDs: {generateUniqueMID()}</Text>
-        <Text>Post ID: {generatePostID()}</Text>
-
       </View>
     )
-  }
-
-  function translate () {
-    alert(message$.get())
   }
 
   return (
     <View style={styles.container}>
       {postPrompt()}
-      {/* <Text>{returnDatabasePostIDS}</Text> */}
     </View>
   )
 }
