@@ -15,23 +15,23 @@ export const PAGES = {
 const currUser$ = atom(null)
 const currScreen$ = atom(null)
 
-export function setUser(u) {
+export function setUser (u) {
   currUser$.actions.set(u)
 }
 
-export function setScreen(s) {
+export function setScreen (s) {
   currScreen$.actions.set(s)
 }
 
-export function getUser() {
+export function getUser () {
   return currUser$.get()
 }
 
-export function getScreen() {
+export function getScreen () {
   return currScreen$.get()
 }
 
-export function returnScreen() {
+export function returnScreen () {
   return currScreen$
 }
 
@@ -57,7 +57,7 @@ export const getData = async (key) => {
   }
 }
 
-export async function removeValue(key) {
+export async function removeValue (key) {
   try {
     await AsyncStorage.removeItem(key)
   } catch (e) {
@@ -65,7 +65,7 @@ export async function removeValue(key) {
   }
 }
 
-export async function deleteAll() {
+export async function deleteAll () {
   let keys = []
   try {
     keys = await AsyncStorage.getAllKeys()
@@ -74,10 +74,6 @@ export async function deleteAll() {
   }
   await AsyncStorage.multiRemove(keys)
   console.log('All data removed.')
-}
-
-export async function initP2P() {
-
 }
 
 export const styles = StyleSheet.create({
@@ -136,7 +132,7 @@ export const styles = StyleSheet.create({
     height: '15%',
     bottom: 0,
     borderWidth: 0,
-    borderColor: '#FFA31B',
+    borderColor: '#FFA31B'
   },
   userButton: {
     position: 'absolute',
@@ -219,7 +215,7 @@ export const styles = StyleSheet.create({
   },
   bottomButtonText: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 0
   },
   bottomButtonIcon: {
     position: 'absolute',
@@ -239,10 +235,17 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  bigText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '5%'
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
-  },
+  }
 })
