@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, View, Image, TouchableOpacity } from 'react-native'
 import { PAGES, styles, setScreen, initP2P } from './Utility'
 import { loginScreen, newUserPrompt, accountPage, makeAdminAcc } from './User'
-import { friendsPage } from './Friends'
+import { friendsListPage } from './Friends'
 import logo from './assets/MesoSphere.png'
 
 export class ScreenGenerator {
@@ -39,8 +39,8 @@ export class ScreenGenerator {
       )
     } else if (this.page === PAGES.FRIENDS) {
       this.output = (
-        <View style={styles.container}>
-          {friendsPage()}
+        <View style={styles.friendContainer}>
+          {friendsListPage()}
           {this.generateBottomBar(3)}
         </View>
       )
@@ -59,7 +59,8 @@ export class ScreenGenerator {
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.friendButton}>
+          <TouchableOpacity style={styles.friendButton}
+          onPress={() => {setScreen(PAGES.FRIENDSLIST)}}>
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Friends</Text>
           </TouchableOpacity>

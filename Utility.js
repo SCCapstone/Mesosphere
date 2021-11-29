@@ -6,7 +6,10 @@ export const PAGES = {
   LOGIN: 0,
   MAKEACC: 1,
   ACCOUNTPAGE: 2,
-  FRIENDS: 3
+  FRIENDSLIST: 3,
+  DIRECTMESSAGES: 4,
+  NEWFRIEND: 5,
+  FRIEND: 6
 }
 
 const currUser$ = atom(null)
@@ -201,6 +204,19 @@ export const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: '#FFD89F'
   },
+  friendsLogo: {
+    top: '17%',
+    left: '50%',
+    width: 50,
+    height: 50,
+  },
+  friendsLabel: {
+    top: '18%',
+    left: '48.5%', //better alignment, temp
+    justifyContent: 'center',
+    height: 100,
+    width: 100,
+  },
   bottomButtonText: {
     position: 'absolute',
     bottom: 0,
@@ -212,23 +228,21 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     bottom: '30%'
   },
+  friendList: {
+    top: '20%',
+    left: '50%',
+    alignContent: 'center',
+    width: 100,
+    height: 100,
+  },
+  friendContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  friendsLogo: {
-    top: '-30%',
-    alignItems: 'center',
-    width: 100,
-    height: 100,
-  },
-  friendsLabel: {
-    top: '-30%',
-    left: '2%',
-    alignItems:'center',
-    height: 100,
-    width: 100,
   },
 })
