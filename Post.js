@@ -11,12 +11,13 @@ import { atom } from 'elementos'
 // Post data is to be stored locally
 
 export class Post { //Post objects will be constructed from postPage() prompt
- constructor (postID, mediaContent, textContent, score, MID) {
+ constructor (postID, mediaContent, textContent, score, MID, timestamp) {
  	this.postID = postID
 	this.mediaContent = mediaContent
 	this.textContent = textContent
 	this.score = score
 	this.MID = MID
+	this.timestamp = timestamp
  }
  getPost() {
  	return this.post
@@ -73,8 +74,9 @@ async function textContent(post){
   if(post.length > 50) {
   	alert('Post to long. Please shorten.')
   }
-  const u = new Post(0, null, post, 0, null)
-  //const u = new Post(generatePostID(),null,post,0,null)
+  const u = new Post(0, null, post, 0, null, new Date().toString())
+  await storeData(u.postID, u)
+  alert("Post stored to local storage!")
   return u
 }
 
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
   buttonText: {
 	fontSize: 20,
 	fontWeight: 'bold',
-	color: 'black',
+	color: 'black'
 	justifyContent: 'center',
 	alignItems: 'center'
   },
