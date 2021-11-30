@@ -135,6 +135,7 @@ export class ScreenGenerator {
       this.output = (
         <View style={styles.container}>
         <Text style={styles.bigText}>Welcome back, {u.realName}</Text>
+        <Text style={styles.text}>{u.getMiD()}</Text>
         {adminCheck()}
         <TouchableOpacity
           style={styles.loginBtn}
