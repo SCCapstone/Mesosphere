@@ -75,7 +75,7 @@ export async function deleteAll () {
 }
 
 export function generateUniqueMID () {
-  const magicNumber = returnMIDSDatabaseLength + (Math.random() * 1)
+  const magicNumber = returnMIDSDatabaseLength() + (Math.random() * 1)
   const ID = 'meso-' + String(sha224(magicNumber)).substring(0, 11) // will always be random since we're hashing array length in an immutable array, using 224 for smaller footprint
   AsyncStorage.setItem('MID', ID)
   pushMIDToDatabase(ID)
@@ -83,7 +83,7 @@ export function generateUniqueMID () {
 }
 
 export function generatePostID () {
-  const magicNumber = returnPostIDDatabaseLength + (Math.random() * 1)
+  const magicNumber = returnPostIDDatabaseLength() + (Math.random() * 1)
   const ID = String(sha224(magicNumber))
   pushPostIDToDatabase(ID)
   return ID // this value is to be used when creating a new post! also should be added to the current User's array of post IDs
