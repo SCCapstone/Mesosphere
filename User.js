@@ -32,11 +32,15 @@ export class User {
   }
 
   addPost(p) {
-    this.myPosts.append(p)
+    this.myPosts.push(p)
   }
 
   getAllPosts() {
     return this.myPosts
+  }
+
+  storeLocally() {
+    storeData(this.MiD, this);
   }
 }
 
@@ -125,7 +129,7 @@ export async function adminButton () {
 
 export async function deleteCurrUser () {
   const u = getUser()
-  removeValue(u.getUsername())
+  removeValue(u.getMiD())
   setUser(null)
   setScreen(PAGES.LOGIN)
 }

@@ -84,7 +84,7 @@ export async function getAllKeys() {
   let keys = []
   try {
     keys = await AsyncStorage.getAllKeys()
-    console.log(keys)
+    //console.log(keys)
     return keys;
   } catch(e) {
     // read key error
@@ -297,6 +297,17 @@ export const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: '#FFD89F'
   },
+  networkButtonSelected: {
+    position: 'absolute',
+    width: '25%',
+    left: '25%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderRadius: 2,
+    backgroundColor: '#FFFFFF'
+  },
   friendButton: {
     position: 'absolute',
     width: '25%',
@@ -381,6 +392,10 @@ export const styles = StyleSheet.create({
     height: 100,
   },
   friendContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  postContainer: {
     flex: 1,
     backgroundColor: '#fff',
   },

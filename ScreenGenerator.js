@@ -2,10 +2,12 @@ import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
 import { checkLogin, makeAcc, adminButton, deleteCurrUser, makeAdminAcc, makeDemoAcc } from './User'
+import { renderPost } from './Post'
 import { savePost } from './Post'
 import FriendPage from './Friends'
 import logo from './assets/MesoSphere.png'
 import { atom } from 'elementos'
+import { FlatList } from 'react-native-gesture-handler'
 
 export class ScreenGenerator {
   constructor() {
@@ -194,6 +196,24 @@ export class ScreenGenerator {
         {this.generateBottomBar(4)}
         </View>
       )
+    } else if(this.page === PAGES.VIEWPOSTS) {
+      console.log("Fetching Post Array...")
+      let postsArray = getUser().getAllPosts()
+      console.log("Array of Posts" + postsArray)
+      this.output = (
+        <>
+        <SafeAreaView style={styles.container}>
+          <SafeAreaView style={styles.postContainer}>
+          <FlatList
+            data={postsArray}
+            renderItem={post => renderPost(post)}
+            keyExtractor={post => post.postID}
+          />
+          </SafeAreaView>
+          {this.generateBottomBar(2)}
+        </SafeAreaView>
+        </>
+      )
     }
   }
 
@@ -205,7 +225,32 @@ export class ScreenGenerator {
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.networkButton}>
+          <TouchableOpacity style={styles.networkButton}
+            onPress={() => { setScreen(PAGES.VIEWPOSTS) }}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>Network</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.friendButton}
+            onPress={() => { setScreen(PAGES.FRIENDSLIST) }}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>Friends</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.postButton}
+            onPress={() => { setScreen(PAGES.MAKEPOST) }}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>Post</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    } else if (currentSlice === 2) {
+      return (
+        <View style={styles.bottomButtomBar}>
+          <TouchableOpacity style={styles.userButton}
+          onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}>
+            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Text style={styles.bottomButtonText}>User</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.networkButtonSelected}>
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>
@@ -229,7 +274,8 @@ export class ScreenGenerator {
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.networkButton}>
+          <TouchableOpacity style={styles.networkButton}
+            onPress={() => { setScreen(PAGES.VIEWPOSTS) }}>
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>
@@ -252,7 +298,8 @@ export class ScreenGenerator {
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.networkButton}>
+          <TouchableOpacity style={styles.networkButton}
+            onPress={() => { setScreen(PAGES.VIEWPOSTS) }}>
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>

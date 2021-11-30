@@ -22,8 +22,8 @@ export class Post { // Post objects will be constructed from postPage() prompt
     this.timestamp = timestamp
   }
 
-  getPost () {
- 	return this.post
+  getID() {
+    return this.postID
   }
 
   incrementScore () {
@@ -42,15 +42,15 @@ export async function savePost (text, media) { //call with postText$.get() and p
   if (text.length >  50) {
   	alert('Post to long. Please shorten.')
   }
-  const u = new Post(generatePostID(), media, text, 0, new Date().toString())
-  await storeData(u.postID, u)
-  alert('Post stored to local storage!')
-  return u
+  const p = new Post(generatePostID(), media, text, 0, new Date().toString())
+  u = getUser()
+  u.addPost(p)
+  u.storeLocally()
+  setScreen(PAGES.VIEWPOSTS)
 }
 
-export function renderPostByID(postID) {
-	//const p = getData(postID) not to be uncommented until merged
-	const p = new Post(0, null, "text content", 55, new Date().toString())
+export function renderPost(post) {
+	const p = post.item;
 	return (
 		<View>
 			<Text>Post ID: {p.postID} </Text>
@@ -58,6 +58,12 @@ export function renderPostByID(postID) {
 			<Text>Text content: {p.textContent} </Text>
 			<Text>Score: {p.score} </Text>
 			<Text>Timestamp: {p.timestamp} </Text>
+      <View
+                style={{
+                    height: 1,
+                    backgroundColor: '#CED0CE',
+                }}
+            />
 		</View>
 	)
 } //TO BE FORMATTED
