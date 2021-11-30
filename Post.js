@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, Button, Text, TextInput, Image, View, StyleSheet } from 'react-native'
-import { generateUniqueMID, generatePostID, storeData, getData, getUser, setScreen, setUser, PAGES } from './Utility'
+import { generatePostID, storeData, getData, getUser, setScreen, setUser, PAGES } from './Utility'
 import { atom } from 'elementos'
 
 // Tasks:
@@ -33,6 +33,11 @@ export class Post { // Post objects will be constructed from postPage() prompt
   decrementScore () {
  	this.score -= 1
   }
+
+  getPostID() {
+    return this.postID
+  }
+
 }
 
 // Screen -- still implementing
@@ -77,7 +82,7 @@ export function createPostPrompt () {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.postBtn} onPress={
-			() => { savePost() }
+			() => { savePost(postText$.get(), postMedia$.get()) }
 		}
       >
         <Text style={styles.buttonText}> Click to Post! </Text>
@@ -88,8 +93,8 @@ export function createPostPrompt () {
 
 async function savePost (text, media) { //call with postText$.get() and postMedia$.get() as the two parameters
 	media  = null //placeholder for eventual media content
-  if (text.length >  50) {
-  	alert('Post to long. Please shorten.')
+  if (text.length > 100) {
+  	alert('Post too long. Please shorten.')
   }
   const u = new Post(generatePostID(), media, text, 0, new Date().toString())
   await storeData(u.postID, u)
@@ -97,9 +102,9 @@ async function savePost (text, media) { //call with postText$.get() and postMedi
   return u
 }
 
-export function renderPostByID(postID) {
-	//const p = getData(postID) not to be uncommented until merged
-	const p = new Post(0, null, "text content", 55, new Date().toString())
+export async function renderPostByID(postID) {
+	let p = await constructPostFromStorage(postID)
+	//const p = new Post(generatePostID(), null, "text content", 55, new Date().toString())
 	return (
 		<View>
 			<Text>Post ID: {p.postID} </Text>
@@ -110,6 +115,11 @@ export function renderPostByID(postID) {
 		</View>
 	)
 } //TO BE FORMATTED
+
+async function constructPostFromStorage(postID) {
+  const temp = await getData(postID)
+  return new Post(temp.postID, temp.mediaContent, temp.textContent, temp.score, temp.timestamp)
+}
 
 const styles = StyleSheet.create({
   postBtn: {

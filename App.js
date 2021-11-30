@@ -2,17 +2,18 @@ import { getInstance } from './ScreenGenerator'
 import { returnScreen } from './Utility'
 import { observe } from 'elementos'
 import { useState } from 'react'
+//testing below
+import { renderPostByID, createPostPrompt } from './Post'
 
 let oldscreen = -1
 
 /* packages for this branch: (to uninstall)
  *
- *
- *
  */
 
 export default function App () {
-  const [output, setOutput] = useState()
+
+  /*const [output, setOutput] = useState()
   const Gen = getInstance()
 
   observe(returnScreen(), (screen) => {
@@ -31,5 +32,11 @@ export default function App () {
     setOutput(Gen.render())
   }
 
-  return output
+  return output*/
+  
+  //testing code
+  const [post, renderPost] = useState() 
+  return (
+    createPostPrompt()
+  )
 }
