@@ -1,24 +1,24 @@
 import React from 'react'
-import { Text, View, Image, TouchableOpacity } from 'react-native'
+import { Text, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, initP2P } from './Utility'
 import { loginScreen, newUserPrompt, accountPage, makeAdminAcc } from './User'
-import { friendsListPage } from './Friends'
+import FriendPage from './Friends'
 import logo from './assets/MesoSphere.png'
 
 export class ScreenGenerator {
-  constructor () {
+  constructor() {
     this.page = -1
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
     makeAdminAcc()
     setScreen(PAGES.LOGIN)
   }
 
-  selectScreen (input) {
+  selectScreen(input) {
     this.page = input
     this.generateScreen()
   }
 
-  generateScreen () {
+  generateScreen() {
     console.log('Generating: ' + this.page)
     if (this.page === PAGES.LOGIN) {
       this.output = (
@@ -36,17 +36,17 @@ export class ScreenGenerator {
           {this.generateBottomBar(1)}
         </View>
       )
-    } else if (this.page === PAGES.FRIENDS) {
+    } else if (this.page === PAGES.FRIENDSLIST) {
       this.output = (
-        <View style={styles.friendContainer}>
-          {friendsListPage()}
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+          <FriendPage />
           {this.generateBottomBar(3)}
-        </View>
+        </SafeAreaView>
       )
     }
   }
 
-  generateBottomBar (currentSlice) {
+  generateBottomBar(currentSlice) {
     if (currentSlice === 1) {
       return (
         <View style={styles.bottomButtomBar}>
@@ -59,7 +59,7 @@ export class ScreenGenerator {
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.friendButton}
-          onPress={() => {setScreen(PAGES.FRIENDSLIST)}}>
+            onPress={() => { setScreen(PAGES.FRIENDSLIST) }}>
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Friends</Text>
           </TouchableOpacity>
@@ -72,7 +72,8 @@ export class ScreenGenerator {
     } else if (currentSlice == 3) {
       return (
         <View style={styles.bottomButtomBar}>
-          <TouchableOpacity style={styles.userButton}>
+          <TouchableOpacity style={styles.userButton}
+          onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}>
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
           </TouchableOpacity>
@@ -93,14 +94,14 @@ export class ScreenGenerator {
     }
   }
 
-  render () {
+  render() {
     return this.output
   }
 }
 
 let instance
 
-export function getInstance () {
+export function getInstance() {
   if (instance == null) {
     instance = new ScreenGenerator()
     console.log('New SG generated.')
