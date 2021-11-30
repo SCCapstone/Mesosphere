@@ -40,27 +40,6 @@ export class Post { // Post objects will be constructed from postPage() prompt
 
 }
 
-// Screen -- still implementing
-export function postPage () {
-  return (
-    <View>
-      <Text style={styles.text}> Time to Post! </Text>
-      <Text style={styles.input}> Insert Text Here </Text>
-      <TouchableOpacity
-        onPress={() => alert('Still being implemented!')}
-        style={styles.imageBtn}
-      >
-        <Text style={styles.buttonText}> Upload Image </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => alert('Still being implemented!')}
-        style={styles.postBtn}
-      >
-        <Text style={styles.buttonText}> Click to post! </Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
 // where it all comes together
 // will add const media, const score, const id as created
 export function createPostPrompt () {
@@ -102,9 +81,11 @@ async function savePost (text, media) { //call with postText$.get() and postMedi
   return u
 }
 
-export async function renderPostByID(postID) {
-	let p = await constructPostFromStorage(postID)
-	//const p = new Post(generatePostID(), null, "text content", 55, new Date().toString())
+export async function renderPostByID(postID) { //supposed to draw to screen, still working on it
+	const p = await constructPostFromStorage(postID)
+	//const p = new Post(generatePostID(), null, "text content", 55, new Date().toString()) working test data
+  console.log("Post ID: " + p.postID + "\nMedia content: " + p.mediaContent + "\nText content: " 
+  + p.textContent + "\nScore: " + p.score + "\nTimestamp: " + p.timestamp)
 	return (
 		<View>
 			<Text>Post ID: {p.postID} </Text>
@@ -116,10 +97,11 @@ export async function renderPostByID(postID) {
 	)
 } //TO BE FORMATTED
 
-async function constructPostFromStorage(postID) {
+export async function constructPostFromStorage(postID) { //works!
   const temp = await getData(postID)
   return new Post(temp.postID, temp.mediaContent, temp.textContent, temp.score, temp.timestamp)
 }
+
 
 const styles = StyleSheet.create({
   postBtn: {

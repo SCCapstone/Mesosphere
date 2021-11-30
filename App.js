@@ -1,9 +1,12 @@
+import React from 'react'
 import { getInstance } from './ScreenGenerator'
 import { returnScreen } from './Utility'
 import { observe } from 'elementos'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 //testing below
+import { ActivityIndicator } from 'react-native'
 import { renderPostByID, createPostPrompt } from './Post'
+import { render } from 'react-dom'
 
 let oldscreen = -1
 
@@ -31,12 +34,10 @@ export default function App () {
     console.log('Update has been called!')
     setOutput(Gen.render())
   }
-
-  return output*/
-  
+  */  
   //testing code
-  const [post, renderPost] = useState() 
   return (
-    createPostPrompt()
+    //createPostPrompt()
+    new renderPostByID("34c37471dd2693a869094e145444c61cb4f606a23bfcb8f1b5cdde2d")
   )
 }

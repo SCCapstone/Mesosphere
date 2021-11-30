@@ -25,17 +25,11 @@ const IDSRef = doc(database, 'main', 'IDS')
 
 export async function returnMIDSDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
-  if (IDSSnap.exists()) {
-    console.log(IDSSnap.data().MesosphereIDs)
-  }
   return IDSSnap.data().MesosphereIDs.length
 }
 
 export async function returnPostIDDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
-  if (IDSSnap.exists()) {
-    console.log(IDSSnap.data().postIDs)
-  }
   return IDSSnap.data().postIDs.length
 }
 
