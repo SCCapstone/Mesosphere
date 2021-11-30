@@ -189,6 +189,13 @@ export const styles = StyleSheet.create({
     borderColor: '#FFA31B',
     backgroundColor: '#FFFFFF'
   },
+  friendsAvatar: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+    marginBottom: 10,
+    marginRight: 16
+  },
   postButton: {
     position: 'absolute',
     left: '75%',

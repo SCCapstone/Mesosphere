@@ -24,6 +24,7 @@
     "react-native-screens": "~3.4.0",
     "react-native-unimodules": "0.14.10",
     "react-native-web": "~0.13.12",
+    "searchable-flatlist": "^0.0.4",
     "standard": "^16.0.4"
   },
   "devDependencies": {

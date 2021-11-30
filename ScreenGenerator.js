@@ -10,7 +10,7 @@ export class ScreenGenerator {
     this.page = -1
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
     makeAdminAcc()
-    setScreen(PAGES.LOGIN)
+    setScreen(PAGES.FRIENDSLIST)
   }
 
   selectScreen(input) {
