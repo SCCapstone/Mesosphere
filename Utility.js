@@ -11,7 +11,9 @@ export const PAGES = {
   FRIENDSLIST: 3,
   DIRECTMESSAGES: 4,
   NEWFRIEND: 5,
-  FRIEND: 6
+  FRIEND: 6,
+  MAKEPOST: 7,
+  VIEWPOSTS: 8,
 }
 
 const currUser$ = atom(null)
@@ -208,6 +210,29 @@ export const styles = StyleSheet.create({
     marginTop: 40,
     backgroundColor: '#FFA31B'
   },
+  loginText: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  postBtn: {
+  	backgroundColor: '#FFA31B',
+    height: 50,
+    width: '80%',
+    marginTop: 10,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  imageBtn: {
+    backgroundColor: '#FFA31B',
+  	width: '20%',
+    borderRadius: 25,
+    height: 50,
+    marginTop: 40,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   button: {
     width: '25%',
     borderRadius: 25,
@@ -299,6 +324,17 @@ export const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: '#FFD89F'
   },
+  postButtonSelected: {
+    position: 'absolute',
+    left: '75%',
+    width: '25%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderRadius: 2,
+    backgroundColor: '#FFFFFF'
+  },
   friendsLogo: {
     top: '17%',
     left: '50%',
@@ -339,7 +375,8 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '5%'
+    textAlign: 'center',
+    marginBottom: '5%',
   },
   container: {
     flex: 1,

@@ -17,138 +17,7 @@ export class User {
   }
 }
 
-export function accountPage () {
-  const u = getUser()
-  return (
-    <>
-      <Text style={styles.bigText}>Welcome back, {u.realName}</Text>
-      {adminCheck()}
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => {
-          setUser(null)
-          setScreen(PAGES.LOGIN)
-        }}
-      >
-        <Text style={styles.loginText}>LOGOUT</Text>
-      </TouchableOpacity>
-    </>
-  )
-}
-
-export function newUserPrompt () {
-  const username$ = atom('')
-  const password$ = atom('')
-  const dispname$ = atom('')
-  const biography$ = atom('')
-  return (
-    <>
-      <Text>Please enter your information.</Text>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder='Username'
-          placeholderTextColor='#003f5c'
-          returnKeyType='next'
-          maxLength={30}
-          onChangeText={(username) => username$.actions.set(username)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder='Password.'
-          placeholderTextColor='#003f5c'
-          secureTextEntry
-          returnKeyType='next'
-          maxLength={50}
-          onChangeText={(password) => password$.actions.set(password)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder='Display Name.'
-          placeholderTextColor='#003f5c'
-          returnKeyType='next'
-          maxLength={30}
-          onChangeText={(dispname) => dispname$.actions.set(dispname)}
-        />
-      </View>
-      <View style={styles.inputViewBio}>
-        <TextInput
-          multiline
-          numberOfLines={3}
-          style={styles.TextInput}
-          placeholder='Enter a short biography!'
-          placeholderTextColor='#003f5c'
-          returnKeyType='done'
-          blurOnSubmit
-          maxLength={240}
-          onChangeText={(biography) => biography$.actions.set(biography)}
-        />
-      </View>
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => makeAcc(String(username$.get()), String(password$.get()), String(dispname$.get()), String(biography$.get()))}
-      >
-        <Text style={styles.loginText}>CREATE ACCOUNT</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => setScreen(PAGES.LOGIN)}
-      >
-        <Text style={styles.loginText}>CANCEL</Text>
-      </TouchableOpacity>
-    </>
-  )
-}
-export function loginScreen () {
-  const username$ = atom('')
-  const password$ = atom('')
-  return (
-    <>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder='Username.'
-          placeholderTextColor='#003f5c'
-          returnKeyType='next'
-          maxLength={30}
-          onChangeText={(username) => username$.actions.set(username)}
-        />
-      </View>
-
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder='Password.'
-          placeholderTextColor='#003f5c'
-          secureTextEntry
-          returnKeyType='done'
-          maxLength={50}
-          onChangeText={(password) => password$.actions.set(password)}
-        />
-      </View>
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => checkLogin(String(username$.get()), String(password$.get()))}
-      >
-        <Text style={styles.loginText}>LOGIN</Text>
-
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => setScreen(PAGES.MAKEACC)}
-      >
-        <Text style={styles.loginText}>REGISTER</Text>
-
-      </TouchableOpacity>
-    </>
-  )
-}
-
-async function checkLogin (username, password) {
+export async function checkLogin (username, password) {
   // username = String(username);
   if (await getData(username) != null) {
     console.log('User exists!  Checking password...')
@@ -176,7 +45,7 @@ async function checkLogin (username, password) {
   }
 }
 
-async function makeAcc (username, password, realName, bio) {
+export async function makeAcc (username, password, realName, bio) {
   if (username.length < 3 || password.length < 3) {
     Alert.alert(
       'Format Rejected',
@@ -204,30 +73,12 @@ export async function makeAdminAcc () {
   await storeData('admin', u)
 }
 
-function adminCheck () {
-  const u = getUser()
-  if (u != null && u.getUsername() === 'admin') {
-    return (
-      <TouchableOpacity
-        onPress={() => { adminButton() }}
-        style={styles.loginBtn}
-      >
-        <Text style={styles.buttonText}>Delete ALL Data</Text>
-      </TouchableOpacity>
-    )
-  } else if (u != null) {
-    return (
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => deleteCurrUser()}
-      >
-        <Text style={styles.loginText}>Delete My Data</Text>
-      </TouchableOpacity>
-    )
-  }
+export async function makeDemoAcc () {
+  const u = new User('demo', 'pass', 'VeryReal Nameson', 'I do so enjoy my <activies>')
+  await storeData('demo', u)
 }
 
-async function adminButton () {
+export async function adminButton () {
   console.log('Removing everything!')
   await deleteAll()
   console.log('Data removed.  Recreating admin acc...')
@@ -237,7 +88,7 @@ async function adminButton () {
   setScreen(PAGES.LOGIN)
 }
 
-async function deleteCurrUser () {
+export async function deleteCurrUser () {
   const u = getUser()
   removeValue(u.getUsername())
   setUser(null)
