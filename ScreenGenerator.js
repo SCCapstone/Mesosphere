@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
+import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
 import { checkLogin, makeAcc, adminButton, deleteCurrUser, makeAdminAcc, makeDemoAcc } from './User'
 import { savePost } from './Post'
@@ -163,23 +163,29 @@ export class ScreenGenerator {
         <View style={styles.inputViewBio}>
           <TextInput
             multiline
-            numberOfLines={4}
+            numberOfLines={3}
             style={styles.TextInput}
             placeholder='Insert Text Here'
-            placeholderTextColor='Gray'
+            placeholderTextColor='#003f5c'
+            returnKeyType='done'
+            blurOnSubmit
+            maxLength={240}
             onChangeText={(post) => postText$.actions.set(post)}
           />
         </View>
-        <TouchableOpacity style={styles.postBtn}>
+        <TouchableOpacity style={styles.postBtn}
+                    onPress={() => Alert.alert(
+                      'Demo Mode', 
+                      'Still in development.', 
+                      { text: 'OK' })}>
           <Text
             style={styles.buttonText}
-            onPress={() => alert('Still in development.')}
           >Add media!
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.postBtn} onPress={
-			    () => { savePost() }
+			    () => {savePost(String(postText$.get()), null) }
 		      }
         >
           <Text style={styles.buttonText}> Click to Post! </Text>
