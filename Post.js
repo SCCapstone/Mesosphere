@@ -60,19 +60,21 @@ export function createPost() {
 	onChangeText={(post) => post$.actions.set(post)}
     />
     	<TouchableOpacity
-	  style={styles.postBtn} onPress={() => textContent(String(post$.get()))}
-	  >
+	  style={styles.postBtn} onPress={() => textContent(String(post$.get()))}>
+	  <Text style={styles.buttonText}> Click to Post! </Text>
 	</TouchableOpacity>  
     </View>
   )
-
 }
-export function mediaContent() {}
+export function mediaContent() {
+//Out of scope for PoC
+}
 async function textContent(post){
   if(post.length > 50) {
   	alert('Post to long. Please shorten.')
   }
-  const u = new Post(generatePostID(),null,post,0,null)
+  const u = new Post(0, null, post, 0, null)
+  //const u = new Post(generatePostID(),null,post,0,null)
   return u
 }
 
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
   buttonText: {
 	fontSize: 20,
 	fontWeight: 'bold',
-	color: 'white',
+	color: 'black',
 	justifyContent: 'center',
 	alignItems: 'center'
   },
@@ -129,9 +131,3 @@ const styles = StyleSheet.create({
   
   }
 });
-//export function textContent() {}
-//export function imageContent() {}
-//export function videoContent() {}
-
-
-
