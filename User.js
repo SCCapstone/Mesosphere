@@ -4,13 +4,14 @@ import { sha224 } from 'js-sha256'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export class User {
-  constructor (username, password, realName, biography, MiD, myPosts) {
+  constructor (username, password, realName, biography, MiD, myPosts, myPeers) {
     this.username = username
     this.password = password
     this.realName = realName
     this.biography = biography
     if (MiD === 'new') { this.MiD = generateUniqueMID() } else { this.MiD = MiD }
     if (myPosts === 'new') { this.myPosts = [] } else { this.myPosts = myPosts }
+    if (myPeers === 'new') { this.myPeers = [] } else { this.myPeers = myPeers }
   }
 
   getUsername () {
@@ -33,8 +34,18 @@ export class User {
     return this.myPosts
   }
 
+  getAllPeers () {
+    return this.myPeers
+  }
+
   storeLocally () {
     storeData(this.MiD, this)
+  }
+
+  addPeer (MID) {
+    if (MID.length === 16 && MID.substring(0, 5) === 'meso-') { // validates format, not existence
+      this.myPeers.push(MID)
+    }
   }
 }
 
@@ -44,7 +55,7 @@ export async function checkLogin (username, password) {
   for (const MiD of accounts) {
     const temp = await getData(MiD)
     if (temp != null) {
-      const u = new User(temp.username, temp.password, temp.realName, temp.biography, temp.MiD, temp.myPosts)
+      const u = new User(temp.username, temp.password, temp.realName, temp.biography, temp.MiD, temp.myPosts, temp.myPeers)
       // console.log("Comparing for ID: " + u.getMiD())
       // console.log("Incoming: " + username + " | Expected: " + u.getUsername())
       if (username === u.username) {
@@ -92,19 +103,19 @@ export async function makeAcc (username, password, realName, bio) {
     )
     return
   }
-  const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new')
+  const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new', 'new')
   await storeData(u.getMiD(), u)
   setUser(u)
   setScreen(PAGES.ACCOUNTPAGE)
 }
 
 export async function makeAdminAcc () {
-  const u = new User('admin', '8f95cfb66890ae8130f3ae7ec288d43ba0d898d60a0823788c6b3408', 'Administrator', 'It\'s a Messosphere in here.', 'meso-0', 'new')
+  const u = new User('admin', '8f95cfb66890ae8130f3ae7ec288d43ba0d898d60a0823788c6b3408', 'Administrator', 'It\'s a Messosphere in here.', 'meso-0', 'new', 'new')
   await storeData('meso-0', u)
 }
 
 export async function makeDemoAcc () {
-  const u = new User('Demo', 'ccc9c73a37651c6b35de64c3a37858ccae045d285f57fffb409d251d', 'VeryReal Nameson', 'I do so enjoy my <activies>', 'meso-1', 'new')
+  const u = new User('Demo', 'ccc9c73a37651c6b35de64c3a37858ccae045d285f57fffb409d251d', 'VeryReal Nameson', 'I do so enjoy my <activies>', 'meso-1', 'new', 'new')
   await storeData('meso-1', u)
 }
 
