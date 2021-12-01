@@ -1,4 +1,4 @@
-import { Alert} from 'react-native'
+import { Alert } from 'react-native'
 import { deleteAll, storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -9,69 +9,63 @@ export class User {
     this.password = password
     this.realName = realName
     this.biography = biography
-    if(MiD === "new")
-      this.MiD = generateUniqueMID()
-    else
-      this.MiD = MiD
-    if(myPosts === "new")
-      this.myPosts = []
-    else
-      this.myPosts = myPosts
+    if (MiD === 'new') { this.MiD = generateUniqueMID() } else { this.MiD = MiD }
+    if (myPosts === 'new') { this.myPosts = [] } else { this.myPosts = myPosts }
   }
 
   getUsername () {
     return this.username
   }
 
-  getMiD() {
+  getMiD () {
     return this.MiD
   }
 
-  getHashedPass() {
+  getHashedPass () {
     return this.password
   }
 
-  addPost(p) {
+  addPost (p) {
     this.myPosts.push(p)
   }
 
-  getAllPosts() {
+  getAllPosts () {
     return this.myPosts
   }
 
-  storeLocally() {
-    storeData(this.MiD, this);
+  storeLocally () {
+    storeData(this.MiD, this)
   }
 }
 
-export async function checkLogin(username, password) {
-  accounts = await getAllKeys();
-  let found = false;
-  for(const MiD of accounts) {
-    temp = await getData(MiD)
-    if(temp != null) {
+export async function checkLogin (username, password) {
+  const accounts = await getAllKeys()
+  let found = false
+  for (const MiD of accounts) {
+    const temp = await getData(MiD)
+    if (temp != null) {
       const u = new User(temp.username, temp.password, temp.realName, temp.biography, temp.MiD, temp.myPosts)
-      //console.log("Comparing for ID: " + u.getMiD())
-      //console.log("Incoming: " + username + " | Expected: " + u.getUsername())
-      if(username === u.username) {
-        found = true;
+      // console.log("Comparing for ID: " + u.getMiD())
+      // console.log("Incoming: " + username + " | Expected: " + u.getUsername())
+      if (username === u.username) {
+        found = true
         if (String(sha224(String(password))) === u.password) {
           console.log('Password match!  Logging in...')
           setUser(u)
-          setScreen(PAGES.ACCOUNTPAGE);
-          return;
+          setScreen(PAGES.ACCOUNTPAGE)
+          return
         }
       }
     }
   }
-  if(found) {
+  if (found) {
     console.log('Password mismatch.')
     Alert.alert(
       'Incorrect Password',
       'The password you entered was incorrect.',
       { text: 'OK' }
     )
-    return;
+    return
   }
   console.log('User does not exist!  Moving to create account screen...')
   Alert.alert(
@@ -79,9 +73,7 @@ export async function checkLogin(username, password) {
     'The username you entered was incorrect.',
     { text: 'OK' }
   )
-  return;
 }
-
 
 export async function makeAcc (username, password, realName, bio) {
   if (username.length < 3 || password.length < 3) {
@@ -101,7 +93,7 @@ export async function makeAcc (username, password, realName, bio) {
     return
   }
   const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new')
-  await storeData(u.getMiD(), u);
+  await storeData(u.getMiD(), u)
   setUser(u)
   setScreen(PAGES.ACCOUNTPAGE)
 }

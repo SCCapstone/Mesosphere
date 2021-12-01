@@ -13,7 +13,7 @@ export const PAGES = {
   NEWFRIEND: 5,
   FRIEND: 6,
   MAKEPOST: 7,
-  VIEWPOSTS: 8,
+  VIEWPOSTS: 8
 }
 
 const currUser$ = atom(null)
@@ -80,16 +80,16 @@ export async function deleteAll () {
   console.log('All data removed.')
 }
 
-export async function getAllKeys() {
+export async function getAllKeys () {
   let keys = []
   try {
     keys = await AsyncStorage.getAllKeys()
-    //console.log(keys)
-    return keys;
-  } catch(e) {
+    // console.log(keys)
+    return keys
+  } catch (e) {
     // read key error
   }
-  return null;
+  return null
   // example console.log result:
   // ['@MyApp_user', '@MyApp_key']
 }
@@ -227,10 +227,10 @@ export const styles = StyleSheet.create({
   loginText: {
     alignItems: 'center',
     justifyContent: 'center',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   postBtn: {
-  	backgroundColor: '#FFA31B',
+    backgroundColor: '#FFA31B',
     height: 50,
     width: '80%',
     marginTop: 10,
@@ -240,7 +240,7 @@ export const styles = StyleSheet.create({
   },
   imageBtn: {
     backgroundColor: '#FFA31B',
-  	width: '20%',
+    width: '20%',
     borderRadius: 25,
     height: 50,
     marginTop: 40,
@@ -364,14 +364,14 @@ export const styles = StyleSheet.create({
     top: '17%',
     left: '50%',
     width: 50,
-    height: 50,
+    height: 50
   },
   friendsLabel: {
     top: '18%',
-    left: '48.5%', //better alignment, temp
+    left: '48.5%', // better alignment, temp
     justifyContent: 'center',
     height: 100,
-    width: 100,
+    width: 100
   },
   bottomButtonText: {
     position: 'absolute',
@@ -389,15 +389,15 @@ export const styles = StyleSheet.create({
     left: '50%',
     alignContent: 'center',
     width: 100,
-    height: 100,
+    height: 100
   },
   friendContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   postContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   bigText: {
     fontSize: 24,
@@ -405,7 +405,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    marginBottom: '5%',
+    marginBottom: '5%'
   },
   container: {
     flex: 1,
