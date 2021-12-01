@@ -7,6 +7,7 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@expo/ngrok": "^4.1.0",
     "@react-native-async-storage/async-storage": "~1.15.0",
     "elementos": "^1.0.0",
     "elementos-react": "^1.0.0",

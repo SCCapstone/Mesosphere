@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Alert } from 'react-native'
-import { generatePostID, getUser, setScreen, PAGES } from './Utility'
+import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
 
 // Tasks:
 // Posts must consist of plaintext and optional image components
@@ -49,18 +49,13 @@ export async function savePost (text, media) { // call with postText$.get() and 
 export function renderPost (post) {
   const p = post.item
   return (
-    <View>
-      <Text>Post ID: {p.postID} </Text>
-      <Text>Media content: {p.mediaContent} </Text>
-      <Text>Text content: {p.textContent} </Text>
-      <Text>Score: {p.score} </Text>
-      <Text>Timestamp: {p.timestamp} </Text>
-      <View
-        style={{
-          height: 1,
-          backgroundColor: '#CED0CE'
-        }}
-      />
+    <View style={styles.postContainer}>
+      <Text style={styles.postContainerText}>Post ID: {p.postID} </Text>
+      <Text style={styles.postContainerText}>{p.timestamp} </Text>
+      <Text style={styles.postContainerText}>Media content: {p.mediaContent} </Text>
+      <Text style={styles.postContainerText}>Text content: {p.textContent} </Text>
+      <Text style={styles.postContainerText}>Score: {p.score} </Text>
+
     </View>
   )
 } // TO BE FORMATTED

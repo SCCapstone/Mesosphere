@@ -397,7 +397,19 @@ export const styles = StyleSheet.create({
   },
   postContainer: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: 'fff',
+    width: '100%',
+    marginBottom: '2%',
+    padding: '2%',
+    borderRadius: 20,
+    shadowColor: 'grey',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+  },
+  postContainerText: {
+    padding: "0.5%",
+    fontWeight: 400,
   },
   bigText: {
     fontSize: 24,
