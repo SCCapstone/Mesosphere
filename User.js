@@ -4,7 +4,7 @@ import { sha224 } from 'js-sha256'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export class User {
-  constructor (username, password, realName, biography, MiD, myPosts) {
+  constructor (username, password, realName, biography, MiD, myPosts, myPeers) {
     this.username = username
     this.password = password
     this.realName = realName
@@ -17,6 +17,10 @@ export class User {
       this.myPosts = []
     else
       this.myPosts = myPosts
+    if(myPeers === "new")
+      this.myPeers = myPeers
+    else
+      this.myPeers = []
   }
 
   getUsername () {
@@ -39,8 +43,19 @@ export class User {
     return this.myPosts
   }
 
+  getAllPeers() {
+    return this.myPeers
+  }
+
   storeLocally() {
     storeData(this.MiD, this);
+  }
+}
+
+export function addPeer(MID) {
+  const u = getUser()
+  if (MID.length == 16 && MID.substring(0,5) == "meso-") { //validates format, not existence
+    u.myPeers.push(MID)
   }
 }
 
@@ -81,7 +96,6 @@ export async function checkLogin(username, password) {
   )
   return;
 }
-
 
 export async function makeAcc (username, password, realName, bio) {
   if (username.length < 3 || password.length < 3) {
