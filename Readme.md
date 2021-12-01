@@ -1,5 +1,3 @@
-# THIS IS A DEVELOPMENT BRANCH FOR THE UTILITY FUNCTIONALITY (DATA FLOW, ETC.)
-
 # Mesosphere
 
 Mesosphere is a P2P social media network that uses IDs to connect people and build networks via personal connections. Every individual is their own node and voluntarily builds networks of nodes in passing by others and expanding their networks. You only participate in networks and are exposed to nodes you choose. Data you post is stored and accessed via your phone, offloading the role of a central server across the entire network per each node on demand. Mesosphere will be aimed at iOS & Android, and released on Android via APK initially.
