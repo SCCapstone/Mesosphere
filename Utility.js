@@ -332,11 +332,12 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   friendsAvatar: {
-    width: 200,
-    height: 200,
+    width: 50,
+    height: 50,
     resizeMode: 'contain',
     marginBottom: 10,
-    marginRight: 16
+    marginRight: 20,
+    backgroundColor: '#000'
   },
   postButton: {
     position: 'absolute',
