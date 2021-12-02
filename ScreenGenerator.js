@@ -156,10 +156,14 @@ export class ScreenGenerator {
       )
     } else if (this.page === PAGES.FRIENDSLIST) {
       this.output = (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-          <FriendPage />
-          {this.generateBottomBar(3)}
-        </SafeAreaView>
+        <>
+          <SafeAreaView style={styles.container}>
+            <SafeAreaView style={{ flex: 1, width: '100%', backgroundColor: '#fff',  marginBottom: '23%' }}>
+              <FriendPage />
+            </SafeAreaView>
+            {this.generateBottomBar(3)}
+          </SafeAreaView>
+        </>
       )
     } else if (this.page === PAGES.MAKEPOST) {
       const postText$ = atom('')
