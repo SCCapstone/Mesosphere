@@ -421,7 +421,7 @@ export const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   postContainerText: {
-    padding: "0.5%",
+    padding: '0.5%',
     fontWeight: '400',
   },
   bigText: {
