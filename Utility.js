@@ -332,8 +332,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   friendsAvatar: {
-    width: 50,
-    height: 50,
+    width: '10%',
+    height: '300%',
     resizeMode: 'contain',
     marginBottom: 10,
     marginRight: 20,
