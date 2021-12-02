@@ -71,37 +71,20 @@ export async function checkLogin (username, password) {
   }
   if (found) {
     console.log('Password mismatch.')
-    Alert.alert(
-      'Incorrect Password',
-      'The password you entered was incorrect.',
-      { text: 'OK' }
-    )
+    alert('Incorrect password.')
     return
   }
   console.log('User does not exist!  Moving to create account screen...')
-  Alert.alert(
-    'Incorrect Username',
-    'The username you entered was incorrect.',
-    { text: 'OK' }
-  )
+  alert('Incorrect username.')
 }
 
 export async function makeAcc (username, password, realName, bio) {
   if (username.length < 3 || password.length < 3) {
-    Alert.alert(
-      'Format Rejected',
-      'Your username and password must be at least 3 characters.',
-      { text: 'OK' }
-    )
+    alert('Your username or password must be at least 3 characters')
     return
   }
   if (realName.length < 1) {
-    Alert.alert(
-      'Format Rejected',
-      'You must enter a display name.',
-      { text: 'OK' }
-    )
-    return
+    alert('You must enter a display name.')
   }
   const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new', 'new')
   await storeData(u.getMiD(), u)

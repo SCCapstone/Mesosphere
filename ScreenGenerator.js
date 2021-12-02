@@ -158,7 +158,7 @@ export class ScreenGenerator {
       this.output = (
         <>
           <SafeAreaView style={styles.container}>
-            <SafeAreaView style={{ flex: 1, width: '100%', backgroundColor: '#fff', marginBottom: '23%' }}>
+            <SafeAreaView style={{ flex: 1, width: '100%', backgroundColor: '#fff', marginBottom: '25%' }}>
               <FriendPage />
             </SafeAreaView>
             {this.generateBottomBar(3)}
@@ -185,10 +185,7 @@ export class ScreenGenerator {
           </View>
           <TouchableOpacity
             style={styles.postBtn}
-            onPress={() => Alert.alert(
-              'Demo Mode',
-              'Still in development.',
-              { text: 'OK' })}
+            onPress={() => alert('Still in development!')}
           >
             <Text
               style={styles.buttonText}
