@@ -399,7 +399,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'fff',
     width: '100%',
-    marginBottom: '2%',
+    marginBottom: '5%',
     padding: '2%',
     borderRadius: 20,
     shadowColor: 'grey',
