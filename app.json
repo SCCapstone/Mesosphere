@@ -11,8 +11,10 @@
     },
     "assetBundlePatterns": [
       "**/*"
-    ]
-    
+    ],
+    "android": {
+      "package": "com.colelewis.mesosrc"
+    }
   },
   "name": "meso-src"
 }

@@ -397,7 +397,7 @@ export const styles = StyleSheet.create({
   },
   postContainer: {
     flex: 1,
-    backgroundColor: 'fff',
+    backgroundColor: '#fff',
     width: '100%',
     marginBottom: '5%',
     padding: '2%',
