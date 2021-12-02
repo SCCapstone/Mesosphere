@@ -55,7 +55,6 @@ export function renderPost (post) {
       <Text style={styles.postContainerText}>Media content: {p.mediaContent} </Text>
       <Text style={styles.postContainerText}>Text content: {p.textContent} </Text>
       <Text style={styles.postContainerText}>Score: {p.score} </Text>
-      <br />
     </View>
   )
 } // TO BE FORMATTED

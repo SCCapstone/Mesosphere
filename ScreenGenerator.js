@@ -208,7 +208,7 @@ export class ScreenGenerator {
       this.output = (
         <>
           <SafeAreaView style={styles.container}>
-            <SafeAreaView style={styles.postContainer}>
+            <SafeAreaView style={styles.postViewContainer}>
               <FlatList
                 data={postsArray}
                 renderItem={post => renderPost(post)}
