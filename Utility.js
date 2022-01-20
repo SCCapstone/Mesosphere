@@ -407,7 +407,7 @@ export const styles = StyleSheet.create({
     // shadowOffset: {width: -2, height: 4},
     // shadowOpacity: 0.1,
     // shadowRadius: 3, these shadows look best on web/iOS, below is the necessary shadow element for Android
-    elevation: 20,
+    elevation: 20
   },
   postViewContainer: {
     flex: 1,
@@ -417,13 +417,13 @@ export const styles = StyleSheet.create({
     padding: '2%',
     borderRadius: 20,
     shadowColor: 'grey',
-    shadowOffset: {width: -2, height: 4},
+    shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 3,
+    shadowRadius: 3
   },
   postContainerText: {
     padding: '0.5%',
-    fontWeight: '400',
+    fontWeight: '400'
   },
   bigText: {
     fontSize: 24,
