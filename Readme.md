@@ -35,7 +35,9 @@ If building an Android App Bundle, ensure that Google Play App Signing is enable
 
 The unit tests are in `/test/unit`.
 
-The behavioral tests are in `/test/casper/`.
+The behavioral tests are in `/test/behavioral/`.
+
+Tests are initiated with `npm run test`.
 
 ## Testing Technology
 
