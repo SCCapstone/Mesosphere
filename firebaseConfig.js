@@ -19,7 +19,6 @@ const database = getFirestore(app)
   */
 // collection 'main'
 // document 'IDS'
-// two fields in 'IDS' named "MesosphereIDs" and "postIDs"
 
 const IDSRef = doc(database, 'main', 'IDS')
 
