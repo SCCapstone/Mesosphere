@@ -1,3 +1,20 @@
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+export default class App extends Component {
+render() {
+   return (
+      <View>
+         <Text accessibilityLabel="Text">
+            Text 1
+         </Text>
+        <Text accessibilityLabel="Text">
+           Text 2
+        </Text>
+     </View>
+  );
+ }
+}
+/*
 import { getInstance } from './ScreenGenerator'
 import { returnScreen } from './Utility'
 import { observe } from 'elementos'
@@ -10,7 +27,7 @@ let oldscreen = -1
  *
  *
  */
-
+/*
 export default function App () {
   const [output, setOutput] = useState()
   const Gen = getInstance()
@@ -33,3 +50,4 @@ export default function App () {
 
   return output
 }
+*/

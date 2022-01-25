@@ -4,7 +4,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start",
+    "start": "expo start --dev-client",
     "test": "jest"
   },
   "jest": {
@@ -25,7 +25,6 @@
     "expo-updates": "~0.11.5",
     "firebase": "^9.3.0",
     "jest": "^26.6.3",
-    "jest-expo": "^44.0.0",
     "js-sha256": "^0.9.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -36,11 +35,29 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-web": "0.17.1",
-    "react-test-renderer": "^17.0.2",
     "standard": "^16.0.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@testing-library/react-native": "^9.0.0",
+    "detox": "^19.4.2",
+    "detox-expo-helpers": "^0.6.0",
+    "expo-detox-hook": "^1.0.10",
+    "jest-expo": "^44.0.1",
+    "react-test-renderer": "^17.0.2"
   },
-  "private": true
+  "detox": {
+    "test-runner": "jest",
+    "configurations": {
+      "android.sim": {
+        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "cd android && gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
+        "type": "android.emulator",
+        "name": "Pixel_2_API_28"
+      }
+    }
+  },
+  "private": true,
+  "name": "Mesosphere",
+  "version": "1.0.0"
 }
