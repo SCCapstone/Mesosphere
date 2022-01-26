@@ -33,17 +33,13 @@ If building an Android App Bundle, ensure that Google Play App Signing is enable
 
 The unit tests are in `/test/unit`.
 
-The behavioral tests are in `/e2e`.
-
 ## Testing Technology
 
 Unit testing is done with the [Jest](https://jestjs.io) testing library.
-Behavioral testing is done with the [Appium](https://appium.io) testing framework.
 
 ## Running Tests
 
 Unit tests are run with `npm run test`.
-Behavioral tests are run with `npm run test:e2e`.
 
 # Authors
 
