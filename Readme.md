@@ -26,8 +26,6 @@ To run the project, run `expo start` in the terminal.  This will bring the user 
 
 # Deployment
 
-APK release TBD, awaiting completion of Proof-of-Concept features and further refining.
-
 To build an APK for the Android platform, run `expo build:android -t apk`, or to build an Android App Bundle, `expo build:android -t app-bundle`. 
 If building an Android App Bundle, ensure that Google Play App Signing is enabled for your project, more information can be found [here](https://developer.android.com/guide/app-bundle).
 
@@ -37,15 +35,13 @@ The unit tests are in `/test/unit`.
 
 The behavioral tests are in `/test/behavioral/`.
 
-Tests are initiated with `npm run test`.
-
 ## Testing Technology
 
-In some cases you need to install test runners, etc. TBD.
+Unit testing is done with the [Jest](https://jestjs.io) testing library.
 
 ## Running Tests
 
-TBD, contingent upon completion of available tests.
+Unit tests are run with `npm run test`.
 
 # Authors
 
