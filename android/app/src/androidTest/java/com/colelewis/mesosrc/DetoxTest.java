@@ -1,4 +1,4 @@
-// Replace "com.example" here and below with your app's package name from the top of MainActivity.java
+//Replace "com.example" here and below with your app's package name from the top of MainActivity.java
 package com.colelewis.mesosrc;
 
 import com.wix.detox.Detox;
