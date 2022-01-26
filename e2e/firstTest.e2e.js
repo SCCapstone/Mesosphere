@@ -5,10 +5,15 @@ describe('Example', () => {
     await device.launchApp();
     //await reloadApp();
   });
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
 
-  test('2 text nodes', async() => {
-    await expect( element(by.label("Text")).atIndex(0) ).toBeVisible();
-    await expect( element(by.label("Text")).atIndex(1) ).toBeVisible();
+  test('LoginScreenDisplays', async() => {
+    await expect(element(by.id('LoginUserPrompt'))).toBeVisible();
+    await expect(element(by.id('LoginPassPrompt'))).toBeVisible();
+    await expect(element(by.id('LoginButton'))).toBeVisible();
+    await expect(element(by.id('RegisterButton'))).toBeVisible();
  });
 
 });
