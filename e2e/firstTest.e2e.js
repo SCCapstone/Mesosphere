@@ -2,7 +2,8 @@ const { reloadApp } = require('detox-expo-helpers');
 
 describe('Example', () => {
   beforeAll(async () => {
-    await reloadApp();
+    await device.launchApp();
+    //await reloadApp();
   });
 
   test('2 text nodes', async() => {
