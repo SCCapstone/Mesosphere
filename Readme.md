@@ -41,11 +41,11 @@ Unit testing is done with the [Jest](https://jestjs.io) testing library.
 
 Unit tests are run with `npm run test`.
 
-## Running Behavoiral Tests
+### Running Behavoiral Tests
 
 These instructions are for a windows machine, and use powershell.  A google document with pictures can be found at https://docs.google.com/document/d/1zRyo-trcaG2ypgH6JTNMvaAxX5eEQsnjscOABk4gTFM/edit?usp=sharing
 
-## Installing Android Studio Emulator & Tools.
+### Installing Android Studio Emulator & Tools.
 For detox behavioral tests, an Android emulator must be utilized.
 Install the latest version of Android Studio (You will also need an android virtual device)
 
@@ -64,7 +64,7 @@ Lastly, ensure that your local kotlin version is up-to-date (1.6.10).  You can c
 
 If a new version is available, install it.
 
-##Restarting your machine
+### Restarting your machine
 Installing a new Kotlin version requires a machine restart.  However, so do various other steps in these instructions.  For convenience, they have been compiled here to avoid unnecessary restarts.
 You will need Node Package Manager (https://nodejs.org/en/download/). 
 You will also need Java 14  (16+ will not work): (https://www.oracle.com/java/technologies/javase/jdk14-archive-downloads.html).
@@ -79,7 +79,7 @@ PATH				| C:\Program Files\Java\jdk-14.0.2\bin
 
 You should replace [User] and jdk-14.0.2 with the relevant files on your machine.  You should also add these to your Path variable (Edit -> New).  After following the gradle instructions, you should also add C:\Gradle\gradle-6.8.3\bin to your Path variable.
 
-## Generating a debug apk
+### Generating a debug apk
 For the use of Detox behavioral testing, a debug apk must be generated.  Expo does not support this generation, so we’ll have to do this locally.  Alternatively, an (out-of-date) debug apk can be found at [link].  Clone the Mesosphere repository and cd into it.
 `git clone https://github.com/SCCapstone/Mesosphere.git’
 ‘cd .\Mesosphere\’
@@ -100,7 +100,7 @@ Once that’s done, run `react-native run-android` to test if you’ve been successf
 
 If you’ve gotten this far, you should be good to continue!
 
-## Building the APK.
+### Building the APK.
 Close your android emulator.  Detox will open its own.  Cd into the android library and run ./gradlew clean
 
 CD back into the Mesosphere main folder (cd ../)
@@ -109,7 +109,7 @@ npm install -g detox-cli
 Run ‘detox build -c android’
 If this also builds successfully, you should be ready to run your tests!
 
-## Running Detox Tests
+### Running Detox Tests
 Running the react-native commands may have installed the react-native build tools (29.0.2). This is fine.  However, you need to copy the file ‘aapt’ from it’s current build tools location (32.0.0) to build-tools\metrics.  That would be:
 C:\Users\[User]\AppData\Local\Android\Sdk\build-tools\32.0.0\aapt
 Copied into
