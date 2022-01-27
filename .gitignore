@@ -52,3 +52,7 @@ buck-out/
 # Expo
 .expo/
 web-build/
+
+# Visual Studio
+.vs/
+.vscode/
