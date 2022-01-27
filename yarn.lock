@@ -6759,7 +6759,7 @@
     "path-browserify" "^1.0.0"
     "url-parse" "^1.4.4"
 
-"expo-cli@^4.12.6":
+"expo-cli@^4.13.0":
   "integrity" "sha512-C7dfk2yleC7mdOoo9KzphfYz7F+I881VLb8UVgKCqGokwEyxhceKZCImX3D4zsR7bsKJEyjjEvx1XNIp4LV+Ew=="
   "resolved" "https://registry.npmjs.org/expo-cli/-/expo-cli-4.13.0.tgz"
   "version" "4.13.0"
@@ -6949,7 +6949,7 @@
     "resolve-from" "^5.0.0"
     "uuid" "^3.4.0"
 
-"expo@*", "expo@^44.0.0":
+"expo@*", "expo@^44.0.5":
   "integrity" "sha512-QNQjUb+Rve1r1wUjs2fSx3JVxAVtcmqWZgS+izCLFovAoX6bZ1UUkQBUkVP9PNfimnZ11EDFG4243E0yxtmuuA=="
   "resolved" "https://registry.npmjs.org/expo/-/expo-44.0.5.tgz"
   "version" "44.0.5"
