@@ -36,6 +36,7 @@ The unit tests are in `/test/unit`.
 ## Testing Technology
 
 Unit testing is done with the [Jest](https://jestjs.io) testing library.
+Behavioral testing is done with the [Detox](https://github.com/wix/Detox) library.
 
 ## Running Unit Tests
 
