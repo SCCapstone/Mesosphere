@@ -44,6 +44,7 @@ export class ScreenGenerator {
               returnKeyType='next'
               maxLength={30}
               onChangeText={(username) => username$.actions.set(username)}
+              testID='LoginUserPrompt'
             />
           </View>
           <View style={styles.inputView}>
@@ -55,17 +56,20 @@ export class ScreenGenerator {
               returnKeyType='done'
               maxLength={50}
               onChangeText={(password) => password$.actions.set(password)}
+              testID='LoginPassPrompt'
             />
           </View>
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => checkLogin(String(username$.get()), String(password$.get()))}
+            testID='LoginButton'
           >
             <Text style={styles.loginText}>LOGIN</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => setScreen(PAGES.MAKEACC)}
+            testID='RegisterButton'
           >
             <Text style={styles.loginText}>REGISTER</Text>
           </TouchableOpacity>
