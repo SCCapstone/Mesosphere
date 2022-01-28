@@ -32,6 +32,7 @@ If building an Android App Bundle, ensure that Google Play App Signing is enable
 # Testing
 
 The unit tests are in `/test/unit`.
+The behavoiral tests are in `/e2e/`.
 
 ## Testing Technology
 
@@ -51,9 +52,9 @@ Install the latest version of Android Studio (You will also need an android virt
   
 Create a virtual android device  
 Open the Virtual Device Manager (VDM)  
-Select 'Create Device' in the top left corner.  
-Select 'Pixel 2'  
-For system image, tab over to 'x86 Images' and scroll down to select 'Pie 28 x86_64' (No Google API)  
+Select `Create Device` in the top left corner.  
+Select `Pixel 2` 
+For system image, tab over to `x86 Images` and scroll down to select `Pie 28 x86_64` (No Google API)  
   
 You will need to download it first (click the blue download button).  
 (In configuration Advanced Settings, you may want to increase the Internal Storage.  You can do this later).  
@@ -71,26 +72,26 @@ You will also need Java 14  (16+ will not work): (https://www.oracle.com/java/te
 To build the dev apk, we will need gradle 6.8: https://gradle.org/next-steps/?version=6.8.3&format=all  
 https://gradle.org/install/ (This may be optional, as react-native run-android also installs gradle)  
 Edit your environment variables for your account.  Add the following (if they are not already present):  
-ANDROID_SDK_ROOT	| C:\Users\[User]\AppData\Local\Android\Sdk  
-JAVA_HOME			| C:\Program Files\Java\jdk-14.0.2  
-PATH				| C:\Program Files\Java\jdk-14.0.2\bin  
-				    | C:\Users\[User]\AppData\Local\Android\Sdk\platform-tools  
-				    | C:\Gradle\gradle-6.8.3\bin  
+ANDROID_SDK_ROOT	| `C:\Users\[User]\AppData\Local\Android\Sdk`  
+JAVA_HOME			| `C:\Program Files\Java\jdk-14.0.2`  
+PATH				| `C:\Program Files\Java\jdk-14.0.2\bin`  
+| `C:\Users\[User]\AppData\Local\Android\Sdk\platform-tools`  
+| `C:\Gradle\gradle-6.8.3\bin`  
   
 You should replace [User] and jdk-14.0.2 with the relevant files on your machine.  You should also add these to your Path variable (Edit -> New).  After following the gradle instructions, you should also add C:\Gradle\gradle-6.8.3\bin to your Path variable.  
   
 ### Generating a debug apk
 For the use of Detox behavioral testing, a debug apk must be generated.  Expo does not support this generation, so we'll have to do this locally.  Alternatively, an (out-of-date) debug apk can be found at [link].  If you choose to install this, skip to the last section after this one. Clone the Mesosphere repository and cd into it.  
-`git clone https://github.com/SCCapstone/Mesosphere.git'  
-'cd .\Mesosphere\'  
-'npm install --force'  
-Now that the project is set up, an index needs to be generated to run the local apk.  You should also update the build tools and kotlin under android/build.gradle to match your most current build tools (visible in C:\Users\[User]\AppData\Local\Android\Sdk\build-tools)  
+`git clone https://github.com/SCCapstone/Mesosphere.git`  
+`cd .\Mesosphere\`  
+`npm install --force`  
+Now that the project is set up, an index needs to be generated to run the local apk.  You should also update the build tools and kotlin under android/build.gradle to match your most current build tools (visible in `C:\Users\[User]\AppData\Local\Android\Sdk\build-tools`)  
   
 Since we're using react native, you should also install the cli tools  
-npm install -g react-native-cli  
-npm install -g expo  
-npm install -g expo-cli  
-npm install -g detox-cli  
+`npm install -g react-native-cli`  
+`npm install -g expo`  
+`npm install -g expo-cli`  
+`npm install -g detox-cli`  
   
 The index is created through the following command (this will take a while):  
   
