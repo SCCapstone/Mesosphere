@@ -37,6 +37,7 @@ The behavoiral tests are in `/e2e/`.
 ## Testing Technology
 
 Unit testing is done with the [Jest](https://jestjs.io) testing library.
+Behavioral testing is done with the [Detox](https://github.com/wix/Detox) testing library.
 
 ## Running Unit Tests
 
@@ -81,7 +82,7 @@ PATH				| `C:\Program Files\Java\jdk-14.0.2\bin`
 You should replace [User] and jdk-14.0.2 with the relevant files on your machine.  You should also add these to your Path variable (Edit -> New).  After following the gradle instructions, you should also add `C:\Gradle\gradle-6.8.3\bin` to your Path variable.  
   
 ### Generating a debug apk
-For the use of Detox behavioral testing, a debug apk must be generated.  Expo does not support this generation, so we'll have to do this locally.  Alternatively, an (out-of-date) debug apk can be found at [link].  If you choose to install this, skip to the last section after this one. Clone the Mesosphere repository and cd into it.  
+For the use of Detox behavioral testing, a debug apk must be generated.  Expo does not support this generation, so we'll have to do this locally.  Alternatively, an (out-of-date) debug apk can be found at [link](https://github.com/SCCapstone/Mesosphere/releases/tag/v0.2).  If you choose to install this, skip to the last section after this one. Clone the Mesosphere repository and cd into it.  
 `git clone https://github.com/SCCapstone/Mesosphere.git`  
 `cd .\Mesosphere\`  
 `npm install --force`  
