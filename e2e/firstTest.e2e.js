@@ -1,6 +1,6 @@
 //const { reloadApp } = require('detox-expo-helpers');
 
-describe('Example', () => {
+describe('LandingElements', () => {
   beforeAll(async () => {
     await device.launchApp();
     //await reloadApp();
