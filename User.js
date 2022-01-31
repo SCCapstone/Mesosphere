@@ -44,9 +44,9 @@ export class User {
     return this.myPeers
   }
 
-  storeLocally () {
-    storeData(this.MiD, this)
-  }
+  // storeLocally () {
+  //   storeData(this.MiD, this)
+  // }
 
   addPeer (MID) {
     if (MID.length === 16 && MID.substring(0, 5) === 'meso-') { // validates format, not existence

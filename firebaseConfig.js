@@ -80,13 +80,17 @@ export async function removePeerFromDatabase (MID, peerID) {
 export async function pushPostToDatabase (p) {
   await updateDoc(ContentRef, {
     posts: arrayUnion({
-      "MID": p.MiD,
+      "MID": p.attachedMiD,
       "postID": p.postID,
       "score": p.score,
       "text": p.textContent,
       "timestamp": new Date()
     })
   })
+}
+
+export async function alterPostScore (postID, change) {
+
 }
 
 export async function removePostFromDatabase (postID) {
