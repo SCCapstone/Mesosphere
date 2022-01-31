@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Alert } from 'react-native'
-import { pushPostToDatabase } from './firebaseConfig'
+import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES, getData } from './Utility'
 
 // Tasks:
@@ -48,7 +48,7 @@ export async function savePost (text) { // call with postText$.get()
   const u = getUser()
   const p = new Post(u.MiD, generatePostID(), 0, text, new Date().toString())
   u.addPost(p)
-  //u.storeLocally()
+  u.storeLocally()
   pushPostToDatabase(p)
   setScreen(PAGES.VIEWPOSTS)
 }

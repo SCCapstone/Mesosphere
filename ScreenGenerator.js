@@ -20,8 +20,8 @@ export class ScreenGenerator {
   constructor () {
     this.page = -1
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
-    makeAdminAcc()
-    makeDemoAcc()
+    // makeAdminAcc()
+    // makeDemoAcc()
     setScreen(PAGES.LOGIN)
   }
 

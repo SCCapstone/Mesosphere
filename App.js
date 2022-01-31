@@ -2,7 +2,7 @@ import { getInstance } from './ScreenGenerator'
 import { returnScreen } from './Utility'
 import { observe } from 'elementos'
 import { useState } from 'react'
-
+import {alterPostScore} from './firebaseConfig'
 let oldscreen = -1
 
 /* packages for this branch: (to uninstall)

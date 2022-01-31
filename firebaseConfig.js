@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove, query, where, getDocs } from 'firebase/firestore/lite'
+import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, query, where, getDocs, deleteDoc, increment } from 'firebase/firestore/lite'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -23,6 +23,7 @@ const database = getFirestore(app)
 const IDSRef = doc(database, 'main', 'IDS')
 const ContentRef = doc(database, 'main', 'Content')
 
+//const ref = doc(database, 'accounts' MID)
 
 export async function returnMIDSDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
@@ -54,77 +55,65 @@ export async function pushPostIDToDatabase (postID) { // functional
 
 
 export async function pushAccountToDatabase (u) {
-  await updateDoc(ContentRef, {
-    accounts: arrayUnion({
-      "MID": u.MiD,
-      "biography": u.biography,
-      "displayname": u.username,
-      "friends": u.myPeers,
-      "posts": u.myPosts
-    })
+  await setDoc(doc(database, 'accounts', u.MiD), {
+    "MID": u.MiD,
+    "biography": u.biography,
+    "displayname": u.username,
+    "friends": u.myPeers,
+    "posts": u.myPosts
   })
 }
 
 export async function removeAccountFromDatabase (u) {
-  // const q = query(ContentRef, where("accounts", "array-contains", {
-  //   "MID": u.MiD,
-  //   "biography": u.biography,
-  //   "displayname": u.username,
-  //   "friends": u.myPeers,
-  //   "posts": u.myPosts 
-  // }))
+  await deleteDoc(doc(database, 'accounts', u.MiD))
+  
+  for (let i = 0; i < u.myPosts.length; i++) {
+    await deleteDoc(doc(database, 'posts', u.myPosts[i].postID))
+  }
+}
 
-  // const qSnap = await getDocs(q)
-
-  // qSnap.forEach((doc) => {
-  //   alert(doc.id, " => ", doc.data())
-
-  // })
-  await updateDoc(ContentRef, {
-    accounts: arrayRemove({
-      "MID": u.MiD,
-      "biography": u.biography,
-      "displayname": u.username,
-      "friends": u.myPeers,
-      "posts": u.myPosts
-    })
+export async function addPeerToDatabase (u, peerID) {
+  await updateDoc(doc(database, 'accounts', u.MiD), {
+    friends: arrayUnion(peerID)
   })
 }
 
-export async function addPeerToDatabase (MID, peerID) {
-
-}
-
-export async function removePeerFromDatabase (MID, peerID) {
-
+export async function removePeerFromDatabase (u, peerID) {
+  await updateDoc(doc(database, 'accounts', u.MiD), {
+    friends: arrayRemove(peerID)
+  })
 }
 
 export async function pushPostToDatabase (p) {
-  await updateDoc(ContentRef, {
-    posts: arrayUnion({
-      "MID": p.attachedMiD,
-      "postID": p.postID,
-      "score": p.score,
-      "text": p.textContent,
-      "timestamp": new Date()
-    })
+  await setDoc(doc(database, 'posts', p.postID), {
+    "MID": p.attachedMiD,
+    "postID": p.postID,
+    "score": p.score,
+    "text": p.textContent,
+    "timestamp": new Date()
+  })
+
+  await updateDoc(doc(database, 'accounts', p.attachedMiD), {
+    posts: arrayUnion(p.postID)
   })
 }
 
-export async function alterPostScore (postID, change) {
-
-}
+export async function alterPostScore (postID, change) { //increment/decrement in units of 0.5; upvote: change = 0.5, downvote: change = -0.5
+  await updateDoc(doc(database, 'posts', postID), {
+    score: increment(change)
+  })
+} //STILL NEEDS A FUNCTION TO UPDATE POST SCORE LOCALLY! Local post updating doesn't need to be done here.
 
 export async function removePostFromDatabase (p) {
-  await updateDoc(ContentRef, {
-    posts: arrayRemove({
-      "MID": p.attachedMiD,
-      "postID": p.postID,
-      "score": p.score,
-      "text": p.textContent,
-      "timestamp": new Date()
-    })
+  await updateDoc(doc(database, 'accounts', p.attachedMiD), {
+    posts: arrayRemove(p.postID)
   })
+
+  await deleteDoc(doc(database, 'posts', p.postID))
+}
+
+export async function pullPersonalPostsFromDatabase (u) {
+  //overwrite local storage with database copy of posts
 }
 
 
