@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, Alert } from 'react-native'
+import { pushPostToDatabase } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
 
 // Tasks:
@@ -10,15 +11,19 @@ import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
 // Post data is to be stored locally
 
 export class Post { // Post objects will be constructed from postPage() prompt
-  constructor (postID, mediaContent, textContent, score, timestamp) {
+  constructor (MiD, postID, score, textContent, timestamp) {
+    this.MiD = MiD
     this.postID = postID
-    this.mediaContent = mediaContent
-    this.textContent = textContent
     this.score = score
+    this.textContent = textContent
     this.timestamp = timestamp
   }
 
-  getID () {
+  getAttachedMID() {
+    return this.MID
+  }
+
+  getPostID () {
     return this.postID
   }
 
@@ -34,13 +39,13 @@ export class Post { // Post objects will be constructed from postPage() prompt
 // where it all comes together
 // will add const media, const score, const id as created
 
-export async function savePost (text, media) { // call with postText$.get() and postMedia$.get() as the two parameters
+export async function savePost (text) { // call with postText$.get()
   media = null // placeholder for eventual media content
   if (text.length > 50) {
     Alert.alert('Post too long', 'Posts can be, at most, 50 characers.', { text: 'OK.' })
   }
-  const p = new Post(generatePostID(), media, text, 0, new Date().toString())
   const u = getUser()
+  const p = new Post(u.getMiD(), generatePostID(), text, 0, new Date().toString())
   u.addPost(p)
   u.storeLocally()
   setScreen(PAGES.VIEWPOSTS)

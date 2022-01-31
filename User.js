@@ -1,6 +1,7 @@
 import { Alert } from 'react-native'
 import { deleteAll, storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
+import { pushAccountToDatabase } from './firebaseConfig'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export class User {
@@ -18,6 +19,10 @@ export class User {
     return this.username
   }
 
+  getBiography () {
+    return this.biography
+  }
+
   getMiD () {
     return this.MiD
   }
@@ -28,6 +33,7 @@ export class User {
 
   addPost (p) {
     this.myPosts.push(p)
+    //update account in Firebase to reflect added postID
   }
 
   getAllPosts () {
@@ -88,6 +94,7 @@ export async function makeAcc (username, password, realName, bio) {
   }
   const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new', 'new')
   await storeData(u.getMiD(), u)
+  pushAccountToDatabase(u)
   setUser(u)
   setScreen(PAGES.ACCOUNTPAGE)
 }

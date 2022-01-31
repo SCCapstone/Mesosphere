@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore/lite'
+import { getFirestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove, Timestamp } from 'firebase/firestore/lite'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -21,6 +21,8 @@ const database = getFirestore(app)
 // document 'IDS'
 
 const IDSRef = doc(database, 'main', 'IDS')
+const ContentRef = doc(database, 'main', 'Content')
+
 
 export async function returnMIDSDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
@@ -49,5 +51,47 @@ export async function pushPostIDToDatabase (postID) { // functional
     postIDs: arrayUnion(postID)
   })
 }
+
+
+export async function pushAccountToDatabase (u) {
+  await updateDoc(ContentRef, {
+    accounts: arrayUnion({
+      "MID": u.MiD,
+      "biography": u.biography,
+      "displayname": u.username,
+      "friends": u.myPeers,
+      "posts": u.myPosts
+    })
+  })
+}
+
+export async function removeAccountFromDatabase (MID) {
+
+}
+
+export async function addPeerToDatabase (MID, peerID) {
+
+}
+
+export async function removePeerFromDatabase (MID, peerID) {
+
+}
+
+export async function pushPostToDatabase (p) {
+  await updateDoc(ContentRef, {
+    posts: arrayUnion({
+      "MID": p.MiD,
+      "postID": p.postID,
+      "score": p.score,
+      "text": p.textContent,
+      "timestamp": new Date()
+    })
+  })
+}
+
+export async function removePostFromDatabase (postID) {
+
+}
+
 
 export { database }
