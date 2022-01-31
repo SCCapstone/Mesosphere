@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove, Timestamp } from 'firebase/firestore/lite'
+import { getFirestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove, query, where, getDocs } from 'firebase/firestore/lite'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -65,8 +65,30 @@ export async function pushAccountToDatabase (u) {
   })
 }
 
-export async function removeAccountFromDatabase (MID) {
+export async function removeAccountFromDatabase (u) {
+  // const q = query(ContentRef, where("accounts", "array-contains", {
+  //   "MID": u.MiD,
+  //   "biography": u.biography,
+  //   "displayname": u.username,
+  //   "friends": u.myPeers,
+  //   "posts": u.myPosts 
+  // }))
 
+  // const qSnap = await getDocs(q)
+
+  // qSnap.forEach((doc) => {
+  //   alert(doc.id, " => ", doc.data())
+
+  // })
+  await updateDoc(ContentRef, {
+    accounts: arrayRemove({
+      "MID": u.MiD,
+      "biography": u.biography,
+      "displayname": u.username,
+      "friends": u.myPeers,
+      "posts": u.myPosts
+    })
+  })
 }
 
 export async function addPeerToDatabase (MID, peerID) {
@@ -93,8 +115,16 @@ export async function alterPostScore (postID, change) {
 
 }
 
-export async function removePostFromDatabase (postID) {
-
+export async function removePostFromDatabase (p) {
+  await updateDoc(ContentRef, {
+    posts: arrayRemove({
+      "MID": p.attachedMiD,
+      "postID": p.postID,
+      "score": p.score,
+      "text": p.textContent,
+      "timestamp": new Date()
+    })
+  })
 }
 
 

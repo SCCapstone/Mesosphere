@@ -1,7 +1,7 @@
 import { Alert } from 'react-native'
 import { deleteAll, storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
-import { pushAccountToDatabase } from './firebaseConfig'
+import { pushAccountToDatabase, removeAccountFromDatabase, removePostFromDatabase } from './firebaseConfig'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export class User {
@@ -123,6 +123,7 @@ export async function adminButton () {
 export async function deleteCurrUser () {
   const u = getUser()
   removeValue(u.getMiD())
+  removeAccountFromDatabase(u)
   setUser(null)
   setScreen(PAGES.LOGIN)
 }

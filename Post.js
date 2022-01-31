@@ -29,10 +29,12 @@ export class Post { // Post objects will be constructed from postPage() prompt
 
   incrementScore () {
     this.score += 1
+    //incrementPostScore firebase
   }
 
   decrementScore () {
     this.score -= 1
+    //decrementPostScore firebase
   }
 }
 
