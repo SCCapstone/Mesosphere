@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Alert } from 'react-native'
+import { View, Text, Alert, TouchableOpacity} from 'react-native'
 import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
 
 // Tasks:
@@ -39,12 +39,15 @@ export async function savePost (text, media) { // call with postText$.get() and 
   if (text.length > 50) {
     Alert.alert('Post too long', 'Posts can be, at most, 50 characers.', { text: 'OK.' })
   }
-  const p = new Post(generatePostID(), media, text, 0, new Date().toString())
+  const p = new Post(generatePostID(), media, text, 0, new Date().toLocaleString())
   const u = getUser()
   u.addPost(p)
   u.storeLocally()
   setScreen(PAGES.VIEWPOSTS)
 }
+
+// When rendering post, we want to display just the items contained, i.e: text + timestamp
+// Want to create a more aesthetically pleasing post & timestamp & interactive score button with counter
 
 export function renderPost (post) {
   const p = post.item
@@ -52,9 +55,20 @@ export function renderPost (post) {
     <View style={styles.postContainer}>
       <Text style={styles.postContainerText}>Post ID: {p.postID} </Text>
       <Text style={styles.postContainerText}>{p.timestamp} </Text>
-      <Text style={styles.postContainerText}>Media content: {p.mediaContent} </Text>
-      <Text style={styles.postContainerText}>Text content: {p.textContent} </Text>
-      <Text style={styles.postContainerText}>Score: {p.score} </Text>
+      <Text style={styles.postContainerText}>Text content: {p.textContent} </Text>      
     </View>
   )
 } // TO BE FORMATTED
+
+/*
+<TouchableOpacity
+          onPress={"heart this?"} style={styling.Button}>
+      </TouchableOpacity>
+      
+
+*/
+// Old content
+// <Text style={styles.postContainerText}>Media content: {p.mediaContent} </Text>
+//<Text style={styles.postContainerText}>Score: {p.score} </Text>
+//      if(p.getMediaContent() != null){
+// <Text style={styles.postContainerText}>Media content: {p.mediaContent}</Text>

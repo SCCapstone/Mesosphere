@@ -425,6 +425,10 @@ export const styles = StyleSheet.create({
     padding: '0.5%',
     fontWeight: '400'
   },
+  ScoreButton: {
+    color: "#e92f3c",
+    borderRadius:160
+  },
   bigText: {
     fontSize: 24,
     fontWeight: 'bold',

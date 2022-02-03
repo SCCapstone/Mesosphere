@@ -4,7 +4,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "expo start --dev-",
     "test": "jest"
   },
   "jest": {
