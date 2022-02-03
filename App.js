@@ -2,7 +2,8 @@ import { getInstance } from './ScreenGenerator'
 import { returnScreen } from './Utility'
 import { observe } from 'elementos'
 import { useState } from 'react'
-import {alterPostScore} from './firebaseConfig'
+import { pullPostFromDataBase } from './firebaseConfig'
+
 let oldscreen = -1
 
 /* packages for this branch: (to uninstall)
@@ -11,9 +12,12 @@ let oldscreen = -1
  *
  */
 
+
 export default function App () {
   const [output, setOutput] = useState()
   const Gen = getInstance()
+
+  pullPostFromDataBase("aeaa2a51cd22bc7df2c93a7b8a15f704267ea86ff61877fe44f240bb")
 
   observe(returnScreen(), (screen) => {
     console.log('Change observed.')

@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, query, where, getDocs, deleteDoc, increment } from 'firebase/firestore/lite'
+import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment } from 'firebase/firestore/lite'
+import { Post } from './Post'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -13,17 +14,7 @@ const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS 
 const app = initializeApp(firebaseConfig)
 const database = getFirestore(app)
 
-/* Database will store:
-  - Mesosphere IDs
-  - Post IDs
-  */
-// collection 'main'
-// document 'IDS'
-
 const IDSRef = doc(database, 'main', 'IDS')
-const ContentRef = doc(database, 'main', 'Content')
-
-//const ref = doc(database, 'accounts' MID)
 
 export async function returnMIDSDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
@@ -114,6 +105,20 @@ export async function removePostFromDatabase (p) {
 
 export async function pullPersonalPostsFromDatabase (u) {
   //overwrite local storage with database copy of posts
+}
+
+export async function pullPostFromDataBase (postID) { //test
+  const postRef = doc(database, 'posts', postID)
+  const docSnap = await getDoc(postRef)
+  if (docSnap.exists()) {
+    const data = docSnap.data()
+    console.log("Document data:", docSnap.data());
+    return new Post(data.MID, data.postID, data.score, data.text, data.timestamp)
+    
+  }
+  else {
+    console.log("Error: Requested post does not exist.")
+  }
 }
 
 
