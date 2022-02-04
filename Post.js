@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Alert } from 'react-native'
-import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
+import { alterPostScore, pushPostToDatabase, alterPostScore } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES, getData } from './Utility'
 
 // Tasks:
@@ -29,12 +29,12 @@ export class Post { // Post objects will be constructed from postPage() prompt
 
   incrementScore () {
     this.score += 1
-    //incrementPostScore firebase
+    alterPostScore(this.postID, 0.5)
   }
 
   decrementScore () {
     this.score -= 1
-    //decrementPostScore firebase
+    alterPostScore(this.postID, -0.5)
   }
 }
 
