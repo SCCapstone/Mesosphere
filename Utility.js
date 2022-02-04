@@ -425,9 +425,32 @@ export const styles = StyleSheet.create({
     padding: '0.5%',
     fontWeight: '400'
   },
-  ScoreButton: {
-    color: "#e92f3c",
-    borderRadius:160
+  LikeButton:{
+    color: "#FFA31B",
+    alignItems: 'left'
+  },
+  DislikeButton:{
+    color: "#FFA31B",
+    alignItems: 'right'
+  },
+  ReplyButton:{
+    color: "#FFA31B",
+    alignItems: 'right'
+  },
+  DeleteButton:{
+    color: "#FFD89F"
+  },
+  LRText:{
+    fontSize: 12,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  smallerPostIDText:{
+    fontSize: '10',
+    fontWeight: 'bold',
+    alignItems: 'center',
+    textAlign: 'center'
   },
   bigText: {
     fontSize: 24,

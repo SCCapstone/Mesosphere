@@ -218,6 +218,7 @@ export class ScreenGenerator {
                 data={postsArray}
                 renderItem={post => renderPost(post)}
                 keyExtractor={post => post.postID}
+                style = {{flex:1, width: '100%', borderRadius: 2, backgroundColor: 'black'}}
               />
             </SafeAreaView>
             {this.generateBottomBar(2)}

@@ -29,6 +29,9 @@ export class User {
   addPost (p) {
     this.myPosts.push(p)
   }
+  removePost (p){
+    this.myPosts.pull(p)
+  }
 
   getAllPosts () {
     return this.myPosts

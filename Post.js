@@ -10,9 +10,8 @@ import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
 // Post data is to be stored locally
 
 export class Post { // Post objects will be constructed from postPage() prompt
-  constructor (postID, mediaContent, textContent, score, timestamp) {
+  constructor (postID, textContent, score, timestamp) {
     this.postID = postID
-    this.mediaContent = mediaContent
     this.textContent = textContent
     this.score = score
     this.timestamp = timestamp
@@ -31,19 +30,17 @@ export class Post { // Post objects will be constructed from postPage() prompt
   }
 }
 
-// where it all comes together
-// will add const media, const score, const id as created
-
 export async function savePost (text, media) { // call with postText$.get() and postMedia$.get() as the two parameters
   media = null // placeholder for eventual media content
   if (text.length > 50) {
     Alert.alert('Post too long', 'Posts can be, at most, 50 characers.', { text: 'OK.' })
   }
-  const p = new Post(generatePostID(), media, text, 0, new Date().toLocaleString())
+  const p = new Post(generatePostID(), text, 0, new Date().toLocaleString())
   const u = getUser()
   u.addPost(p)
   u.storeLocally()
   setScreen(PAGES.VIEWPOSTS)
+
 }
 
 // When rendering post, we want to display just the items contained, i.e: text + timestamp
@@ -53,12 +50,19 @@ export function renderPost (post) {
   const p = post.item
   return (
     <View style={styles.postContainer}>
-      <Text style={styles.postContainerText}>Post ID: {p.postID} </Text>
+      <Text style={styles.postContainerText}>{p.textContent} </Text>
       <Text style={styles.postContainerText}>{p.timestamp} </Text>
-      <Text style={styles.postContainerText}>Text content: {p.textContent} </Text>      
+      <Text style={styles.postContainerText}>Post ID: {p.postID} </Text>
+      <TouchableOpacity>
+        style={styles.DeleteButton} onPress={
+          () => alert('Still in development!')
+        } <Text style={styles.buttonText}> Delete Post? </Text>
+      </TouchableOpacity>
     </View>
   )
 } // TO BE FORMATTED
+
+// Render a delete option for the posts feed
 
 /*
 <TouchableOpacity
@@ -72,3 +76,8 @@ export function renderPost (post) {
 //<Text style={styles.postContainerText}>Score: {p.score} </Text>
 //      if(p.getMediaContent() != null){
 // <Text style={styles.postContainerText}>Media content: {p.mediaContent}</Text>
+/*
+  
+
+
+*/
