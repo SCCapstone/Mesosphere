@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment } from 'firebase/firestore/lite'
 import { Post } from './Post'
+import { User } from './User'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -55,6 +56,19 @@ export async function pushAccountToDatabase (u) {
   })
 }
 
+export async function pullAccountFromDatabase (mesosphereID) {
+  const userRef = doc(database, 'accounts', mesosphereID)
+  const docSnap = await getDoc(userRef)
+  if (docSnap.exists()) {
+    const data = docSnap.data()
+    console.log("Document data:", docSnap.data())
+    return new User("", "", data.displayname, data.biography, data.MID, data.posts, data.friends)
+  }
+  else {
+    console.log("Error: Requested post does not exist.")
+  }
+}
+
 export async function removeAccountFromDatabase (u) {
   await deleteDoc(doc(database, 'accounts', u.MiD))
   
@@ -93,7 +107,7 @@ export async function alterPostScore (postID, change) { //increment/decrement in
   await updateDoc(doc(database, 'posts', postID), {
     score: increment(change)
   })
-} //STILL NEEDS A FUNCTION TO UPDATE POST SCORE LOCALLY! Local post updating doesn't need to be done here.
+} //done in conjunction with local post score altering, see Post.js
 
 export async function removePostFromDatabase (p) {
   await updateDoc(doc(database, 'accounts', p.attachedMiD), {
@@ -103,11 +117,7 @@ export async function removePostFromDatabase (p) {
   await deleteDoc(doc(database, 'posts', p.postID))
 }
 
-export async function pullPersonalPostsFromDatabase (u) {
-  //overwrite local storage with database copy of posts
-}
-
-export async function pullPostFromDataBase (postID) { //test
+export async function pullPostFromDataBase (postID) {
   const postRef = doc(database, 'posts', postID)
   const docSnap = await getDoc(postRef)
   if (docSnap.exists()) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Alert } from 'react-native'
-import { alterPostScore, pushPostToDatabase, alterPostScore } from './firebaseConfig'
+import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES, getData } from './Utility'
 
 // Tasks:
