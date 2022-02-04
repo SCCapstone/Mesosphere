@@ -25,6 +25,14 @@ export async function returnMIDSDatabaseLength () {
   return IDSSnap.data().MesosphereIDs.length
 }
 
+export async function searchMID (sMID) {
+  const IDSSnap = await getDoc(IDSRef)
+  if (IDSSnap.exists()) {
+    // console.log(IDSSnap.data().MesosphereIDs)
+  }
+  return IDSSnap.data().MesosphereIDs.includes(sMID)
+}
+
 export async function returnPostIDDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
   if (IDSSnap.exists()) {
@@ -44,7 +52,6 @@ export async function pushPostIDToDatabase (postID) { // functional
     postIDs: arrayUnion(postID)
   })
 }
-
 
 export async function pushAccountToDatabase (u) {
   await setDoc(doc(database, 'accounts', u.MiD), {
@@ -89,6 +96,8 @@ export async function removePeerFromDatabase (u, peerID) {
   })
 }
 
+// being "friends" in Mesosphere needs mutual peer acceptance! Internal logic will check and verify that each other is a peer, otherwise, no posts will be shown 
+
 export async function pushPostToDatabase (p) {
   await setDoc(doc(database, 'posts', p.postID), {
     "MID": p.attachedMiD,
@@ -128,6 +137,19 @@ export async function pullPostFromDataBase (postID) {
   else {
     console.log("Error: Requested post does not exist.")
   }
+}
+
+//user manipulation from local changes
+export async function changeUserBiographyInDatabase (mesosphereID, newBio) {
+  await updateDoc(doc(database, 'accounts', mesosphereID), {
+    biography: newBio
+  })
+}
+
+export async function changeUserDisplayNameInDatabase (mesosphereID, newDisplayName) {
+  await updateDoc(doc(database, 'accounts', mesosphereID), {
+    displayname: newDisplayName
+  })
 }
 
 
