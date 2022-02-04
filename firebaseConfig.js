@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment } from 'firebase/firestore/lite'
+import { getFirestore, doc, collectionGroup, getDoc, getDocs, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment, DocumentSnapshot } from 'firebase/firestore/lite'
 import { Post } from './Post'
 import { User } from './User'
 
@@ -23,6 +23,23 @@ export async function returnMIDSDatabaseLength () {
     // console.log(IDSSnap.data().MesosphereIDs)
   }
   return IDSSnap.data().MesosphereIDs.length
+}
+
+export async function returnMIDSDatabaseArray () {
+  const userRef = collectionGroup(database, 'accounts')
+  const docSnap = await getDocs(userRef)
+  const activeIDs = []
+  if(docSnap.size != 0) {
+    //console.log(docSnap.docs)
+    for(const document of docSnap.docs) {
+      console.log("Attempting to print MID:")
+      console.log(document.data().MID)
+      activeIDs.push(document.data().MID)
+    }
+  } else {
+    console.log("No active IDs!")
+  }
+  return activeIDs;
 }
 
 export async function returnPostIDDatabaseLength () {

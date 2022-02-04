@@ -361,7 +361,7 @@ function adminCheck () {
   if (u != null && u.getUsername() === 'admin') {
     return (
       <TouchableOpacity
-        onPress={() => { adminButton() }}
+        onPress={() => { }}//adminButton() }}
         style={styles.loginBtn}
       >
         <Text style={styles.buttonText}>Delete ALL Data</Text>

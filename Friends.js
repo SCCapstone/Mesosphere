@@ -3,6 +3,7 @@ import { View, Image, TouchableOpacity, Text, FlatList } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { styles } from './Utility';
 import logo from './assets/MesoSphere.png'
+import { returnMIDSDatabaseArray } from './firebaseConfig'
 
 
 export default class Friends extends Component {
@@ -19,7 +20,13 @@ export default class Friends extends Component {
     }
 
     componentDidMount() {
-        this.makeRemoteRequest();
+        //this.makeRemoteRequest();
+        this.fetchMiDs();
+        //console.log(data);
+    }
+
+    async fetchMiDs() {
+        data = await returnMIDSDatabaseArray();
     }
 
     makeRemoteRequest = () => {
