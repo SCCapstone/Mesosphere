@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Alert } from 'react-native'
+import { View, Text, Alert, Button } from 'react-native'
 import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES, getData } from './Utility'
 
@@ -58,10 +58,45 @@ export function renderPost (post) {
   return (
     <View style={styles.postContainer}>
       {/* <Text style={styles.postContainerText}>MID: {p.attachedMiD} </Text> */}
-      <Text style={styles.postContainerText}>Post ID: {p.postID} </Text>
+      <Text style={styles.postContainerText}>{p.textContent} </Text>
       <Text style={styles.postContainerText}>{p.timestamp} </Text>
-      <Text style={styles.postContainerText}>Text content: {p.textContent} </Text>
-      <Text style={styles.postContainerText}>Score: {p.score} </Text>
+      <View style={styles.scoreButtonStyle}>
+        <View style={styles.scoreButton}/>
+          <Button
+              onPress={() => alert('not fully implemented yet!')}
+              title="Like"
+              color="#000"
+              borderRadius='12'
+          />
+        <View style={styles.spacing}/>
+        <View style={styles.scoreButton}/>
+          <Button
+              onPress={() => alert('not fully implemented yet!')}
+              title="Dislike"
+              color="#000"
+          />
+
+       
+        
+      </View>
     </View>
   )
-} // TO BE FORMATTED
+}
+/*
+      <Text style={styles.postContainerText}>post_id: {p.postID} </Text>
+      onPress={() => p.decrementScore()}
+      <Text style={styles.postContainerText}> {p.getUsername}</Text>
+            <View style={styles.dislikeScoreButton}>
+        <Button
+            onPress={() => alert('not fully implemented yet!')}
+            title="Dislike"
+            color="#000"
+            alignItems="right"
+            display="flex"
+            justifyContent="flex-end"
+              paddingHorizontal: 10,
+        />
+      </View>
+
+      Modify height to increase space between buttons
+*/

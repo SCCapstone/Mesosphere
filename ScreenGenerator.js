@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
+import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView, Button} from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
 import { checkLogin, makeAcc, adminButton, deleteCurrUser, makeAdminAcc, makeDemoAcc } from './User'
 import { renderPost, savePost } from './Post'
@@ -220,7 +220,7 @@ export class ScreenGenerator {
                 keyExtractor={post => post.postID}
               />
             </SafeAreaView>
-            {this.generateBottomBar(2)}
+            {this.generateBottomBar(4)}
           </SafeAreaView>
         </>
       )

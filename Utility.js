@@ -323,7 +323,7 @@ export const styles = StyleSheet.create({
   },
   postContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFA31B',
     width: '100%',
     marginBottom: '5%',
     padding: '2%',
@@ -332,7 +332,9 @@ export const styles = StyleSheet.create({
     // shadowOffset: {width: -2, height: 4},
     // shadowOpacity: 0.1,
     // shadowRadius: 3, these shadows look best on web/iOS, below is the necessary shadow element for Android
-    elevation: 20
+    elevation: 20,
+    borderWidth: 4,
+    borderColor: '#000',
   },
   postViewContainer: {
     flex: 1,
@@ -346,10 +348,14 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3
   },
+  secondPostView:{
+    backgroundColor: 'black'
+  },
   postContainerText: {
     padding: '0.5%',
     fontWeight: '400'
   },
+
   bigText: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -363,5 +369,21 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  smallerPostIDText:{
+    fontSize: 10,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  scoreButtonStyle:{
+    flexDirection: 'row',
+  },
+  scoreButton:{
+    justifyContent: 'space-between'
+  },
+  spacing:{
+    width: 15,
+    height: 15
   }
 })
