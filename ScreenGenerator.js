@@ -169,10 +169,12 @@ export class ScreenGenerator {
           </SafeAreaView>
         </>
       )
-    } else if (this.page === PAGES.MAKEPOST) {
+    } else if (this.page === PAGES.MAKEPOST) {  // "New Post" page.
+      // TODO(Gazdecki) Figure out what this does exactly.
       const postText$ = atom('')
       this.output = (
         <View style={styles.container}>
+          {/**Large Title above text box. */}
           <Text style={styles.bigText}> New Post </Text>
           <View style={styles.inputViewBio}>
             <TextInput
@@ -187,45 +189,67 @@ export class ScreenGenerator {
               onChangeText={(post) => postText$.actions.set(post)}
             />
           </View>
+          {/**"Add Media" button. */}
           <TouchableOpacity
             style={styles.postBtn}
             onPress={() => alert('Still in development!')}
           >
             <Text
               style={styles.buttonText}
-            >Add media!
+            >Adding images and videos are still a work in progress!
             </Text>
           </TouchableOpacity>
+          {/**"Save Post" button. */}
           <TouchableOpacity
             style={styles.postBtn} onPress={
-            () => { savePost(String(postText$.get()), null) }
-          }
+              () => { savePost(String(postText$.get()), null) }
+            }
           >
             <Text style={styles.buttonText}> Click to Post! </Text>
           </TouchableOpacity>
+          {/**Generates bottom bar at all times on page. */}
           {this.generateBottomBar(4)}
         </View>
-      )
-    } else if (this.page === PAGES.VIEWPOSTS) {
+      )  // End of `this.output =`.
+    // End of "New Post" page.
+    } else if (this.page === PAGES.VIEWPOSTS) { // AKA "Network" page currently.
+      // TODO(Gazdecki) We need the bottom bar to sit ontop of a scrolling page. Like an embedded scroll bar.
+      // e.g. If there are lots of posts in the network page, you have to scroll past alllllllll of them to get to the bottom bar again...
+      // TODO(Gazdecki) Speaking of which the bottom bar changes hight in the webpage rendering. Network and Friends do it alone...
       console.log('Fetching Post Array...')
       const postsArray = getUser().getAllPosts()
       console.log('Array of Posts' + postsArray)
       this.output = (
-        <>
+        <> {/**Really JSX? You need a blank opener here?*/}
+          {/**This is the page. Notice the bottom bar just inside this level. */}
           <SafeAreaView style={styles.container}>
+            {/**Big list of posts. */}
             <SafeAreaView style={styles.postViewContainer}>
+              {/**Individual posts, see ./Post.js */}}
               <FlatList
                 data={postsArray}
                 renderItem={post => renderPost(post)}
                 keyExtractor={post => post.postID}
               />
+              {/**Vote Button. */}
+              {/**TODO(Gazdecki) This button does not duplicate with each post correctly. */}
+              {/**TODO(Gazdecki) This button appears without any posts there. */}
+              {/**TODO(Gazdecki) There is a stray closing curly bracket at the top of the page. */}
+              {/**TODO(all) Sometimes the bottom bar breaks. Need to find way to reproduce. */}
+              <TouchableOpacity
+                style={styles.postBtn} onPress={
+                  () => { savePost(String(postText$.get()), null) }
+                }
+              >
+                <Text style={styles.buttonText}> Vote </Text>
+              </TouchableOpacity>
             </SafeAreaView>
             {this.generateBottomBar(2)}
           </SafeAreaView>
         </>
       )
-    }
-  }
+    } // End of view posts page.
+  } // End of generateScreen.
 
   generateBottomBar (currentSlice) {
     if (currentSlice === 1) {
