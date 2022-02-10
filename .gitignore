@@ -55,3 +55,6 @@ web-build/
 
 # Visual Studio
 .vs/
+
+# Vim Swap Files
+**.sw*
