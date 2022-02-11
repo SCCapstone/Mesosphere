@@ -26,22 +26,19 @@ export class Post { // Post objects will be constructed from postPage() prompt
   getPostID () {
     return this.postID
   }
-
-  incrementScore () {
-    this.score += 1
-    alterPostScore(this.postID, 0.5)
-  }
-
-  decrementScore () {
-    this.score -= 1
-    alterPostScore(this.postID, -0.5)
-  }
 }
 
-// where it all comes together
-// will add const media, const score, const id as created
+export function incrementScore () {
+  this.score += 1
+  alterPostScore(this.postID, 0.5)
+}
 
-export async function savePost (text) { // call with postText$.get()
+export function decrementScore () {
+  this.score -= 1
+  alterPostScore(this.postID, -0.5)
+}
+
+export async function savePost (text) {
   if (text.length > 50) {
     Alert.alert('Post too long', 'Posts can be, at most, 50 characers.', { text: 'OK.' })
   }
@@ -66,11 +63,13 @@ export function renderPost (post) {
       <View style={styles.scoreButtonStyle}>
         <View style={styles.scoreButton}/>
           <Button
-              onPress={() => alert('not fully implemented yet!')}
+              onPress={() => p.incrementScore() && renderPost(this)}
               title="Like"
               color="#000"
               borderRadius='12'
           />
+        <View style={styles.spacing}/>
+        <Text style={styles.postContainerText}>{p.score}</Text>
         <View style={styles.spacing}/>
         <View style={styles.scoreButton}/>
           <Button
@@ -78,9 +77,9 @@ export function renderPost (post) {
               title="Dislike"
               color="#000"
           />
-
-       
-        
+        <View style={styles.spacing}/>
+        <Text style={styles.postContainerText}>{p.score}</Text>
+        <View style={styles.spacing}/>        
       </View>
     </View>
   )
