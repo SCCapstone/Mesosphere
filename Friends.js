@@ -26,7 +26,17 @@ export default class Friends extends Component {
     }
 
     async fetchMiDs() {
-        data = await returnMIDSDatabaseArray();
+        this.setState({loading: true});
+        allIDs = await returnMIDSDatabaseArray();
+        this.setState({
+            data: allIDs,
+            error: null,
+            loading: false,
+        });
+        //TODO: Remove IDs that aren't in my friends list
+
+        //TODO: Fetch full user profile from Firebase
+        console.log(this.data);
     }
 
     makeRemoteRequest = () => {
@@ -112,11 +122,13 @@ export default class Friends extends Component {
                                     style={{
                                         textAlign: 'center',
                                         color: '#000'
-                                    }}>{`${item.name.first} ${item.name.last}`}</Text>
+                                    //}}>{`${item.name.first} ${item.name.last}`}
+                                    }}>{`${item}`}
+                                </Text>
                             </View>
                         </TouchableOpacity>
                     )}
-                    keyExtractor={item => item.email}
+                    //keyExtractor={item => item.email}
                     ItemSeparatorComponent={this.renderSeparator}
                     ListFooterComponent={this.renderFooter}
                 />

@@ -32,8 +32,8 @@ export async function returnMIDSDatabaseArray () {
   if(docSnap.size != 0) {
     //console.log(docSnap.docs)
     for(const document of docSnap.docs) {
-      console.log("Attempting to print MID:")
-      console.log(document.data().MID)
+      //console.log("Attempting to print MID:")
+      //console.log(document.data().MID)
       activeIDs.push(document.data().MID)
     }
   } else {
