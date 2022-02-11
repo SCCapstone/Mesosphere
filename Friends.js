@@ -114,7 +114,7 @@ export default class Friends extends Component {
                     ListHeaderComponent={this.renderHeader}
                     data={this.state.data}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => alert('Item pressed!')}>
+                        <TouchableOpacity onPress={() => this.itemTapped(item)}>
                             <View
                                 style={{
                                     flexDirection: 'row',
@@ -142,5 +142,14 @@ export default class Friends extends Component {
                 />
             </View>
         );
+    }
+
+    itemTapped(item) {
+        alert('Item pressed! ' + item);
+        if(item.includes("Add Friend")) {
+            console.log("Add friend button pushed!");
+        } else {
+            console.log("Real item pushed! Should move to User screen.");
+        }
     }
 }
