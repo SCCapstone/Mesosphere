@@ -17,7 +17,7 @@ const newDispname$ = atom('')
 const newBiography$ = atom('')
 
 export class ScreenGenerator {
-  constructor () {
+  constructor() {
     this.page = -1
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
     makeAdminAcc()
@@ -25,12 +25,12 @@ export class ScreenGenerator {
     setScreen(PAGES.LOGIN)
   }
 
-  selectScreen (input) {
+  selectScreen(input) {
     this.page = input
     this.generateScreen()
   }
 
-  generateScreen () {
+  generateScreen() {
     console.log('Generating: ' + this.page)
     if (this.page === PAGES.LOGIN) {
       this.output = (
@@ -155,8 +155,18 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>LOGOUT</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              setScreen(PAGES.SETTINGS)
+            }}
+          >
+            <Text style={styles.loginText}>Settings</Text>
+          </TouchableOpacity>
+
           {this.generateBottomBar(1)}
         </View>
+
       )
     } else if (this.page === PAGES.FRIENDSLIST) {
       this.output = (
@@ -198,8 +208,8 @@ export class ScreenGenerator {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.postBtn} onPress={
-            () => { savePost(String(postText$.get()), null) }
-          }
+              () => { savePost(String(postText$.get()), null) }
+            }
           >
             <Text style={styles.buttonText}> Click to Post! </Text>
           </TouchableOpacity>
@@ -224,14 +234,151 @@ export class ScreenGenerator {
           </SafeAreaView>
         </>
       )
+    } else if (this.page === PAGES.SETTINGS) {
+      console.log('Switching to Settings Page...')
+      const u = getUser()
+
+      this.output = (
+        <View style={styles.container}>
+          <Text style={styles.bigText}>{u.realName}</Text>
+          <Text style={styles.text}>{u.getMiD()}</Text>
+          {adminCheck()}
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              setScreen(PAGES.CHANGEACCOUNT_DISP)
+            }}
+          >
+            <Text style={styles.loginText}>Change Display Name</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              setScreen(PAGES.CHANGEACCOUNT_PASS)
+            }}
+          >
+            <Text style={styles.loginText}>Change Password</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              setScreen(PAGES.CHANGEACCOUNT_BIO)
+            }}
+          >
+            <Text style={styles.loginText}>Change Bio</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              setUser(null)
+              setScreen(PAGES.LOGIN)
+            }}
+          >
+            <Text style={styles.loginText}>Logout</Text>
+          </TouchableOpacity>
+
+          {this.generateBottomBar(1)}
+        </View>
+
+      )
+    } else if (this.page === PAGES.CHANGEACCOUNT_DISP) {
+      console.log('changing some aspect of the account (user)')
+      const u = getUser()
+      this.output = (
+        <View style={styles.container}>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder='New Display Name'
+              placeholderTextColor='#003f5c'
+              returnKeyType='next'
+              maxLength={30}
+              onChangeText={(newusername) => newUsername$.actions.set(newusername)}
+            />
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => {
+                alert("Functionality not yet linked, but display name in the process of being changed!")
+                setScreen(PAGES.SETTINGS)
+              }
+              }
+
+            >
+              <Text style={styles.loginText}>Change Display Name</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
+    } else if (this.page === PAGES.CHANGEACCOUNT_PASS) {
+      console.log('changing some aspect of the account (pass)')
+      const u = getUser()
+      this.output = (
+        <View style={styles.container}>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder='New Password'
+              placeholderTextColor='#003f5c'
+              secureTextEntry
+              returnKeyType='next'
+              maxLength={50}
+              onChangeText={(newpassword) => newPassword$.actions.set(newpassword)}
+            />
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => {
+                alert("Functionality not yet linked, but password in the process of being changed!")
+                setScreen(PAGES.SETTINGS)
+              }
+              }
+            >
+              <Text style={styles.loginText}>Change Password</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
+    } else if (this.page === PAGES.CHANGEACCOUNT_BIO) {
+      console.log('changing some aspect of the account (bio)')
+      const u = getUser()
+      this.output = (
+        <View style={styles.container}>
+          <View style={styles.inputViewBio}>
+            <TextInput
+              multiline
+              numberOfLines={3}
+              style={styles.TextInput}
+              placeholder='New Bio'
+              placeholderTextColor='#003f5c'
+              returnKeyType='done'
+              blurOnSubmit
+              maxLength={240}
+              onChangeText={(biography) => newBiography$.actions.set(biography)}
+            />
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => {
+                alert("Functionality not yet linked, but bio in the process of being changed!")
+                setScreen(PAGES.SETTINGS)
+              }
+              }
+            >
+              <Text style={styles.loginText}>Change Bio</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
     }
+
   }
 
-  generateBottomBar (currentSlice) {
+  generateBottomBar(currentSlice) {
     if (currentSlice === 1) {
       return (
         <View style={styles.bottomButtomBar}>
-          <TouchableOpacity style={styles.userButtonSelected}>
+          <TouchableOpacity
+            style={styles.userButtonSelected}
+            onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
+          >
             <Image source={logo} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
           </TouchableOpacity>
@@ -351,12 +498,12 @@ export class ScreenGenerator {
     }
   }
 
-  render () {
+  render() {
     return this.output
   }
 }
 
-function adminCheck () {
+function adminCheck() {
   const u = getUser()
   if (u != null && u.getUsername() === 'admin') {
     return (
@@ -381,7 +528,7 @@ function adminCheck () {
 
 let instance
 
-export function getInstance () {
+export function getInstance() {
   if (instance == null) {
     instance = new ScreenGenerator()
     console.log('New SG generated.')
