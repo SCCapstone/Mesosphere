@@ -33,10 +33,11 @@ export default class Friends extends Component {
             error: null,
             loading: false,
         });
+        this.arrayholder = allIDs;
         //TODO: Remove IDs that aren't in my friends list
 
         //TODO: Fetch full user profile from Firebase
-        console.log(this.data);
+        //console.log(this.data);
     }
 
     makeRemoteRequest = () => {
@@ -77,7 +78,7 @@ export default class Friends extends Component {
         });
 
         const newData = this.arrayholder.filter(item => {
-            const itemData = `${item.name.title.toUpperCase()} ${item.name.first.toUpperCase()} ${item.name.last.toUpperCase()}`;
+            const itemData = `${item.toUpperCase()}`;
             const textData = text.toUpperCase();
             return itemData.indexOf(textData) > -1;
         });
@@ -128,7 +129,7 @@ export default class Friends extends Component {
                             </View>
                         </TouchableOpacity>
                     )}
-                    //keyExtractor={item => item.email}
+                    keyExtractor={item => item}
                     ItemSeparatorComponent={this.renderSeparator}
                     ListFooterComponent={this.renderFooter}
                 />
