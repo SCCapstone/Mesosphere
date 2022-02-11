@@ -2,8 +2,7 @@ import { getInstance } from './ScreenGenerator'
 import { returnScreen } from './Utility'
 import { observe } from 'elementos'
 import { useState } from 'react'
-import { searchMID } from './firebaseConfig'
-//import { pullPostFromDataBase, pullAccountFromDatabase } from './firebaseConfig'
+import { searchMID, changeUserDisplayNameInDatabase } from './firebaseConfig'
 
 let oldscreen = -1
 
@@ -12,8 +11,6 @@ let oldscreen = -1
  *
  *
  */
-
-console.log(searchMID("meso-81af3251c79"))
 
 export default function App () {
   const [output, setOutput] = useState()

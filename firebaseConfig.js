@@ -146,6 +146,10 @@ export async function changeUserBiographyInDatabase (mesosphereID, newBio) {
   })
 }
 
+export async function getUserDisplayNameFromDatabase (mesosphereID) {
+  
+}
+
 export async function changeUserDisplayNameInDatabase (mesosphereID, newDisplayName) {
   await updateDoc(doc(database, 'accounts', mesosphereID), {
     displayname: newDisplayName

@@ -1,4 +1,4 @@
-import { Alert } from 'react-native'
+import { Alert, AsyncStorage } from 'react-native'
 import { deleteAll, storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
 import { pushAccountToDatabase, removeAccountFromDatabase, removePostFromDatabase } from './firebaseConfig'
@@ -33,7 +33,6 @@ export class User {
 
   addPost (p) {
     this.myPosts.push(p)
-    //update account in Firebase to reflect added postID
   }
 
   getAllPosts () {
@@ -51,8 +50,22 @@ export class User {
   addPeer (MID) {
     if (MID.length === 16 && MID.substring(0, 5) === 'meso-') { // validates format, not existence
       this.myPeers.push(MID)
+      addPeerToDatabase(this, MID)
     }
   }
+
+  setRealName(newName) {
+    this.realName = newName
+  }
+
+  setNewPassword(newPassword) {
+    this.password = newPassword
+  }
+
+  setNewBiography(newBiography) {
+    this.biography = newBiography
+  }
+
 }
 
 export async function checkLogin (username, password) {
@@ -97,6 +110,10 @@ export async function makeAcc (username, password, realName, bio) {
   pushAccountToDatabase(u)
   setUser(u)
   setScreen(PAGES.ACCOUNTPAGE)
+}
+
+export function changeRealName () {
+  alert(this.MiD)
 }
 
 // export async function makeAdminAcc () {

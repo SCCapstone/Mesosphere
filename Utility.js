@@ -13,7 +13,11 @@ export const PAGES = {
   NEWFRIEND: 5,
   FRIEND: 6,
   MAKEPOST: 7,
-  VIEWPOSTS: 8
+  VIEWPOSTS: 8,
+  SETTINGS: 9,
+  CHANGEACCOUNT_DISP:10,
+  CHANGEACCOUNT_PASS:11,
+  CHANGEACCOUNT_BIO:12
 }
 
 const currUser$ = atom(null)
