@@ -169,6 +169,7 @@ export class ScreenGenerator {
           </SafeAreaView>
         </>
       )
+    // TODO(Gazdecki) Stretch text box to be the exact same size as the oval background. Good luck testing that.
     } else if (this.page === PAGES.MAKEPOST) {  // "New Post" page.
       // TODO(Gazdecki) Figure out what this does exactly.
       const postText$ = atom('')
@@ -231,9 +232,6 @@ export class ScreenGenerator {
                 renderItem={post => renderPost(post)}
                 keyExtractor={post => post.postID}
               />
-              {/**Vote Button. */}
-              {/**TODO(all) Sometimes the bottom bar breaks. Need to find way to reproduce. */}
-              {/**Leading theory is the botton was executing nonsense code. Oops. */}
             </SafeAreaView>
             {this.generateBottomBar(2)}
           </SafeAreaView>
