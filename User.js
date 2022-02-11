@@ -1,6 +1,7 @@
 import { Alert } from 'react-native'
 import { deleteAll, storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
+import { pushAccountToDatabase, removeAccountFromDatabase, removePostFromDatabase } from './firebaseConfig'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export class User {
@@ -18,6 +19,10 @@ export class User {
     return this.username
   }
 
+  getBiography () {
+    return this.biography
+  }
+
   getMiD () {
     return this.MiD
   }
@@ -28,6 +33,7 @@ export class User {
 
   addPost (p) {
     this.myPosts.push(p)
+    //update account in Firebase to reflect added postID
   }
 
   getAllPosts () {
@@ -88,33 +94,35 @@ export async function makeAcc (username, password, realName, bio) {
   }
   const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new', 'new')
   await storeData(u.getMiD(), u)
+  pushAccountToDatabase(u)
   setUser(u)
   setScreen(PAGES.ACCOUNTPAGE)
 }
 
-export async function makeAdminAcc () {
-  const u = new User('admin', '8f95cfb66890ae8130f3ae7ec288d43ba0d898d60a0823788c6b3408', 'Administrator', 'It\'s a Messosphere in here.', 'meso-0', 'new', 'new')
-  await storeData('meso-0', u)
-}
+// export async function makeAdminAcc () {
+//   const u = new User('admin', '8f95cfb66890ae8130f3ae7ec288d43ba0d898d60a0823788c6b3408', 'Administrator', 'It\'s a Messosphere in here.', 'meso-0', 'new', 'new')
+//   await storeData('meso-0', u)
+// }
 
-export async function makeDemoAcc () {
-  const u = new User('Demo', 'ccc9c73a37651c6b35de64c3a37858ccae045d285f57fffb409d251d', 'VeryReal Nameson', 'I do so enjoy my <activies>', 'meso-1', 'new', 'new')
-  await storeData('meso-1', u)
-}
+// export async function makeDemoAcc () {
+//   const u = new User('Demo', 'ccc9c73a37651c6b35de64c3a37858ccae045d285f57fffb409d251d', 'VeryReal Nameson', 'I do so enjoy my <activies>', 'meso-1', 'new', 'new')
+//   await storeData('meso-1', u)
+// }
 
-export async function adminButton () {
-  console.log('Removing everything!')
-  await deleteAll()
-  console.log('Data removed.  Recreating admin acc...')
-  await makeAdminAcc()
-  await makeDemoAcc()
-  console.log('Done.  Moving to login...')
-  setUser(null)
-  setScreen(PAGES.LOGIN)
-}
+// export async function adminButton () {
+//   console.log('Removing everything!')
+//   await deleteAll()
+//   console.log('Data removed.  Recreating admin acc...')
+//   await makeAdminAcc()
+//   await makeDemoAcc()
+//   console.log('Done.  Moving to login...')
+//   setUser(null)
+//   setScreen(PAGES.LOGIN)
+// }
 
 export async function deleteCurrUser () {
   const u = getUser()
+  removeAccountFromDatabase(u)
   removeValue(u.getMiD())
   setUser(null)
   setScreen(PAGES.LOGIN)
