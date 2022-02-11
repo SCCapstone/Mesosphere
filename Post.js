@@ -55,9 +55,12 @@ export async function savePost (text) { // call with postText$.get()
 
 export function renderPost (post) {
   const p = post.item
+  const u = getUser()
   return (
     <View style={styles.postContainer}>
+       <Text style={styles.postContainerText}>{u.realName} </Text>
       {/* <Text style={styles.postContainerText}>MID: {p.attachedMiD} </Text> */}
+
       <Text style={styles.postContainerText}>{p.textContent} </Text>
       <Text style={styles.postContainerText}>{p.timestamp} </Text>
       <View style={styles.scoreButtonStyle}>
@@ -97,6 +100,6 @@ export function renderPost (post) {
               paddingHorizontal: 10,
         />
       </View>
-
+      <Text style={styles.postContainerText}> {u.}</Text>
       Modify height to increase space between buttons
 */
