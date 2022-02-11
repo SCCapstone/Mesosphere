@@ -82,9 +82,16 @@ export default class Friends extends Component {
             const textData = text.toUpperCase();
             return itemData.indexOf(textData) > -1;
         });
-        this.setState({
-            data: newData,
-        });
+        if(newData.length == 0 && this.arrayholder.length > 0) {
+            const dummyData = ["Add Friend " + text +  "?"];
+            this.setState({
+                data: dummyData,
+            })
+        } else {
+            this.setState({
+                data: newData,
+            });
+        }
     };
 
     renderHeader = () => {
