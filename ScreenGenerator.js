@@ -5,6 +5,7 @@ import { checkLogin, makeAcc, adminButton, deleteCurrUser, makeAdminAcc, makeDem
 import { renderPost, savePost } from './Post'
 
 import FriendPage from './Friends'
+import PostsPage from './PostsScreenComponent'
 import logo from './assets/MesoSphere.png'
 import { atom } from 'elementos'
 import { FlatList } from 'react-native-gesture-handler'
@@ -235,18 +236,11 @@ export class ScreenGenerator {
         </View>
       )
     } else if (this.page === PAGES.VIEWPOSTS) {
-      console.log('Fetching Post Array...')
-      const postsArray = getUser().getAllPosts()
-      console.log('Array of Posts' + postsArray)
       this.output = (
         <>
           <SafeAreaView style={styles.container}>
-            <SafeAreaView style={styles.postViewContainer}>
-              <FlatList
-                data={postsArray}
-                renderItem={post => renderPost(post)}
-                keyExtractor={post => post.postID}
-              />
+          <SafeAreaView style={styles.postViewContainer}>
+              <PostsPage/>
             </SafeAreaView>
             {this.generateBottomBar(2)}
           </SafeAreaView>

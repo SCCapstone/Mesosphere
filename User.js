@@ -45,29 +45,6 @@ export class User {
     return this.myPosts
   }
 
-  //All posts this user can see, including their peers and their own.
-  async getAllPosts() {
-    const allPosts = [];
-    //For each of my peers:
-    for(const u in this.myPeers) {
-      const peer = await pullAccountFromDatabase(u);
-      console.log(peer.getMiD());
-      console.log(peer.getMyPosts());
-      const peerPosts = peer.getMyPosts();
-      //For each of their posts:
-      for(const p in peerPosts) {
-        //Fetch the post from firebase using ID
-        const post = await pullPostFromDataBase(p);
-        allPosts.push(post);
-      }
-    }
-    //Do the same for myself:
-    for(const post in this.myPosts) {
-      allPosts.push(post);
-    }
-    return allPosts;
-  }
-
   getAllPeers () {
     return this.myPeers
   }

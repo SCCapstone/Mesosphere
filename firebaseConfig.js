@@ -140,7 +140,12 @@ export async function pullPostFromDataBase (postID) {
   if (docSnap.exists()) {
     const data = docSnap.data()
     console.log("Document data:", docSnap.data());
-    return new Post(data.MID, data.postID, data.score, data.text, data.timestamp)
+    console.log(data.timestamp);
+    const realstamp = new Date(1970, 0, 1);
+    realstamp.setSeconds(data.timestamp.seconds);
+    realstamp.setMilliseconds(data.timestamp.nanoseconds)
+    console.log(realstamp);
+    return new Post(data.MID, data.postID, data.score, data.text, realstamp.toString())
   }
   else {
     console.log("Error: Requested post does not exist.")
