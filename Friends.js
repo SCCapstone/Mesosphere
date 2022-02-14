@@ -29,7 +29,11 @@ export default class Friends extends Component {
     async fetchMiDs() {
         this.setState({loading: true});
         this.allIDs = await returnMIDSDatabaseArray();
+        if(getUser() == null) {
+            console.log("Null getUser!");
+        }
         const myPeers = getUser().getAllPeers();
+            
         for (const ID of this.allIDs) {
             console.log("Checking ID " + ID + " against list of peers:" + myPeers);
             if(myPeers.includes(ID) && !(this.arrayholder.includes(ID)))
@@ -140,13 +144,12 @@ export default class Friends extends Component {
                 [
                   {
                     text: "Cancel",
-                    onPress: () => null,//console.log("Cancel Pressed"),
+                    onPress: () => this.searchFilterFunction(""),//console.log("Cancel Pressed"),
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () =>  {getUser().addPeer(newFriendID); this.fetchMiDs()}}
+                  { text: "OK", onPress: () =>  {getUser().addPeer(newFriendID); this.fetchMiDs();this.searchFilterFunction("");}}
                 ]
               );
-              
         } else {
             console.log("Real item pushed! Should move to User screen.");
             //Construct a User object from item using Firebase

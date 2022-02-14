@@ -1,7 +1,7 @@
 import { Alert } from 'react-native'
 import { deleteAll, storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
-import { pushAccountToDatabase, removeAccountFromDatabase, removePostFromDatabase } from './firebaseConfig'
+import { pushAccountToDatabase, removeAccountFromDatabase, removePostFromDatabase, pullAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase, pullPostFromDataBase} from './firebaseConfig'
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -41,8 +41,31 @@ export class User {
     //update account in Firebase to reflect added postID
   }
 
-  getAllPosts () {
+  getMyPosts () {
     return this.myPosts
+  }
+
+  //All posts this user can see, including their peers and their own.
+  async getAllPosts() {
+    const allPosts = [];
+    //For each of my peers:
+    for(const u in this.myPeers) {
+      const peer = await pullAccountFromDatabase(u);
+      console.log(peer.getMiD());
+      console.log(peer.getMyPosts());
+      const peerPosts = peer.getMyPosts();
+      //For each of their posts:
+      for(const p in peerPosts) {
+        //Fetch the post from firebase using ID
+        const post = await pullPostFromDataBase(p);
+        allPosts.push(post);
+      }
+    }
+    //Do the same for myself:
+    for(const post in this.myPosts) {
+      allPosts.push(post);
+    }
+    return allPosts;
   }
 
   getAllPeers () {
@@ -57,7 +80,8 @@ export class User {
     console.log("Adding peer: "+ MID)
     if (MID.length === 16 && MID.substring(0, 5) === 'meso-') { // validates format, not existence
       console.log("Format validated!")
-      this.myPeers.push(MID)
+      this.myPeers.push(MID);
+      addPeerToDatabase(MID);
     }
   }
 
@@ -65,6 +89,7 @@ export class User {
     const index = this.myPeers.indexOf(MID);
     if(index > -1) {
       this.myPeers.splice(index, 1);
+      removePeerFromDatabase(MID);
     }
   }
 }

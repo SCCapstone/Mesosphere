@@ -31,6 +31,7 @@ export function setScreen (s) {
 export function getUser () {
   if(currUser$ == null)
     console.log("Null current user! (Error state)")
+  console.log(currUser$.get());
   return currUser$.get()
 }
 
