@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, Text, FlatList } from 'react-native';
+import { Alert, View, Image, TouchableOpacity, Text, FlatList } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import { styles } from './Utility';
+import { styles, getUser, setFocus, setScreen, PAGES } from './Utility';
 import logo from './assets/MesoSphere.png'
-import { returnMIDSDatabaseArray } from './firebaseConfig'
+import { returnMIDSDatabaseArray, pullAccountFromDatabase } from './firebaseConfig'
 
 
 export default class Friends extends Component {
@@ -17,6 +17,7 @@ export default class Friends extends Component {
         };
 
         this.arrayholder = [];
+        this.allIDs = [];
     }
 
     componentDidMount() {
@@ -27,37 +28,19 @@ export default class Friends extends Component {
 
     async fetchMiDs() {
         this.setState({loading: true});
-        allIDs = await returnMIDSDatabaseArray();
+        this.allIDs = await returnMIDSDatabaseArray();
+        const myPeers = getUser().getAllPeers();
+        for (const ID of this.allIDs) {
+            console.log("Checking ID " + ID + " against list of peers:" + myPeers);
+            if(myPeers.includes(ID) && !(this.arrayholder.includes(ID)))
+                this.arrayholder.push(ID);
+        }
         this.setState({
-            data: allIDs,
+            data: this.arrayholder,
             error: null,
             loading: false,
         });
-        this.arrayholder = allIDs;
-        //TODO: Remove IDs that aren't in my friends list
-
-        //TODO: Fetch full user profile from Firebase
-        //console.log(this.data);
     }
-
-    makeRemoteRequest = () => {
-        const url = `https://randomuser.me/api/?&results=20`;
-        this.setState({ loading: true });
-
-        fetch(url)
-            .then(res => res.json())
-            .then(res => {
-                this.setState({
-                    data: res.results,
-                    error: res.error || null,
-                    loading: false,
-                });
-                this.arrayholder = res.results;
-            })
-            .catch(error => {
-                this.setState({ error, loading: false });
-            });
-    };
 
     renderSeparator = () => {
         return (
@@ -82,7 +65,9 @@ export default class Friends extends Component {
             const textData = text.toUpperCase();
             return itemData.indexOf(textData) > -1;
         });
-        if(newData.length == 0 && this.arrayholder.length > 0) {
+        //If: There are no friends in the search field & ID exists & ID is not you
+        if(newData.length == 0 && this.allIDs.length > 0 && text.length == 16 && this.allIDs.includes(text) &&
+            text != getUser().getMiD()) {
             const dummyData = ["Add Friend " + text +  "?"];
             this.setState({
                 data: dummyData,
@@ -144,12 +129,33 @@ export default class Friends extends Component {
         );
     }
 
-    itemTapped(item) {
-        alert('Item pressed! ' + item);
+    async itemTapped(item) {
+        //alert('Item pressed! ' + item);
         if(item.includes("Add Friend")) {
-            console.log("Add friend button pushed!");
+            console.log(item.substring(11,27));
+            const newFriendID = item.substring(11,27);
+            Alert.alert(
+                "Add Friend?",
+                "Are you sure you want to add " + newFriendID + "?",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => null,//console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () =>  {getUser().addPeer(newFriendID); this.fetchMiDs()}}
+                ]
+              );
+              
         } else {
             console.log("Real item pushed! Should move to User screen.");
+            //Construct a User object from item using Firebase
+            const u = await pullAccountFromDatabase(item);
+            //Set that user object to our "current focus"
+            setFocus(u);
+            console.log(u.getDisplayName());
+            //Set the screen to the 'View Friend' screen (which uses our focus to generate display)
+            setScreen(PAGES.FRIEND);
         }
     }
 }

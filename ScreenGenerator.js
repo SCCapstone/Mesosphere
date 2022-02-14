@@ -1,6 +1,6 @@
 import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
-import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
+import { PAGES, styles, setScreen, getUser, setUser, getFocus } from './Utility'
 import { checkLogin, makeAcc, adminButton, deleteCurrUser, makeAdminAcc, makeDemoAcc } from './User'
 import { renderPost, savePost } from './Post'
 
@@ -168,6 +168,34 @@ export class ScreenGenerator {
             {this.generateBottomBar(3)}
           </SafeAreaView>
         </>
+      )
+    } else if (this.page === PAGES.FRIEND) {
+      const u = getFocus();
+      this.output = (
+        <View style={styles.container}>
+          <Text style={styles.bigText}>{u.getDisplayName()}</Text>
+          <Text style={styles.text}>{u.getMiD()}</Text>
+          <Text style={styles.text}>{u.getBiography()}</Text>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              //Remove friend
+              getUser().removePeer(u.getMiD())
+              setScreen(PAGES.FRIENDSLIST);
+            }}
+          >
+            <Text style={styles.loginText}>REMOVE FRIEND</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              setScreen(PAGES.FRIENDSLIST);
+            }}
+          >
+            <Text style={styles.loginText}>BACK</Text>
+          </TouchableOpacity>
+          {this.generateBottomBar(3)}
+        </View>
       )
     } else if (this.page === PAGES.MAKEPOST) {
       const postText$ = atom('')

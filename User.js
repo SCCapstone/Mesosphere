@@ -2,6 +2,7 @@ import { Alert } from 'react-native'
 import { deleteAll, storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
 import { pushAccountToDatabase, removeAccountFromDatabase, removePostFromDatabase } from './firebaseConfig'
+import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export class User {
@@ -17,6 +18,10 @@ export class User {
 
   getUsername () {
     return this.username
+  }
+
+  getDisplayName () {
+    return this.realName
   }
 
   getBiography () {
@@ -49,8 +54,17 @@ export class User {
   }
 
   addPeer (MID) {
+    console.log("Adding peer: "+ MID)
     if (MID.length === 16 && MID.substring(0, 5) === 'meso-') { // validates format, not existence
+      console.log("Format validated!")
       this.myPeers.push(MID)
+    }
+  }
+
+  removePeer (MID) {
+    const index = this.myPeers.indexOf(MID);
+    if(index > -1) {
+      this.myPeers.splice(index, 1);
     }
   }
 }

@@ -18,6 +18,7 @@ export const PAGES = {
 
 const currUser$ = atom(null)
 const currScreen$ = atom(null)
+const currFocus$ = atom(null)
 
 export function setUser (u) {
   currUser$.actions.set(u)
@@ -28,6 +29,8 @@ export function setScreen (s) {
 }
 
 export function getUser () {
+  if(currUser$ == null)
+    console.log("Null current user! (Error state)")
   return currUser$.get()
 }
 
@@ -37,6 +40,14 @@ export function getScreen () {
 
 export function returnScreen () {
   return currScreen$
+}
+
+export function getFocus () {
+  return currFocus$.get()
+}
+
+export function setFocus (f) {
+  return currFocus$.actions.set(f);
 }
 
 export const storeData = async (key, value) => {
