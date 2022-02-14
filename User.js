@@ -60,6 +60,7 @@ export class User {
       this.myPeers.push(MID);
       addPeerToDatabase(MID);
     }
+    storeLocally ();
   }
 
   removePeer (MID) {
@@ -68,6 +69,7 @@ export class User {
       this.myPeers.splice(index, 1);
       removePeerFromDatabase(MID);
     }
+    storeLocally ();
   }
 }
 
