@@ -1,19 +1,18 @@
-//const { reloadApp } = require('detox-expo-helpers');
+// const { reloadApp } = require('detox-expo-helpers');
 
 describe('Example', () => {
   beforeAll(async () => {
-    await device.launchApp();
-    //await reloadApp();
-  });
+    await device.launchApp()
+    // await reloadApp();
+  })
   beforeEach(async () => {
-    await device.reloadReactNative();
-  });
+    await device.reloadReactNative()
+  })
 
-  test('LoginScreenDisplays', async() => {
-    await expect(element(by.id('LoginUserPrompt'))).toBeVisible();
-    await expect(element(by.id('LoginPassPrompt'))).toBeVisible();
-    await expect(element(by.id('LoginButton'))).toBeVisible();
-    await expect(element(by.id('RegisterButton'))).toBeVisible();
- });
-
-});
+  test('LoginScreenDisplays', async () => {
+    await expect(element(by.id('LoginUserPrompt'))).toBeVisible()
+    await expect(element(by.id('LoginPassPrompt'))).toBeVisible()
+    await expect(element(by.id('LoginButton'))).toBeVisible()
+    await expect(element(by.id('RegisterButton'))).toBeVisible()
+  })
+})

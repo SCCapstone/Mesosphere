@@ -1,14 +1,7 @@
 import React from 'react'
 import { View, Text, Alert } from 'react-native'
 import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
-import { generatePostID, getUser, setScreen, styles, PAGES, getData } from './Utility'
-
-// Tasks:
-// Posts must consist of plaintext and optional image components
-// Users must be able to attach images via a pointer to their phone library
-// Posts generate unique IDs after checking with firebase
-// Posts have associated score variables
-// Post data is to be stored locally
+import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
 
 export class Post { // Post objects will be constructed from postPage() prompt
   constructor (attachedMiD, postID, score, textContent, interactedUsers, timestamp) {
@@ -20,7 +13,7 @@ export class Post { // Post objects will be constructed from postPage() prompt
     this.timestamp = timestamp
   }
 
-  getAttachedMID() {
+  getAttachedMID () {
     return this.MiD
   }
 
@@ -62,7 +55,6 @@ export function renderPost (post) {
   const p = post.item
   return (
     <View style={styles.postContainer}>
-      {/* <Text style={styles.postContainerText}>MID: {p.attachedMiD} </Text> */}
       <Text style={styles.postContainerText}>Post ID: {p.postID} </Text>
       <Text style={styles.postContainerText}>{p.timestamp} </Text>
       <Text style={styles.postContainerText}>Text content: {p.textContent} </Text>

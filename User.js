@@ -54,18 +54,17 @@ export class User {
     }
   }
 
-  setRealName(newName) {
+  setRealName (newName) {
     this.realName = newName
   }
 
-  setNewPassword(newPassword) {
+  setNewPassword (newPassword) {
     this.password = newPassword
   }
 
-  setNewBiography(newBiography) {
+  setNewBiography (newBiography) {
     this.biography = newBiography
   }
-
 }
 
 export async function checkLogin (username, password) {
@@ -75,8 +74,6 @@ export async function checkLogin (username, password) {
     const temp = await getData(MiD)
     if (temp != null) {
       const u = new User(temp.username, temp.password, temp.realName, temp.biography, temp.MiD, temp.myPosts, temp.myPeers)
-      // console.log("Comparing for ID: " + u.getMiD())
-      // console.log("Incoming: " + username + " | Expected: " + u.getUsername())
       if (username === u.username) {
         found = true
         if (String(sha224(String(password))) === u.password) {

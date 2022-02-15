@@ -2,8 +2,6 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment } from 'firebase/firestore/lite'
 import { Post } from './Post'
 import { User } from './User'
-import { getUser } from './Utility'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -55,11 +53,11 @@ export async function pushPostIDToDatabase (postID) { // functional
 
 export async function pushAccountToDatabase (u) {
   await setDoc(doc(database, 'accounts', u.MiD), {
-    "MID": u.MiD,
-    "biography": u.biography,
-    "displayname": u.username,
-    "friends": u.myPeers,
-    "posts": u.myPosts
+    MID: u.MiD,
+    biography: u.biography,
+    displayname: u.username,
+    friends: u.myPeers,
+    posts: u.myPosts
   })
 }
 
@@ -68,17 +66,16 @@ export async function pullAccountFromDatabase (mesosphereID) {
   const docSnap = await getDoc(userRef)
   if (docSnap.exists()) {
     const data = docSnap.data()
-    console.log("Document data:", docSnap.data())
-    return new User("", "", data.displayname, data.biography, data.MID, data.posts, data.friends)
-  }
-  else {
-    console.log("Error: Requested post does not exist.")
+    console.log('Document data:', docSnap.data())
+    return new User('', '', data.displayname, data.biography, data.MID, data.posts, data.friends)
+  } else {
+    console.log('Error: Requested post does not exist.')
   }
 }
 
 export async function removeAccountFromDatabase (u) {
   await deleteDoc(doc(database, 'accounts', u.MiD))
-  
+
   for (let i = 0; i < u.myPosts.length; i++) {
     await deleteDoc(doc(database, 'posts', u.myPosts[i].postID))
   }
@@ -96,16 +93,16 @@ export async function removePeerFromDatabase (u, peerID) {
   })
 }
 
-// being "friends" in Mesosphere needs mutual peer acceptance! Internal logic will check and verify that each other is a peer, otherwise, no posts will be shown 
+// being "friends" in Mesosphere needs mutual peer acceptance! Internal logic will check and verify that each other is a peer, otherwise, no posts will be shown
 
 export async function pushPostToDatabase (p) {
   await setDoc(doc(database, 'posts', p.postID), {
-    "MID": p.attachedMiD,
-    "postID": p.postID,
-    "score": p.score,
-    "text": p.textContent,
-    "interactedUsers": p.interactedUsers,
-    "timestamp": new Date()
+    MID: p.attachedMiD,
+    postID: p.postID,
+    score: p.score,
+    text: p.textContent,
+    interactedUsers: p.interactedUsers,
+    timestamp: new Date()
   })
 
   await updateDoc(doc(database, 'accounts', p.attachedMiD), {
@@ -113,7 +110,7 @@ export async function pushPostToDatabase (p) {
   })
 }
 
-export async function alterPostScore (u, postID, change) { //increment/decrement in units of 0.5; upvote: change = 0.5, downvote: change = -0.5
+export async function alterPostScore (u, postID, change) { // increment/decrement in units of 0.5; upvote: change = 0.5, downvote: change = -0.5
   const postRef = doc(database, 'posts', postID)
   await updateDoc(doc(database, 'posts', postID), {
     score: increment(change)
@@ -122,14 +119,14 @@ export async function alterPostScore (u, postID, change) { //increment/decrement
   await updateDoc(doc(database, 'posts', postID), {
     interactedUsers: arrayUnion(u.MiD)
   })
-} //done in conjunction with local post score altering, see Post.js
+} // done in conjunction with local post score altering, see Post.js
 
-export async function deInteract(u, postID) { //removing post interaction, used for undoing a like/dislike
+export async function deInteract (u, postID) { // removing post interaction, used for undoing a like/dislike
   await updateDoc(doc(database, 'posts', postID), {
     interactedUsers: arrayRemove(u.MiD)
   })
-} 
-//if you've already interacted, and want to take the opposite interaction, first call deInteract to remove the interaction, then call alterPostScore()
+}
+// if you've already interacted, and want to take the opposite interaction, first call deInteract to remove the interaction, then call alterPostScore()
 
 export async function removePostFromDatabase (p) {
   await updateDoc(doc(database, 'accounts', p.attachedMiD), {
@@ -144,15 +141,14 @@ export async function pullPostFromDataBase (postID) {
   const docSnap = await getDoc(postRef)
   if (docSnap.exists()) {
     const data = docSnap.data()
-    console.log("Document data:", docSnap.data());
+    console.log('Document data:', docSnap.data())
     return new Post(data.MID, data.postID, data.score, data.text, data.timestamp)
-  }
-  else {
-    console.log("Error: Requested post does not exist.")
+  } else {
+    console.log('Error: Requested post does not exist.')
   }
 }
 
-//user manipulation from local changes
+// user manipulation from local changes
 export async function changeUserBiographyInDatabase (mesosphereID, newBio) {
   await updateDoc(doc(database, 'accounts', mesosphereID), {
     biography: newBio
@@ -160,7 +156,7 @@ export async function changeUserBiographyInDatabase (mesosphereID, newBio) {
 }
 
 export async function getUserDisplayNameFromDatabase (mesosphereID) {
-  
+
 }
 
 export async function changeUserDisplayNameInDatabase (mesosphereID, newDisplayName) {
@@ -168,6 +164,5 @@ export async function changeUserDisplayNameInDatabase (mesosphereID, newDisplayN
     displayname: newDisplayName
   })
 }
-
 
 export { database }

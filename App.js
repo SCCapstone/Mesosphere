@@ -1,15 +1,9 @@
 import { getInstance } from './ScreenGenerator'
-import { returnScreen, getItem } from './Utility'
+import { returnScreen } from './Utility'
 import { observe } from 'elementos'
 import { useState } from 'react'
 
 let oldscreen = -1
-
-/* packages for this branch: (to uninstall)
- *
- *
- *
- */
 
 export default function App () {
   const [output, setOutput] = useState()
