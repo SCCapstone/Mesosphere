@@ -2,6 +2,8 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment } from 'firebase/firestore/lite'
 import { Post } from './Post'
 import { User } from './User'
+import { getUser } from './Utility'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -14,8 +16,6 @@ const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS 
 }
 const app = initializeApp(firebaseConfig)
 const database = getFirestore(app)
-
-const IDSRef = doc(database, 'main', 'IDS')
 
 export async function returnMIDSDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
@@ -104,6 +104,7 @@ export async function pushPostToDatabase (p) {
     "postID": p.postID,
     "score": p.score,
     "text": p.textContent,
+    "interactedUsers": p.interactedUsers,
     "timestamp": new Date()
   })
 
@@ -112,11 +113,23 @@ export async function pushPostToDatabase (p) {
   })
 }
 
-export async function alterPostScore (postID, change) { //increment/decrement in units of 0.5; upvote: change = 0.5, downvote: change = -0.5
+export async function alterPostScore (u, postID, change) { //increment/decrement in units of 0.5; upvote: change = 0.5, downvote: change = -0.5
+  const postRef = doc(database, 'posts', postID)
   await updateDoc(doc(database, 'posts', postID), {
     score: increment(change)
   })
+
+  await updateDoc(doc(database, 'posts', postID), {
+    interactedUsers: arrayUnion(u.MiD)
+  })
 } //done in conjunction with local post score altering, see Post.js
+
+export async function deInteract(u, postID) { //removing post interaction, used for undoing a like/dislike
+  await updateDoc(doc(database, 'posts', postID), {
+    interactedUsers: arrayRemove(u.MiD)
+  })
+} 
+//if you've already interacted, and want to take the opposite interaction, first call deInteract to remove the interaction, then call alterPostScore()
 
 export async function removePostFromDatabase (p) {
   await updateDoc(doc(database, 'accounts', p.attachedMiD), {

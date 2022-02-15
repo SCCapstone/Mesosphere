@@ -11,11 +11,12 @@ import { generatePostID, getUser, setScreen, styles, PAGES, getData } from './Ut
 // Post data is to be stored locally
 
 export class Post { // Post objects will be constructed from postPage() prompt
-  constructor (attachedMiD, postID, score, textContent, timestamp) {
+  constructor (attachedMiD, postID, score, textContent, interactedUsers, timestamp) {
     this.attachedMiD = attachedMiD
     this.postID = postID
     this.score = score
     this.textContent = textContent
+    this.interactedUsers = interactedUsers
     this.timestamp = timestamp
   }
 
@@ -36,6 +37,10 @@ export class Post { // Post objects will be constructed from postPage() prompt
     this.score -= 1
     alterPostScore(this.postID, -0.5)
   }
+
+  getInteractedUsers () {
+    return this.interactedUsers
+  }
 }
 
 // where it all comes together
@@ -46,7 +51,7 @@ export async function savePost (text) { // call with postText$.get()
     Alert.alert('Post too long', 'Posts can be, at most, 50 characers.', { text: 'OK.' })
   }
   const u = getUser()
-  const p = new Post(u.MiD, generatePostID(), 0, text, new Date().toString())
+  const p = new Post(u.MiD, generatePostID(), 0, text, [], new Date().toString())
   u.addPost(p)
   u.storeLocally()
   pushPostToDatabase(p)

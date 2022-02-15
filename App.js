@@ -1,8 +1,7 @@
 import { getInstance } from './ScreenGenerator'
-import { returnScreen } from './Utility'
+import { returnScreen, getItem } from './Utility'
 import { observe } from 'elementos'
 import { useState } from 'react'
-import { searchMID, changeUserDisplayNameInDatabase } from './firebaseConfig'
 
 let oldscreen = -1
 
@@ -15,7 +14,6 @@ let oldscreen = -1
 export default function App () {
   const [output, setOutput] = useState()
   const Gen = getInstance()
-
   observe(returnScreen(), (screen) => {
     console.log('Change observed.')
     if (oldscreen !== screen) {
