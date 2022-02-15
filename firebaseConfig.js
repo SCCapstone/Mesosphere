@@ -117,14 +117,13 @@ export async function alterPostScore (u, postID, change) { // increment/decremen
   await updateDoc(doc(database, 'posts', postID), {
     interactedUsers: arrayUnion(u.MiD)
   })
-} // done in conjunction with local post score altering, see Post.js
+}
 
 export async function deInteract (u, postID) { // removing post interaction, used for undoing a like/dislike
   await updateDoc(doc(database, 'posts', postID), {
     interactedUsers: arrayRemove(u.MiD)
   })
-}
-// if you've already interacted, and want to take the opposite interaction, first call deInteract to remove the interaction, then call alterPostScore()
+} // if you've already interacted, and want to take the opposite interaction, first call deInteract to remove the interaction, then call alterPostScore()
 
 export async function removePostFromDatabase (p) {
   await updateDoc(doc(database, 'accounts', p.attachedMiD), {
@@ -140,7 +139,7 @@ export async function pullPostFromDataBase (postID) {
   if (docSnap.exists()) {
     const data = docSnap.data()
     console.log('Document data:', docSnap.data())
-    return new Post(data.MID, data.postID, data.score, data.text, data.timestamp)
+    return new Post(data.MID, data.postID, data.score, data.text, data.interactedUsers, data.timestamp)
   } else {
     console.log('Error: Requested post does not exist.')
   }
@@ -182,6 +181,17 @@ export async function doesPostExist (postID) {
   const postRef = doc(database, 'posts', postID)
   const postSnap = await getDoc(postRef)
   return postSnap.exists()
+}
+
+export async function hasInteractedWith (u, postID) {
+  const postRef = doc(database, 'posts', postID)
+  const postSnap = await getDoc(postRef)
+  if (postSnap.exists()) {
+    const data = postSnap.data()
+    return data.interactedUsers.includes(u.MiD)
+  } else {
+    console.log('Error: Requested post does not exist.')
+  }
 }
 
 export { database }

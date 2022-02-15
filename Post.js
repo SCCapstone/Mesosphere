@@ -52,6 +52,7 @@ export async function savePost (text) { // call with postText$.get()
 }
 
 export function renderPost (post) {
+  //call score sync function?
   const p = post.item
   return (
     <View style={styles.postContainer}>
@@ -61,4 +62,4 @@ export function renderPost (post) {
       <Text style={styles.postContainerText}>Score: {p.score} </Text>
     </View>
   )
-} // TO BE FORMATTED
+}
