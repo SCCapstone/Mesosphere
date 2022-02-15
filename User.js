@@ -1,8 +1,7 @@
 import { Alert, AsyncStorage } from 'react-native'
-import { deleteAll, storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
+import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
-import { pushAccountToDatabase, removeAccountFromDatabase, removePostFromDatabase } from './firebaseConfig'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
+import { doesAccountExist, pushAccountToDatabase, removeAccountFromDatabase } from './firebaseConfig'
 
 export class User {
   constructor (username, password, realName, biography, MiD, myPosts, myPeers) {
@@ -48,7 +47,7 @@ export class User {
   }
 
   addPeer (MID) {
-    if (MID.length === 16 && MID.substring(0, 5) === 'meso-') { // validates format, not existence
+    if (MID.length === 16 && MID.substring(0, 5) === 'meso-' && doesAccountExist(MID)) { // validates format, not existence
       this.myPeers.push(MID)
       addPeerToDatabase(this, MID)
     }
@@ -112,27 +111,6 @@ export async function makeAcc (username, password, realName, bio) {
 export function changeRealName () {
   alert(this.MiD)
 }
-
-// export async function makeAdminAcc () {
-//   const u = new User('admin', '8f95cfb66890ae8130f3ae7ec288d43ba0d898d60a0823788c6b3408', 'Administrator', 'It\'s a Messosphere in here.', 'meso-0', 'new', 'new')
-//   await storeData('meso-0', u)
-// }
-
-// export async function makeDemoAcc () {
-//   const u = new User('Demo', 'ccc9c73a37651c6b35de64c3a37858ccae045d285f57fffb409d251d', 'VeryReal Nameson', 'I do so enjoy my <activies>', 'meso-1', 'new', 'new')
-//   await storeData('meso-1', u)
-// }
-
-// export async function adminButton () {
-//   console.log('Removing everything!')
-//   await deleteAll()
-//   console.log('Data removed.  Recreating admin acc...')
-//   await makeAdminAcc()
-//   await makeDemoAcc()
-//   console.log('Done.  Moving to login...')
-//   setUser(null)
-//   setScreen(PAGES.LOGIN)
-// }
 
 export async function deleteCurrUser () {
   const u = getUser()

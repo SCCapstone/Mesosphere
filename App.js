@@ -8,6 +8,7 @@ let oldscreen = -1
 export default function App () {
   const [output, setOutput] = useState()
   const Gen = getInstance()
+
   observe(returnScreen(), (screen) => {
     console.log('Change observed.')
     if (oldscreen !== screen) {

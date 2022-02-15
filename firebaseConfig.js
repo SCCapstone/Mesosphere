@@ -39,13 +39,13 @@ export async function returnPostIDDatabaseLength () {
   return IDSSnap.data().postIDs.length
 }
 
-export async function pushMIDToDatabase (MID) { // functional
+export async function pushMIDToDatabase (MID) {
   await updateDoc(IDSRef, {
     MesosphereIDs: arrayUnion(MID)
   })
 }
 
-export async function pushPostIDToDatabase (postID) { // functional
+export async function pushPostIDToDatabase (postID) {
   await updateDoc(IDSRef, {
     postIDs: arrayUnion(postID)
   })
@@ -92,8 +92,6 @@ export async function removePeerFromDatabase (u, peerID) {
     friends: arrayRemove(peerID)
   })
 }
-
-// being "friends" in Mesosphere needs mutual peer acceptance! Internal logic will check and verify that each other is a peer, otherwise, no posts will be shown
 
 export async function pushPostToDatabase (p) {
   await setDoc(doc(database, 'posts', p.postID), {
@@ -148,6 +146,17 @@ export async function pullPostFromDataBase (postID) {
   }
 }
 
+export async function returnPostScoreFromDatabase (postID) { //used for keeping local copies of personal posts up to date with Firebase
+  const postRef = doc(database, 'posts', postID)
+  const postSnap = await getDoc(postRef)
+  if (postSnap.exists()) {
+    const data = postSnap.data()
+    return data.score
+  } else {
+    console.log('Error: Requested post does not exist.')
+  }
+}
+
 // user manipulation from local changes
 export async function changeUserBiographyInDatabase (mesosphereID, newBio) {
   await updateDoc(doc(database, 'accounts', mesosphereID), {
@@ -155,14 +164,24 @@ export async function changeUserBiographyInDatabase (mesosphereID, newBio) {
   })
 }
 
-export async function getUserDisplayNameFromDatabase (mesosphereID) {
-
-}
-
 export async function changeUserDisplayNameInDatabase (mesosphereID, newDisplayName) {
   await updateDoc(doc(database, 'accounts', mesosphereID), {
     displayname: newDisplayName
   })
+}
+
+// testing and validation methods
+
+export async function doesAccountExist (mesosphereID) {
+  const accountRef = doc(database, 'accounts', mesosphereID)
+  const accountSnap = await getDoc(accountRef)
+  return accountSnap.exists()
+}
+
+export async function doesPostExist (postID) {
+  const postRef = doc(database, 'posts', postID)
+  const postSnap = await getDoc(postRef)
+  return postSnap.exists()
 }
 
 export { database }

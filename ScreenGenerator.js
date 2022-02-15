@@ -521,28 +521,28 @@ export class ScreenGenerator {
   }
 }
 
-function adminCheck () {
-  const u = getUser()
-  if (u != null && u.getUsername() === 'admin') {
-    return (
-      <TouchableOpacity
-        onPress={() => { adminButton() }}
-        style={styles.loginBtn}
-      >
-        <Text style={styles.buttonText}>Delete ALL Data</Text>
-      </TouchableOpacity>
-    )
-  } else if (u != null) {
-    return (
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => deleteCurrUser()}
-      >
-        <Text style={styles.loginText}>Delete My Data</Text>
-      </TouchableOpacity>
-    )
-  }
-}
+// function adminCheck () {
+//   const u = getUser()
+//   if (u != null && u.getUsername() === 'admin') {
+//     return (
+//       <TouchableOpacity
+//         onPress={() => { adminButton() }}
+//         style={styles.loginBtn}
+//       >
+//         <Text style={styles.buttonText}>Delete ALL Data</Text>
+//       </TouchableOpacity>
+//     )
+//   } else if (u != null) {
+//     return (
+//       <TouchableOpacity
+//         style={styles.loginBtn}
+//         onPress={() => deleteCurrUser()}
+//       >
+//         <Text style={styles.loginText}>Delete My Data</Text>
+//       </TouchableOpacity>
+//     )
+//   }
+// }
 
 let instance
 
