@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment } from 'firebase/firestore/lite'
+import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment, query, where, getDocs } from 'firebase/firestore/lite'
 import { Post } from './Post'
 import { User } from './User'
 
@@ -114,16 +114,52 @@ export async function alterPostScore (u, postID, change) { // increment/decremen
     score: increment(change)
   })
 
-  await updateDoc(doc(database, 'posts', postID), {
-    interactedUsers: arrayUnion(u.MiD)
-  })
-}
+  var actionTaken = ""
+  switch(change) {
+    case 0.5:
+      actionTaken = 'like'
+      break
+    case -0.5:
+      actionTaken = 'dislike'
+  }
 
-export async function deInteract (u, postID) { // removing post interaction, used for undoing a like/dislike
-  await updateDoc(doc(database, 'posts', postID), {
-    interactedUsers: arrayRemove(u.MiD)
+  await updateDoc(doc(database, 'posts', postID), { //updates interactedUsers in the post with the MID and action taken
+    interactedUsers: arrayUnion(
+      {
+        user: u.MiD,
+        action: actionTaken
+      }
+    )
   })
-} // if you've already interacted, and want to take the opposite interaction, first call deInteract to remove the interaction, then call alterPostScore()
+} //NOTE: arrayUnion ensures that an interaction either like/dislike can only appear once each time per user, however, the score can keep increasing if validation isn't ensured
+
+export async function removeInteraction (u, postID) {
+  const actionTaken = await returnInteractionFromDatabase(u, postID)
+  await updateDoc(doc(database, 'posts', postID), {
+    interactedUsers: arrayRemove(
+      {
+        user: u.MiD,
+        action: actionTaken
+      }
+    )
+  })
+} //both are called here since Firestore doesn't allow for searching for JSON fields in an array of maps
+
+export async function returnInteractionFromDatabase (u, postID) {
+  const postRef = doc(database, 'posts', postID)
+  const postSnap = await getDoc(postRef)
+  if (!postSnap.exists()) {
+      console.log('Error: Requested post does not exist.')
+  } else if (hasInteractedWith(u, postID) === false) {
+    return null
+  } else {
+    try {
+      return postSnap.data().interactedUsers.find(item => item.user === u.MiD).action
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
 
 export async function removePostFromDatabase (p) {
   await updateDoc(doc(database, 'accounts', p.attachedMiD), {
@@ -133,7 +169,7 @@ export async function removePostFromDatabase (p) {
   await deleteDoc(doc(database, 'posts', p.postID))
 }
 
-export async function pullPostFromDataBase (postID) {
+export async function pullPostFromDatabase (postID) {
   const postRef = doc(database, 'posts', postID)
   const docSnap = await getDoc(postRef)
   if (docSnap.exists()) {
@@ -145,15 +181,15 @@ export async function pullPostFromDataBase (postID) {
   }
 }
 
-export async function returnPostScoreFromDatabase (postID) { //used for keeping local copies of personal posts up to date with Firebase
-  const postRef = doc(database, 'posts', postID)
-  const postSnap = await getDoc(postRef)
-  if (postSnap.exists()) {
-    const data = postSnap.data()
-    return data.score
-  } else {
-    console.log('Error: Requested post does not exist.')
-  }
+export async function updatePostInteractionsFromDatabase (postID) { //used for keeping local copies of personal posts up to date with Firebase
+  // const postRef = doc(database, 'posts', postID)
+  // const postSnap = await getDoc(postRef)
+  // if (postSnap.exists()) {
+  //   const data = postSnap.data()
+  //   return data.score
+  // } else {
+  //   console.log('Error: Requested post does not exist.')
+  // }
 }
 
 // user manipulation from local changes
@@ -186,12 +222,10 @@ export async function doesPostExist (postID) {
 export async function hasInteractedWith (u, postID) {
   const postRef = doc(database, 'posts', postID)
   const postSnap = await getDoc(postRef)
-  if (postSnap.exists()) {
-    const data = postSnap.data()
-    return data.interactedUsers.includes(u.MiD)
-  } else {
-    console.log('Error: Requested post does not exist.')
+  if (!postSnap.exists()) {
+      console.log('Error: Requested post does not exist.')
   }
+  return postSnap.data().interactedUsers.some(search => search.user === u.MiD)
 }
 
 export { database }

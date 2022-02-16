@@ -47,7 +47,7 @@ export class User {
   }
 
   addPeer (MID) {
-    if (MID.length === 16 && MID.substring(0, 5) === 'meso-' && doesAccountExist(MID)) { // validates format, not existence
+    if (MID.length === 16 && MID.substring(0, 5) === 'meso-' && doesAccountExist(MID)) {
       this.myPeers.push(MID)
       addPeerToDatabase(this, MID)
     }
