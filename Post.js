@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Alert, TouchableOpacity } from 'react-native'
+import { View, Text, Alert, Button } from 'react-native'
 import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES, getData } from './Utility'
 
@@ -7,7 +7,7 @@ export class Post extends React.Component {
   // Post objects will be constructed from postPage() prompt
   constructor (attachedMiD, postID, mediaContent, textContent, starting_score, timestamp) {
     super()
-    // TODO(Gazdecki) Supposedly we need this, but it doesn't work and I don't need it for suome reason?
+    // TODO(Gazdecki) Supposedly we need this, but it doesn't work and I don't need it for some reason?
     // this.incrementScore = this.incrementScore.bind(this)
     this.attachedMiD = attachedMiD
     this.postID = postID
@@ -18,17 +18,10 @@ export class Post extends React.Component {
     this.timestamp = timestamp
   }
 }  // End of Post Class.
-// TODO(Gazdecki) Consider compressing both buttons into a set of one function.
-
 // Must be an external function in order to be hooked correctly.
 // Must be async inorder to rerender.
 export async function changeScore(post, change) {
   post.stateOfScore = { score:(post.stateOfScore.score + change) }
-  // TODO(Gazdecki) Why doesn't this work?:
-  /*
-  state = post.item.stateOfScore;
-  state = { score:(state.score + 1) }
-  */
   console.log("Upvote button pressed, score is now: " + post.stateOfScore.score + ".")
   alterPostScore(post.postID, 0.5)
 }
@@ -57,22 +50,15 @@ export function renderPost(post) {
       <Text style={styles.postContainerText}>MID: {p.attachedMiD} </Text>
       <Text style={styles.postContainerText}>Post ID: {p.postID} </Text>
       <Text style={styles.postContainerText}>{p.timestamp} </Text>
-      {/**If no media content, then don't render it lmao. */}
-      {(p.mediaContent != null) && <Text style={styles.postContainerText}>
-        Media content: {p.mediaContent} </Text>}
       <Text style={styles.postContainerText}>
         Text content: {p.textContent} </Text>
       <Text style={styles.postContainerText}>
         Score: {p.stateOfScore.score} </Text>
-      {/**TODO(Gazdecki) Need to pull @Carliegh 's button style she's got down in her beta. */}
-      {/**TODO(all) Best way to force 1-person:1-vote on each post? */}
-      {/**Upvote Button. */}
       <TouchableOpacity
-        style={styles.postBtn} onPress={ () => {changeScore(p, 1)} }
+        style={styles.postBtn} onPress={ () =>  }
       >
         <Text style={styles.buttonText}> Upvote </Text>
       </TouchableOpacity>
-      {/**Downvote Button. */}
       <TouchableOpacity
         style={styles.postBtn} onPress={ () => {changeScore(p, -1)} }
       >
@@ -80,4 +66,61 @@ export function renderPost(post) {
       </TouchableOpacity>
     </View>
   )
-} // TO BE FORMATTED TODO(Gazdecki)
+export function renderPost (post) {
+  const p = post.item
+  const u = getUser()
+  return (
+    <View style={styles.postContainer}>
+      <Text style={styles.postContainerUsername}>{u.realName} </Text>
+      <View style={{borderBottomColor: 'black',
+                    borderBottomWidth: 1,}}/>
+      <Text style={styles.postContainerText}>{p.textContent} </Text>
+      {/**If no media content, then don't render it lmao. */}
+      {(p.mediaContent != null) && <Text style={styles.postContainerText}>
+        Media content: {p.mediaContent} </Text>}
+      <Text style={styles.postContainerText}>{new Date().toLocaleString()} </Text>
+      {/**Upvote Button. */}
+      <View style={styles.scoreButtonStyle}>
+        <View style={styles.scoreButton}/>
+          <Button
+              onPress={() => {changeScore(p, 1)} }
+              title="Like"
+              color="#254D32"
+              borderRadius='12'
+          />
+        <View style={styles.spacing}/>
+        {/**Downvote Button. */}
+        <View style={styles.scoreButton}/>
+          <Button
+              onPress={() => {changeScore(p, -1)} }
+              title="Dislike"
+              color="#3A7D44"
+          />
+        <View style={styles.spacing}/>
+        <Text style={styles.postContainerText}>{p.score}</Text>
+        <View style={styles.spacing}/>        
+      </View>
+    </View>
+  )
+}
+/*
+      savePost(String(postText$.get()), null)      
+
+
+<Text style={styles.postContainerText}>post_id: {p.postID} </Text>
+      onPress={() => p.decrementScore()}
+      <Text style={styles.postContainerText}> {p.getUsername}</Text>
+            <View style={styles.dislikeScoreButton}>
+        <Button
+            onPress={() => alert('not fully implemented yet!')}
+            title="Dislike"
+            color="#000"
+            alignItems="right"
+            display="flex"
+            justifyContent="flex-end"
+              paddingHorizontal: 10,
+        />
+      </View>
+      <Text style={styles.postContainerText}> {u.}</Text>
+      Modify height to increase space between buttons
+*/

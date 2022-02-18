@@ -163,12 +163,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  imageBtn: {
-    backgroundColor: '#FFA31B',
-    width: '20%',
+  mediaBtn: {
+    backgroundColor: '#A9A9A9',
+    width: '80%',
     borderRadius: 25,
     height: 50,
-    marginTop: 40,
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -323,7 +323,7 @@ export const styles = StyleSheet.create({
   },
   postContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#CCE3DE',
     width: '100%',
     marginBottom: '5%',
     padding: '2%',
@@ -332,11 +332,13 @@ export const styles = StyleSheet.create({
     // shadowOffset: {width: -2, height: 4},
     // shadowOpacity: 0.1,
     // shadowRadius: 3, these shadows look best on web/iOS, below is the necessary shadow element for Android
-    elevation: 20
+    elevation: 20,
+    borderWidth: 2,
+    borderColor: '#000',
   },
   postViewContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#181D27',
     width: '100%',
     marginBottom: '22%',
     padding: '2%',
@@ -346,9 +348,17 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3
   },
+  secondPostView:{
+    backgroundColor: 'black'
+  },
   postContainerText: {
     padding: '0.5%',
     fontWeight: '400'
+  },
+  postContainerUsername: {
+    padding: '0.5%',
+    fontWeight: 'bold',
+    fontSize: 16
   },
   bigText: {
     fontSize: 24,
@@ -360,8 +370,27 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#A4C3B2',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  smallerPostIDText:{
+    fontSize: 10,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  scoreButtonStyle:{
+    flexDirection: 'row',
+  },
+  scoreButton:{
+    justifyContent: 'space-between'
+  },
+  spacing:{
+    width: 15,
+    height: 15
+  },
+  moreSpacing:{
+    width: 15
   }
 })

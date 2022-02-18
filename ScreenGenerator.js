@@ -1,11 +1,15 @@
 import React from 'react'
-import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
+import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView, Button} from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
 import { checkLogin, makeAcc, adminButton, deleteCurrUser, makeAdminAcc, makeDemoAcc } from './User'
 import { renderPost, savePost } from './Post'
 
 import FriendPage from './Friends'
 import logo from './assets/MesoSphere.png'
+import friends from './assets/friends.png'
+import plus2 from './assets/plus2.png'
+import networking from './assets/networking.png'
+import persons from './assets/persons.png'
 import { atom } from 'elementos'
 import { FlatList } from 'react-native-gesture-handler'
 
@@ -192,7 +196,7 @@ export class ScreenGenerator {
           </View>
           {/**"Add Media" button. */}
           <TouchableOpacity
-            style={styles.postBtn}
+            style={styles.mediaBtn}
             onPress={() => alert('Still in development!')}
           >
             <Text
@@ -233,7 +237,7 @@ export class ScreenGenerator {
                 keyExtractor={post => post.postID}
               />
             </SafeAreaView>
-            {this.generateBottomBar(2)}
+            {this.generateBottomBar(4)}
           </SafeAreaView>
         </>
       )
@@ -245,28 +249,28 @@ export class ScreenGenerator {
       return (
         <View style={styles.bottomButtomBar}>
           <TouchableOpacity style={styles.userButtonSelected}>
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={persons} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.networkButton}
             onPress={() => { setScreen(PAGES.VIEWPOSTS) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={networking} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.friendButton}
             onPress={() => { setScreen(PAGES.FRIENDSLIST) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={friends} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Friends</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.postButton}
             onPress={() => { setScreen(PAGES.MAKEPOST) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={plus2} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
           </TouchableOpacity>
         </View>
@@ -278,25 +282,25 @@ export class ScreenGenerator {
             style={styles.userButton}
             onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={persons} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.networkButtonSelected}>
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={networking} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.friendButton}
             onPress={() => { setScreen(PAGES.FRIENDSLIST) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={friends} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Friends</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.postButton}
             onPress={() => { setScreen(PAGES.MAKEPOST) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={plus2} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
           </TouchableOpacity>
         </View>
@@ -308,25 +312,25 @@ export class ScreenGenerator {
             style={styles.userButton}
             onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={persons} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.networkButton}
             onPress={() => { setScreen(PAGES.VIEWPOSTS) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={networking} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.friendButtonSelected}>
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={friends} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Friends</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.postButton}
             onPress={() => { setScreen(PAGES.MAKEPOST) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={plus2} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
           </TouchableOpacity>
         </View>
@@ -338,25 +342,25 @@ export class ScreenGenerator {
             style={styles.userButton}
             onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={persons} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.networkButton}
             onPress={() => { setScreen(PAGES.VIEWPOSTS) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={networking} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.friendButton}
             onPress={() => { setScreen(PAGES.FRIENDSLIST) }}
           >
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={friends} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Friends</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.postButtonSelected}>
-            <Image source={logo} style={styles.bottomButtonIcon} />
+            <Image source={plus2} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
           </TouchableOpacity>
         </View>
