@@ -58,18 +58,18 @@ export class User {
     if (MID.length === 16 && MID.substring(0, 5) === 'meso-') { // validates format, not existence
       console.log("Format validated!")
       this.myPeers.push(MID);
-      addPeerToDatabase(MID);
+      addPeerToDatabase(this, MID);
     }
-    storeLocally ();
+    this.storeLocally ();
   }
 
   removePeer (MID) {
     const index = this.myPeers.indexOf(MID);
     if(index > -1) {
       this.myPeers.splice(index, 1);
-      removePeerFromDatabase(MID);
+      removePeerFromDatabase(this, MID);
     }
-    storeLocally ();
+    this.storeLocally ();
   }
 }
 

@@ -36,8 +36,13 @@ export default class Friends extends Component {
             
         for (const ID of this.allIDs) {
             console.log("Checking ID " + ID + " against list of peers:" + myPeers);
-            if(myPeers.includes(ID) && !(this.arrayholder.includes(ID)))
-                this.arrayholder.push(ID);
+            if(myPeers.includes(ID) && !(this.arrayholder.includes(ID))) {
+                //Reciprocity: Check if this peer has ME
+                const peer = await pullAccountFromDatabase(ID);
+                if(peer.getAllPeers().includes(getUser().getMiD())) {
+                    this.arrayholder.push(ID);
+                }
+            }
         }
         this.setState({
             data: this.arrayholder,

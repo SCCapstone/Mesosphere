@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser, getFocus } from './Utility'
 import { checkLogin, makeAcc, adminButton, deleteCurrUser, makeAdminAcc, makeDemoAcc } from './User'
-import { renderPost, savePost } from './Post'
+import { savePost } from './Post'
 
 import FriendPage from './Friends'
 import PostsPage from './PostsScreenComponent'
@@ -175,7 +175,7 @@ export class ScreenGenerator {
       this.output = (
         <View style={styles.container}>
           <Text style={styles.bigText}>{u.getDisplayName()}</Text>
-          <Text style={styles.text}>{u.getMiD()}</Text>
+          <Text style={styles.smallText}>{u.getMiD()}</Text>
           <Text style={styles.text}>{u.getBiography()}</Text>
           <TouchableOpacity
             style={styles.loginBtn}

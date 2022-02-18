@@ -370,6 +370,13 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: '5%'
   },
+  smallText: {
+    fontSize: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginBottom: '5%'
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',

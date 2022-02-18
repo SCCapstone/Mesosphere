@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { ActivityIndicator, View, FlatList } from 'react-native';
 import { styles, getUser} from './Utility';
-import { renderPost } from './Post'
+import { Post, renderPost } from './Post'
 import { pullAccountFromDatabase, pullPostFromDataBase } from './firebaseConfig'
 
 export default class PostsPage extends Component {
@@ -33,17 +33,35 @@ export default class PostsPage extends Component {
             console.log(peer.getMiD());
             console.log(peer.getMyPosts());
             const peerPosts = peer.getMyPosts();
-            //For each of their posts:
-            for(const p of peerPosts) {
-                //Fetch the post from firebase using ID
-                const post = await pullPostFromDataBase(p);
-                allPosts.push(post);
+            //Reciprocity: If this peer also has me as a peer...
+            console.log("This peer:" + JSON.stringify(peer));
+            console.log("Peer's peers:" + peer.getAllPeers());
+            if(peer.getAllPeers().includes(currUser.getMiD())) {
+                //For each of their posts:
+                for(const p of peerPosts) {
+                    //Fetch the post from firebase using ID
+                    const post = await pullPostFromDataBase(p);
+                    allPosts.push(post);
+                }
             }
         }
         //Do the same for current user:
         const myPostsArr = currUser.getMyPosts();
         for(const post of myPostsArr) {
             allPosts.push(post);
+        }
+        //console.log("All posts:" + JSON.stringify(allPosts));
+        //console.log(allPosts.includes(null))
+        //console.log(allPosts[1] == null)
+        if(true) {
+            //console.log("Null value detected!");
+            for(let i = 0;i < allPosts.length;++i) {
+                //console.log("Post element at " + i + " is null! Replacing...");
+                const dummyPost = new Post(0,('error-'+i),0,"Error: post not found!",Date().toString());
+                if(allPosts[i] == null) {
+                    allPosts[i] = dummyPost;
+                }
+            } 
         }
         console.log("All posts:" + JSON.stringify(allPosts));
         //Update the state
@@ -68,13 +86,19 @@ export default class PostsPage extends Component {
     };
 
     render() {
-        return (
+        if(this.state.loading) {
+            return (
+                <ActivityIndicator size="large" color="#0000ff" />
+            );
+        } else {
+            return (
               <FlatList
                 data={this.state.data}
                 renderItem={post => renderPost(post)}
                 ItemSeparatorComponent={this.renderSeparator}
                 keyExtractor={item => JSON.stringify(item)}
               />
-        );
+            );
+        }
     }
 }
