@@ -116,6 +116,14 @@ export function generatePostID () {
 
 export const styles = StyleSheet.create({
   backBtn: {
+    backgroundColor: '#FFA31B',
+    position: 'absolute',
+    top: 5,
+    borderWidth: 5, 
+    //left: '-145%',
+    borderRadius: 25,
+    height: 50,
+    width: 50,
   },
   logo: {
     width: 200,

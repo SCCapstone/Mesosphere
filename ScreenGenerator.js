@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
+import { Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
 import { checkLogin, makeAcc, adminButton, deleteCurrUser } from './User'
 import { renderPost, savePost } from './Post'
@@ -10,6 +10,7 @@ import { sha224 } from 'js-sha256'
 
 import FriendPage from './Friends'
 import logo from './assets/MesoSphere.png'
+import backBtn from './assets/BackBtn.png'
 import { atom } from 'elementos'
 import { FlatList } from 'react-native-gesture-handler'
 
@@ -250,9 +251,9 @@ export class ScreenGenerator {
             onPress={() => {
               setScreen(PAGES.VIEW_LOCAL_DATA)
             }}
-            >
-              <Text style={styles.loginText}>View Local Data</Text>
-            </TouchableOpacity>
+          >
+            <Text style={styles.loginText}>View Local Data</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -296,6 +297,13 @@ export class ScreenGenerator {
       const u = getUser()
       this.output = (
         <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.userButtonSelected}
+            onPress={() => { setScreen(PAGES.SETTINGS) }}
+          >
+            <Image source={backBtn} style={styles.backBtn} />
+            <Text> Hi cole :)</Text>
+          </TouchableOpacity>
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
@@ -331,6 +339,13 @@ export class ScreenGenerator {
       const u = getUser()
       this.output = (
         <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.userButtonSelected}
+            onPress={() => { setScreen(PAGES.SETTINGS) }}
+          >
+            <Image source={backBtn} style={styles.backBtn} />
+            <Text> Hi cole :)</Text>
+          </TouchableOpacity>
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
@@ -363,6 +378,13 @@ export class ScreenGenerator {
       const u = getUser()
       this.output = (
         <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.userButtonSelected}
+            onPress={() => { setScreen(PAGES.SETTINGS) }}
+          >
+            <Image source={backBtn} style={styles.backBtn} />
+            <Text> Hi cole :)</Text>
+          </TouchableOpacity>
           <View style={styles.inputViewBio}>
             <TextInput
               multiline
@@ -399,7 +421,13 @@ export class ScreenGenerator {
       const u = getUser()
       this.output = (
         <View style={styles.container}>
-          <Text> Hi cole :)</Text>
+          <TouchableOpacity
+            style={styles.userButtonSelected}
+            onPress={() => { setScreen(PAGES.SETTINGS) }}
+          >
+            <Image source={backBtn} style={styles.backBtn} />
+            <Text> Hi cole :)</Text>
+          </TouchableOpacity>
         </View>
       )
     }
