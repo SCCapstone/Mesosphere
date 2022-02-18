@@ -55,27 +55,25 @@ export function renderPost (post) {
   const u = getUser()
   return (
     <View style={styles.postContainer}>
-       <Text style={styles.postContainerText}>{u.realName} </Text>
-      {/* <Text style={styles.postContainerText}>MID: {p.attachedMiD} </Text> */}
-
+      <Text style={styles.postContainerUsername}>{u.realName} </Text>
+      <View style={{borderBottomColor: 'black',
+                    borderBottomWidth: 1,}}/>
       <Text style={styles.postContainerText}>{p.textContent} </Text>
-      <Text style={styles.postContainerText}>{p.timestamp} </Text>
+      <Text style={styles.postContainerText}>{new Date().toLocaleString()} </Text>
       <View style={styles.scoreButtonStyle}>
         <View style={styles.scoreButton}/>
           <Button
-              onPress={() => p.incrementScore() && renderPost(this)}
+              onPress={() => alert('Not fully implemented!')}
               title="Like"
-              color="#000"
+              color="#254D32"
               borderRadius='12'
           />
-        <View style={styles.spacing}/>
-        <Text style={styles.postContainerText}>{p.score}</Text>
         <View style={styles.spacing}/>
         <View style={styles.scoreButton}/>
           <Button
               onPress={() => alert('not fully implemented yet!')}
               title="Dislike"
-              color="#000"
+              color="#3A7D44"
           />
         <View style={styles.spacing}/>
         <Text style={styles.postContainerText}>{p.score}</Text>
@@ -85,7 +83,10 @@ export function renderPost (post) {
   )
 }
 /*
-      <Text style={styles.postContainerText}>post_id: {p.postID} </Text>
+      savePost(String(postText$.get()), null)      
+
+
+<Text style={styles.postContainerText}>post_id: {p.postID} </Text>
       onPress={() => p.decrementScore()}
       <Text style={styles.postContainerText}> {p.getUsername}</Text>
             <View style={styles.dislikeScoreButton}>
