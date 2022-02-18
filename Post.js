@@ -34,7 +34,6 @@ export async function savePost (text) {
                 { text: 'OK.' })
   }
   const u = getUser()
-  //(attachedMiD, postID, mediaContent, textContent, score, timestamp)
   const new_post = new Post(u.MiD, generatePostID(), null, text, 1,
                             new Date().toString())
   u.addPost(new_post)
@@ -50,11 +49,11 @@ export function renderPost (post) {
     <View style={styles.postContainer}>
       <Text style={styles.postContainerUsername}>{u.realName} </Text>
       <View style={{borderBottomColor: 'black',
-                    borderBottomWidth: 1,}}/>
+                    borderBottomWidth: 1}}/>
       <Text style={styles.postContainerText}>{p.textContent} </Text>
       {/**If no media content, then don't render it lmao. */}
-      {(p.mediaContent != null) && <Text style={styles.postContainerText}>
-        Media content: {p.mediaContent} </Text>}
+      {/**(p.mediaContent != null) && <Text style={styles.postContainerText}>
+        Media content: {p.mediaContent} </Text>*/}
       <Text style={styles.postContainerText}>{new Date().toLocaleString()} </Text>
       {/**Upvote Button. */}
       <View style={styles.scoreButtonStyle}>
@@ -80,24 +79,3 @@ export function renderPost (post) {
     </View>
   )
 }
-/*
-      savePost(String(postText$.get()), null)      
-
-
-<Text style={styles.postContainerText}>post_id: {p.postID} </Text>
-      onPress={() => p.decrementScore()}
-      <Text style={styles.postContainerText}> {p.getUsername}</Text>
-            <View style={styles.dislikeScoreButton}>
-        <Button
-            onPress={() => alert('not fully implemented yet!')}
-            title="Dislike"
-            color="#000"
-            alignItems="right"
-            display="flex"
-            justifyContent="flex-end"
-              paddingHorizontal: 10,
-        />
-      </View>
-      <Text style={styles.postContainerText}> {u.}</Text>
-      Modify height to increase space between buttons
-*/

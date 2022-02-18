@@ -7,7 +7,7 @@ import { renderPost, savePost } from './Post'
 import FriendPage from './Friends'
 import logo from './assets/MesoSphere.png'
 import friends from './assets/friends.png'
-import plus2 from './assets/plus2.png'
+import plussign from './assets/plussign.png'
 import networking from './assets/networking.png'
 import persons from './assets/persons.png'
 import { atom } from 'elementos'
@@ -186,7 +186,7 @@ export class ScreenGenerator {
               multiline
               numberOfLines={3}
               style={styles.TextInput}
-              placeholder='Insert Text Here'
+              placeholder='Posts consist of plaintext and only text, at the moment.'
               placeholderTextColor='#003f5c'
               returnKeyType='done'
               blurOnSubmit
@@ -201,7 +201,7 @@ export class ScreenGenerator {
           >
             <Text
               style={styles.buttonText}
-            >Adding images and videos are still a work in progress!
+            >Add Media
             </Text>
           </TouchableOpacity>
           {/**"Save Post" button. */}
@@ -210,7 +210,7 @@ export class ScreenGenerator {
               () => { savePost(String(postText$.get()), null) }
             }
           >
-            <Text style={styles.buttonText}> Click to Post! </Text>
+            <Text style={styles.buttonText}> Submit </Text>
           </TouchableOpacity>
           {/**Generates bottom bar at all times on page. */}
           {this.generateBottomBar(4)}
@@ -270,7 +270,7 @@ export class ScreenGenerator {
             style={styles.postButton}
             onPress={() => { setScreen(PAGES.MAKEPOST) }}
           >
-            <Image source={plus2} style={styles.bottomButtonIcon} />
+            <Image source={plussign} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
           </TouchableOpacity>
         </View>
@@ -300,7 +300,7 @@ export class ScreenGenerator {
             style={styles.postButton}
             onPress={() => { setScreen(PAGES.MAKEPOST) }}
           >
-            <Image source={plus2} style={styles.bottomButtonIcon} />
+            <Image source={plussign} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
           </TouchableOpacity>
         </View>
@@ -330,7 +330,7 @@ export class ScreenGenerator {
             style={styles.postButton}
             onPress={() => { setScreen(PAGES.MAKEPOST) }}
           >
-            <Image source={plus2} style={styles.bottomButtonIcon} />
+            <Image source={plussign} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
           </TouchableOpacity>
         </View>
@@ -360,7 +360,7 @@ export class ScreenGenerator {
             <Text style={styles.bottomButtonText}>Friends</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.postButtonSelected}>
-            <Image source={plus2} style={styles.bottomButtonIcon} />
+            <Image source={plussign} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
           </TouchableOpacity>
         </View>
