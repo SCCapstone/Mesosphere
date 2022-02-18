@@ -17,21 +17,13 @@ export class Post extends React.Component {
     this.stateOfScore = { score:starting_score };
     this.timestamp = timestamp
   }
-
-  getID () {
-    return this.postID
-  }
-
-  getAttachedMID() {
-    return this.MiD
-  }
 }  // End of Post Class.
 // TODO(Gazdecki) Consider compressing both buttons into a set of one function.
 
 // Must be an external function in order to be hooked correctly.
 // Must be async inorder to rerender.
-export async function incrementScore(post) {
-  post.stateOfScore = { score:(post.stateOfScore.score + 1) }
+export async function changeScore(post, change) {
+  post.stateOfScore = { score:(post.stateOfScore.score + change) }
   // TODO(Gazdecki) Why doesn't this work?:
   /*
   state = post.item.stateOfScore;
@@ -76,12 +68,16 @@ export function renderPost(post) {
       {/**TODO(all) Best way to force 1-person:1-vote on each post? */}
       {/**Upvote Button. */}
       <TouchableOpacity
-        style={styles.postBtn} onPress={ () => {incrementScore(p)} }
+        style={styles.postBtn} onPress={ () => {changeScore(p, 1)} }
       >
         <Text style={styles.buttonText}> Upvote </Text>
       </TouchableOpacity>
       {/**Downvote Button. */}
-      <Text style={styles.postContainerText}>Score: {p.score} </Text>
+      <TouchableOpacity
+        style={styles.postBtn} onPress={ () => {changeScore(p, -1)} }
+      >
+        <Text style={styles.buttonText}> Downvote </Text>
+      </TouchableOpacity>
     </View>
   )
 } // TO BE FORMATTED TODO(Gazdecki)
