@@ -248,6 +248,14 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
+              setScreen(PAGES.VIEW_LOCAL_DATA)
+            }}
+            >
+              <Text style={styles.loginText}>View Local Data</Text>
+            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
               setScreen(PAGES.CHANGEACCOUNT_DISP)
             }}
           >
@@ -384,6 +392,14 @@ export class ScreenGenerator {
               <Text style={styles.loginText}>Change Bio</Text>
             </TouchableOpacity>
           </View>
+        </View>
+      )
+    } else if (this.page === PAGES.VIEW_LOCAL_DATA) {
+      console.log('This is the Local Data Page')
+      const u = getUser()
+      this.output = (
+        <View style={styles.container}>
+          <Text> Hi cole :)</Text>
         </View>
       )
     }

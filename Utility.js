@@ -17,7 +17,8 @@ export const PAGES = {
   SETTINGS: 9,
   CHANGEACCOUNT_DISP: 10,
   CHANGEACCOUNT_PASS: 11,
-  CHANGEACCOUNT_BIO: 12
+  CHANGEACCOUNT_BIO: 12,
+  VIEW_LOCAL_DATA: 13, 
 }
 
 const currUser$ = atom(null)
