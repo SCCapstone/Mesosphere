@@ -288,7 +288,7 @@ export class ScreenGenerator {
       const u = getUser()
       this.output = (
         <View style={styles.container}>
-          <View style={styles.inputView}>
+          <View style={styles.inputViewBio}>
             <TextInput
               style={styles.TextInput}
               placeholder='New Display Name'
@@ -370,7 +370,7 @@ export class ScreenGenerator {
             <TouchableOpacity
               style={styles.loginBtn}
               onPress={() => {
-                alert('Functionality not yet linked, but bio in the process of being changed!') // bmark
+                //alert('Functionality not yet linked, but bio in the process of being changed!') // bmark
                 changeUserBiographyInDatabase(u.MiD, String(newBiography$.get()))
                 u.setNewBiography(String(newBiography$.get()))
                 AsyncStorage.getItem(u.MiD).then(data => {

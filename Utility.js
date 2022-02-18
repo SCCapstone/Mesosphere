@@ -129,17 +129,17 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center'
   },
-  inputViewBio: {
+  inputViewBio: { //in dev
     backgroundColor: '#FFD89F',
     borderRadius: 30,
     width: '70%',
-    height: 80,
-    marginBottom: 10,
+    height: 180,
+    marginBottom: 50,
     marginTop: 10,
     alignItems: 'center'
   },
   TextInput: {
-    height: 50,
+    height: 80, //50
     flex: 1,
     padding: 10,
     marginLeft: 20

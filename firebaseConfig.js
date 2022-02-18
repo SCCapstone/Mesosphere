@@ -1,7 +1,9 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment, query, where, getDocs } from 'firebase/firestore/lite'
+import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment } from 'firebase/firestore/lite'
 import { Post } from './Post'
 import { User } from './User'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -183,15 +185,8 @@ export async function pullPostFromDatabase (postID) {
   }
 }
 
-export async function updatePostInteractionsFromDatabase (postID) { //used for keeping local copies of personal posts up to date with Firebase
-  // const postRef = doc(database, 'posts', postID)
-  // const postSnap = await getDoc(postRef)
-  // if (postSnap.exists()) {
-  //   const data = postSnap.data()
-  //   return data.score
-  // } else {
-  //   console.log('Error: Requested post does not exist.')
-  // }
+export async function updateLocalPostsFromDatabase() {
+  
 }
 
 // user manipulation from local changes
