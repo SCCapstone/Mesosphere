@@ -115,6 +115,8 @@ export function generatePostID () {
 }
 
 export const styles = StyleSheet.create({
+  backBtn: {
+  },
   logo: {
     width: 200,
     height: 200,
