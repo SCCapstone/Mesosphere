@@ -43,29 +43,6 @@ export async function savePost (text) {
   setScreen(PAGES.VIEWPOSTS)
 }
 
-export function renderPost(post) {
-  const p = post.item  // Okay I'll fuckin' bite, what the hell is post.item?
-  return (
-    <View style={styles.postContainer}>
-      <Text style={styles.postContainerText}>MID: {p.attachedMiD} </Text>
-      <Text style={styles.postContainerText}>Post ID: {p.postID} </Text>
-      <Text style={styles.postContainerText}>{p.timestamp} </Text>
-      <Text style={styles.postContainerText}>
-        Text content: {p.textContent} </Text>
-      <Text style={styles.postContainerText}>
-        Score: {p.stateOfScore.score} </Text>
-      <TouchableOpacity
-        style={styles.postBtn} onPress={ () =>  }
-      >
-        <Text style={styles.buttonText}> Upvote </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.postBtn} onPress={ () => {changeScore(p, -1)} }
-      >
-        <Text style={styles.buttonText}> Downvote </Text>
-      </TouchableOpacity>
-    </View>
-  )
 export function renderPost (post) {
   const p = post.item
   const u = getUser()
