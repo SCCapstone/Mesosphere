@@ -102,7 +102,7 @@ export async function pushPostToDatabase (p) {
   await setDoc(doc(database, 'posts', p.postID), {
     "MID": p.attachedMiD,
     "postID": p.postID,
-    "score": p.score,
+    "score": p.stateOfScore.score,
     "text": p.textContent,
     "timestamp": new Date()
   })
