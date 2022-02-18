@@ -21,18 +21,18 @@ const newDispname$ = atom('')
 const newBiography$ = atom('')
 
 export class ScreenGenerator {
-  constructor () {
+  constructor() {
     this.page = -1
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
     setScreen(PAGES.LOGIN)
   }
 
-  selectScreen (input) {
+  selectScreen(input) {
     this.page = input
     this.generateScreen()
   }
 
-  generateScreen () {
+  generateScreen() {
     console.log('Generating: ' + this.page)
     if (this.page === PAGES.LOGIN) {
       this.output = (
@@ -387,9 +387,10 @@ export class ScreenGenerator {
         </View>
       )
     }
+
   }
 
-  generateBottomBar (currentSlice) {
+  generateBottomBar(currentSlice) {
     if (currentSlice === 1) {
       return (
         <View style={styles.bottomButtomBar}>
@@ -516,14 +517,14 @@ export class ScreenGenerator {
     }
   }
 
-  render () {
+  render() {
     return this.output
   }
 }
 
 let instance
 
-export function getInstance () {
+export function getInstance() {
   if (instance == null) {
     instance = new ScreenGenerator()
     console.log('New SG generated.')
