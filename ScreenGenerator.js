@@ -1,8 +1,12 @@
 import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
-import { checkLogin, makeAcc, adminButton, deleteCurrUser, makeAdminAcc, makeDemoAcc } from './User'
+import { checkLogin, makeAcc, adminButton, deleteCurrUser } from './User'
 import { renderPost, savePost } from './Post'
+import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase } from './firebaseConfig'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { sha224 } from 'js-sha256'
 
 import FriendPage from './Friends'
 import logo from './assets/MesoSphere.png'
@@ -20,8 +24,6 @@ export class ScreenGenerator {
   constructor() {
     this.page = -1
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
-    makeAdminAcc()
-    makeDemoAcc()
     setScreen(PAGES.LOGIN)
   }
 
@@ -61,7 +63,7 @@ export class ScreenGenerator {
           </View>
           <TouchableOpacity
             style={styles.loginBtn}
-            onPress={() => checkLogin(String(username$.get()), String(password$.get()))}
+            onPress={() => checkLogin(String(username$.get()), String(password$.get())) && username$.actions.set() && password$.actions.set()}
             testID='LoginButton'
           >
             <Text style={styles.loginText}>LOGIN</Text>
@@ -298,10 +300,17 @@ export class ScreenGenerator {
             <TouchableOpacity
               style={styles.loginBtn}
               onPress={() => {
-                alert("Functionality not yet linked, but display name in the process of being changed!")
+                // alert("Functionality not yet linked, but display name in the process of being changed!")
+                changeUserDisplayNameInDatabase(u.MiD, String(newUsername$.get()))
+                u.setRealName(String(newUsername$.get()))
+                AsyncStorage.getItem(u.MiD).then(data => {
+                  data = JSON.parse(data)
+                  data.realName = String(newUsername$.get())
+                  AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+                })
+
                 setScreen(PAGES.SETTINGS)
-              }
-              }
+              }}
 
             >
               <Text style={styles.loginText}>Change Display Name</Text>
@@ -327,10 +336,14 @@ export class ScreenGenerator {
             <TouchableOpacity
               style={styles.loginBtn}
               onPress={() => {
-                alert("Functionality not yet linked, but password in the process of being changed!")
+                u.setNewPassword(String(sha224(String(newPassword$.get()))))
+                AsyncStorage.getItem(u.MiD).then(data => {
+                  data = JSON.parse(data)
+                  data.password = String(sha224(String(newPassword$.get())))
+                  AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+                })
                 setScreen(PAGES.SETTINGS)
-              }
-              }
+              }}
             >
               <Text style={styles.loginText}>Change Password</Text>
             </TouchableOpacity>
@@ -357,10 +370,16 @@ export class ScreenGenerator {
             <TouchableOpacity
               style={styles.loginBtn}
               onPress={() => {
-                alert("Functionality not yet linked, but bio in the process of being changed!")
+                alert('Functionality not yet linked, but bio in the process of being changed!') // bmark
+                changeUserBiographyInDatabase(u.MiD, String(newBiography$.get()))
+                u.setNewBiography(String(newBiography$.get()))
+                AsyncStorage.getItem(u.MiD).then(data => {
+                  data = JSON.parse(data)
+                  data.bio = String(newBiography$.get())
+                  AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+                })
                 setScreen(PAGES.SETTINGS)
-              }
-              }
+              }}
             >
               <Text style={styles.loginText}>Change Bio</Text>
             </TouchableOpacity>
@@ -503,28 +522,28 @@ export class ScreenGenerator {
   }
 }
 
-function adminCheck() {
-  const u = getUser()
-  if (u != null && u.getUsername() === 'admin') {
-    return (
-      <TouchableOpacity
-        onPress={() => { adminButton() }}
-        style={styles.loginBtn}
-      >
-        <Text style={styles.buttonText}>Delete ALL Data</Text>
-      </TouchableOpacity>
-    )
-  } else if (u != null) {
-    return (
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => deleteCurrUser()}
-      >
-        <Text style={styles.loginText}>Delete My Data</Text>
-      </TouchableOpacity>
-    )
-  }
-}
+// function adminCheck () {
+//   const u = getUser()
+//   if (u != null && u.getUsername() === 'admin') {
+//     return (
+//       <TouchableOpacity
+//         onPress={() => { adminButton() }}
+//         style={styles.loginBtn}
+//       >
+//         <Text style={styles.buttonText}>Delete ALL Data</Text>
+//       </TouchableOpacity>
+//     )
+//   } else if (u != null) {
+//     return (
+//       <TouchableOpacity
+//         style={styles.loginBtn}
+//         onPress={() => deleteCurrUser()}
+//       >
+//         <Text style={styles.loginText}>Delete My Data</Text>
+//       </TouchableOpacity>
+//     )
+//   }
+// }
 
 let instance
 
