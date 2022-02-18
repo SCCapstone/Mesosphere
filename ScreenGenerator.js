@@ -296,12 +296,14 @@ export class ScreenGenerator {
       console.log('changing some aspect of the account (user)')
       const u = getUser()
       this.output = (
-        <><TouchableOpacity
+        <View style={styles.container}>
+          <TouchableOpacity
+          style={styles.backBtnLoc}
           onPress={() => { setScreen(PAGES.SETTINGS) } }
         >
           <Image source={backBtn} style={styles.backBtn} />
 
-        </TouchableOpacity><View style={styles.container}>
+        </TouchableOpacity>
             <View style={styles.inputView}>
               <TextInput
                 style={styles.TextInput}
@@ -329,18 +331,20 @@ export class ScreenGenerator {
                 <Text style={styles.loginText}>Change Display Name</Text>
               </TouchableOpacity>
             </View>
-          </View></>
+          </View>
       )
     } else if (this.page === PAGES.CHANGEACCOUNT_PASS) {
       console.log('changing some aspect of the account (pass)')
       const u = getUser()
       this.output = (
-        <><TouchableOpacity
+        <View style={styles.container}>
+          <TouchableOpacity
+          style={styles.backBtnLoc}
           onPress={() => { setScreen(PAGES.SETTINGS) } }
         >
           <Image source={backBtn} style={styles.backBtn} />
 
-        </TouchableOpacity><View style={styles.container}>
+        </TouchableOpacity>
             <View style={styles.inputView}>
               <TextInput
                 style={styles.TextInput}
@@ -365,18 +369,20 @@ export class ScreenGenerator {
                 <Text style={styles.loginText}>Change Password</Text>
               </TouchableOpacity>
             </View>
-          </View></>
+          </View>
       )
     } else if (this.page === PAGES.CHANGEACCOUNT_BIO) {
       console.log('changing some aspect of the account (bio)')
       const u = getUser()
       this.output = (
-        <><TouchableOpacity
+       <View style={styles.container}>
+         <TouchableOpacity
+          style={styles.backBtnLoc}
           onPress={() => { setScreen(PAGES.SETTINGS) } }
         >
           <Image source={backBtn} style={styles.backBtn} />
 
-        </TouchableOpacity><View style={styles.container}>
+        </TouchableOpacity>
             <View style={styles.inputViewBio}>
               <TextInput
                 multiline
@@ -405,21 +411,22 @@ export class ScreenGenerator {
                 <Text style={styles.loginText}>Change Bio</Text>
               </TouchableOpacity>
             </View>
-          </View></>
+          </View>
       )
     } else if (this.page === PAGES.VIEW_LOCAL_DATA) {
       console.log('This is the Local Data Page')
       const u = getUser()
       this.output = (
-
-        <><TouchableOpacity
-          onPress={() => { setScreen(PAGES.SETTINGS) }}
+        <View style={styles.container}>
+          <TouchableOpacity
+          style={styles.backBtnLoc}
+          onPress={() => { setScreen(PAGES.SETTINGS) } }
         >
           <Image source={backBtn} style={styles.backBtn} />
 
-        </TouchableOpacity><View style={styles.container}>
+        </TouchableOpacity>
             <Text> Hi cole :)</Text>
-          </View></>
+        </View> 
       )
     }
 
