@@ -83,6 +83,14 @@ export async function removeAccountFromDatabase (u) {
   }
 }
 
+export async function returnDisplayNameFromMID (MID) {
+  const userRef = doc(database, 'accounts', mesosphereID)
+  const docSnap = await getDoc(userRef)
+  if (docSnap.exists()) {
+    return docSnap.data().displayname
+  }
+}
+
 export async function addPeerToDatabase (u, peerID) {
   await updateDoc(doc(database, 'accounts', u.MiD), {
     friends: arrayUnion(peerID)
