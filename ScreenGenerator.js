@@ -296,139 +296,130 @@ export class ScreenGenerator {
       console.log('changing some aspect of the account (user)')
       const u = getUser()
       this.output = (
-        <View style={styles.container}>
-          <TouchableOpacity
-            style={styles.userButtonSelected}
-            onPress={() => { setScreen(PAGES.SETTINGS) }}
-          >
-            <Image source={backBtn} style={styles.backBtn} />
-            <Text> Hi cole :)</Text>
-          </TouchableOpacity>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder='New Display Name'
-              placeholderTextColor='#003f5c'
-              returnKeyType='next'
-              maxLength={30}
-              onChangeText={(newusername) => newUsername$.actions.set(newusername)}
-            />
-            <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={() => {
-                // alert("Functionality not yet linked, but display name in the process of being changed!")
-                changeUserDisplayNameInDatabase(u.MiD, String(newUsername$.get()))
-                u.setRealName(String(newUsername$.get()))
-                AsyncStorage.getItem(u.MiD).then(data => {
-                  data = JSON.parse(data)
-                  data.realName = String(newUsername$.get())
-                  AsyncStorage.setItem(u.MiD, JSON.stringify(data))
-                })
+        <><TouchableOpacity
+          onPress={() => { setScreen(PAGES.SETTINGS) } }
+        >
+          <Image source={backBtn} style={styles.backBtn} />
 
-                setScreen(PAGES.SETTINGS)
-              }}
+        </TouchableOpacity><View style={styles.container}>
+            <View style={styles.inputView}>
+              <TextInput
+                style={styles.TextInput}
+                placeholder='New Display Name'
+                placeholderTextColor='#003f5c'
+                returnKeyType='next'
+                maxLength={30}
+                onChangeText={(newusername) => newUsername$.actions.set(newusername)} />
+              <TouchableOpacity
+                style={styles.loginBtn}
+                onPress={() => {
+                  // alert("Functionality not yet linked, but display name in the process of being changed!")
+                  changeUserDisplayNameInDatabase(u.MiD, String(newUsername$.get()))
+                  u.setRealName(String(newUsername$.get()))
+                  AsyncStorage.getItem(u.MiD).then(data => {
+                    data = JSON.parse(data)
+                    data.realName = String(newUsername$.get())
+                    AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+                  })
 
-            >
-              <Text style={styles.loginText}>Change Display Name</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+                  setScreen(PAGES.SETTINGS)
+                } }
+
+              >
+                <Text style={styles.loginText}>Change Display Name</Text>
+              </TouchableOpacity>
+            </View>
+          </View></>
       )
     } else if (this.page === PAGES.CHANGEACCOUNT_PASS) {
       console.log('changing some aspect of the account (pass)')
       const u = getUser()
       this.output = (
-        <View style={styles.container}>
-          <TouchableOpacity
-            style={styles.userButtonSelected}
-            onPress={() => { setScreen(PAGES.SETTINGS) }}
-          >
-            <Image source={backBtn} style={styles.backBtn} />
-            <Text> Hi cole :)</Text>
-          </TouchableOpacity>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder='New Password'
-              placeholderTextColor='#003f5c'
-              secureTextEntry
-              returnKeyType='next'
-              maxLength={50}
-              onChangeText={(newpassword) => newPassword$.actions.set(newpassword)}
-            />
-            <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={() => {
-                u.setNewPassword(String(sha224(String(newPassword$.get()))))
-                AsyncStorage.getItem(u.MiD).then(data => {
-                  data = JSON.parse(data)
-                  data.password = String(sha224(String(newPassword$.get())))
-                  AsyncStorage.setItem(u.MiD, JSON.stringify(data))
-                })
-                setScreen(PAGES.SETTINGS)
-              }}
-            >
-              <Text style={styles.loginText}>Change Password</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <><TouchableOpacity
+          onPress={() => { setScreen(PAGES.SETTINGS) } }
+        >
+          <Image source={backBtn} style={styles.backBtn} />
+
+        </TouchableOpacity><View style={styles.container}>
+            <View style={styles.inputView}>
+              <TextInput
+                style={styles.TextInput}
+                placeholder='New Password'
+                placeholderTextColor='#003f5c'
+                secureTextEntry
+                returnKeyType='next'
+                maxLength={50}
+                onChangeText={(newpassword) => newPassword$.actions.set(newpassword)} />
+              <TouchableOpacity
+                style={styles.loginBtn}
+                onPress={() => {
+                  u.setNewPassword(String(sha224(String(newPassword$.get()))))
+                  AsyncStorage.getItem(u.MiD).then(data => {
+                    data = JSON.parse(data)
+                    data.password = String(sha224(String(newPassword$.get())))
+                    AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+                  })
+                  setScreen(PAGES.SETTINGS)
+                } }
+              >
+                <Text style={styles.loginText}>Change Password</Text>
+              </TouchableOpacity>
+            </View>
+          </View></>
       )
     } else if (this.page === PAGES.CHANGEACCOUNT_BIO) {
       console.log('changing some aspect of the account (bio)')
       const u = getUser()
       this.output = (
-        <View style={styles.container}>
-          <TouchableOpacity
-            style={styles.userButtonSelected}
-            onPress={() => { setScreen(PAGES.SETTINGS) }}
-          >
-            <Image source={backBtn} style={styles.backBtn} />
-            <Text> Hi cole :)</Text>
-          </TouchableOpacity>
-          <View style={styles.inputViewBio}>
-            <TextInput
-              multiline
-              numberOfLines={3}
-              style={styles.TextInput}
-              placeholder='New Bio'
-              placeholderTextColor='#003f5c'
-              returnKeyType='done'
-              blurOnSubmit
-              maxLength={240}
-              onChangeText={(biography) => newBiography$.actions.set(biography)}
-            />
-            <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={() => {
-                alert('Functionality not yet linked, but bio in the process of being changed!') // bmark
-                changeUserBiographyInDatabase(u.MiD, String(newBiography$.get()))
-                u.setNewBiography(String(newBiography$.get()))
-                AsyncStorage.getItem(u.MiD).then(data => {
-                  data = JSON.parse(data)
-                  data.bio = String(newBiography$.get())
-                  AsyncStorage.setItem(u.MiD, JSON.stringify(data))
-                })
-                setScreen(PAGES.SETTINGS)
-              }}
-            >
-              <Text style={styles.loginText}>Change Bio</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <><TouchableOpacity
+          onPress={() => { setScreen(PAGES.SETTINGS) } }
+        >
+          <Image source={backBtn} style={styles.backBtn} />
+
+        </TouchableOpacity><View style={styles.container}>
+            <View style={styles.inputViewBio}>
+              <TextInput
+                multiline
+                numberOfLines={3}
+                style={styles.TextInput}
+                placeholder='New Bio'
+                placeholderTextColor='#003f5c'
+                returnKeyType='done'
+                blurOnSubmit
+                maxLength={240}
+                onChangeText={(biography) => newBiography$.actions.set(biography)} />
+              <TouchableOpacity
+                style={styles.loginBtn}
+                onPress={() => {
+                  alert('Functionality not yet linked, but bio in the process of being changed!') // bmark
+                  changeUserBiographyInDatabase(u.MiD, String(newBiography$.get()))
+                  u.setNewBiography(String(newBiography$.get()))
+                  AsyncStorage.getItem(u.MiD).then(data => {
+                    data = JSON.parse(data)
+                    data.bio = String(newBiography$.get())
+                    AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+                  })
+                  setScreen(PAGES.SETTINGS)
+                } }
+              >
+                <Text style={styles.loginText}>Change Bio</Text>
+              </TouchableOpacity>
+            </View>
+          </View></>
       )
     } else if (this.page === PAGES.VIEW_LOCAL_DATA) {
       console.log('This is the Local Data Page')
       const u = getUser()
       this.output = (
-        <View style={styles.container}>
-          <TouchableOpacity
-            style={styles.userButtonSelected}
-            onPress={() => { setScreen(PAGES.SETTINGS) }}
-          >
-            <Image source={backBtn} style={styles.backBtn} />
+
+        <><TouchableOpacity
+          onPress={() => { setScreen(PAGES.SETTINGS) }}
+        >
+          <Image source={backBtn} style={styles.backBtn} />
+
+        </TouchableOpacity><View style={styles.container}>
             <Text> Hi cole :)</Text>
-          </TouchableOpacity>
-        </View>
+          </View></>
       )
     }
 
