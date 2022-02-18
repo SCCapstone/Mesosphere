@@ -147,7 +147,7 @@ export class ScreenGenerator {
         <View style={styles.container}>
           <Text style={styles.bigText}>Welcome back, {u.realName}</Text>
           <Text style={styles.text}>{u.getMiD()}</Text>
-          {adminCheck()}
+          {/* {adminCheck()} */}
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -244,7 +244,7 @@ export class ScreenGenerator {
         <View style={styles.container}>
           <Text style={styles.bigText}>{u.realName}</Text>
           <Text style={styles.text}>{u.getMiD()}</Text>
-          {adminCheck()}
+          {/* {adminCheck()} */}
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -520,29 +520,6 @@ export class ScreenGenerator {
     return this.output
   }
 }
-
-// function adminCheck () {
-//   const u = getUser()
-//   if (u != null && u.getUsername() === 'admin') {
-//     return (
-//       <TouchableOpacity
-//         onPress={() => { adminButton() }}
-//         style={styles.loginBtn}
-//       >
-//         <Text style={styles.buttonText}>Delete ALL Data</Text>
-//       </TouchableOpacity>
-//     )
-//   } else if (u != null) {
-//     return (
-//       <TouchableOpacity
-//         style={styles.loginBtn}
-//         onPress={() => deleteCurrUser()}
-//       >
-//         <Text style={styles.loginText}>Delete My Data</Text>
-//       </TouchableOpacity>
-//     )
-//   }
-// }
 
 let instance
 

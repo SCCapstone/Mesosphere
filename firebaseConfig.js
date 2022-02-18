@@ -15,6 +15,8 @@ const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS 
 const app = initializeApp(firebaseConfig)
 const database = getFirestore(app)
 
+const IDSRef = doc(database, 'main', 'IDS')
+
 export async function returnMIDSDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
   if (IDSSnap.exists()) {
@@ -143,7 +145,7 @@ export async function removeInteraction (u, postID) {
       }
     )
   })
-} //both are called here since Firestore doesn't allow for searching for JSON fields in an array of maps
+}
 
 export async function returnInteractionFromDatabase (u, postID) {
   const postRef = doc(database, 'posts', postID)
