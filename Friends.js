@@ -40,7 +40,7 @@ export default class Friends extends Component {
                 //Reciprocity: Check if this peer has ME
                 const peer = await pullAccountFromDatabase(ID);
                 if(peer.getAllPeers().includes(getUser().getMiD())) {
-                    this.arrayholder.push(ID);
+                    this.arrayholder.push(peer.getDisplayName());
                 }
             }
         }
