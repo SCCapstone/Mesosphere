@@ -117,7 +117,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10
   },
   inputView: {
-    backgroundColor: '#FFD89F',
+    backgroundColor: '#D0DB97',
     borderRadius: 30,
     width: '70%',
     height: 45,

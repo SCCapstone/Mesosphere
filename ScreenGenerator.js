@@ -179,7 +179,6 @@ export class ScreenGenerator {
       const postText$ = atom('')
       this.output = (
         <View style={styles.container}>
-          {/**Large Title above text box. */}
           <Text style={styles.bigText}> New Post </Text>
           <View style={styles.inputViewBio}>
             <TextInput
@@ -194,7 +193,6 @@ export class ScreenGenerator {
               onChangeText={(post) => postText$.actions.set(post)}
             />
           </View>
-          {/**"Add Media" button. */}
           <TouchableOpacity
             style={styles.mediaBtn}
             onPress={() => alert('Still in development!')}
@@ -204,7 +202,6 @@ export class ScreenGenerator {
             >Add Media
             </Text>
           </TouchableOpacity>
-          {/**"Save Post" button. */}
           <TouchableOpacity
             style={styles.postBtn} onPress={
               () => { savePost(String(postText$.get()), null) }
@@ -212,7 +209,6 @@ export class ScreenGenerator {
           >
             <Text style={styles.buttonText}> Submit </Text>
           </TouchableOpacity>
-          {/**Generates bottom bar at all times on page. */}
           {this.generateBottomBar(4)}
         </View>
       )  // End of `this.output =`.
@@ -225,12 +221,9 @@ export class ScreenGenerator {
       const postsArray = getUser().getAllPosts()
       console.log('Array of Posts' + postsArray)
       this.output = (
-        <> {/**Really JSX? You need a blank opener here?*/}
-          {/**This is the page. Notice the bottom bar just inside this level. */}
-          <SafeAreaView style={styles.container}>
-            {/**Big list of posts. */}
+        <> 
+          <SafeAreaView style={styles.container}>    
             <SafeAreaView style={styles.postViewContainer}>
-              {/**Individual posts, see ./Post.js */}
               <FlatList
                 data={postsArray}
                 renderItem={post => renderPost(post)}

@@ -13,7 +13,6 @@ export class Post extends React.Component {
     this.postID = postID
     this.mediaContent = mediaContent
     this.textContent = textContent
-    // TODO(Gazdecki) Consider counting each type of vote seperately.
     this.stateOfScore = { score:starting_score };
     this.timestamp = timestamp
   }
@@ -49,26 +48,21 @@ export function renderPost (post) {
     <View style={styles.postContainer}>
       <Text style={styles.postContainerUsername}>{u.realName} </Text>
       <View style={{borderBottomColor: 'black',
-                    borderBottomWidth: 1}}/>
+                    borderBottomWidth: 1,}}/>
       <Text style={styles.postContainerText}>{p.textContent} </Text>
-      {/**If no media content, then don't render it lmao. */}
-      {/**(p.mediaContent != null) && <Text style={styles.postContainerText}>
-        Media content: {p.mediaContent} </Text>*/}
       <Text style={styles.postContainerText}>{new Date().toLocaleString()} </Text>
-      {/**Upvote Button. */}
       <View style={styles.scoreButtonStyle}>
         <View style={styles.scoreButton}/>
           <Button
-              onPress={() => {changeScore(p, 1)} }
+              onPress={() => {changeScore(p, 1)}}
               title="Like"
               color="#254D32"
               borderRadius='12'
           />
         <View style={styles.spacing}/>
-        {/**Downvote Button. */}
         <View style={styles.scoreButton}/>
           <Button
-              onPress={() => {changeScore(p, -1)} }
+              onPress={() => {changeScore(p, -1)}}
               title="Dislike"
               color="#3A7D44"
           />
@@ -79,3 +73,4 @@ export function renderPost (post) {
     </View>
   )
 }
+
