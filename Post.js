@@ -67,7 +67,7 @@ export function renderPost (post) {
               color="#3A7D44"
           />
         <View style={styles.spacing}/>
-        <Text style={styles.postContainerText}>{p.score}</Text>
+        <Text style={styles.postContainerText}>{p.stateOfScore.score}</Text>
         <View style={styles.spacing}/>        
       </View>
     </View>
