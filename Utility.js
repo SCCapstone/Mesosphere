@@ -124,8 +124,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFA31B',
   },
   backBtn: {
-    height: 25,
-    width: 25,
+    height: 40, //made bigger so they could be clickable on android
+    width: 40,
     
   },
   logo: {

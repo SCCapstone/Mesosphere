@@ -120,4 +120,20 @@ export async function deleteCurrUser () {
   setScreen(PAGES.LOGIN)
 }
 
+export function dataOccupied(user) { //returns number of bytes
+  let bytes = 0
+  let posts = user.getAllPosts()
+  for (let i = 0; i < user.myPosts.length; i++) {
+    bytes += ~-encodeURI(
+      posts[i].attachedMiD +
+      posts[i].postID + 
+      posts[i].score + 
+      posts[i].textContent +
+      posts[i].timestamp
+    ).split(/%..|./).length
+  }
+  return bytes
+}
+
+
 export default User

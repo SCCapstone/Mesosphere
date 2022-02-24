@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
-import { checkLogin, makeAcc, adminButton, deleteCurrUser } from './User'
+import { checkLogin, dataOccupied, makeAcc } from './User'
 import { renderPost, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase } from './firebaseConfig'
 
@@ -416,6 +416,7 @@ export class ScreenGenerator {
     } else if (this.page === PAGES.VIEW_LOCAL_DATA) {
       console.log('This is the Local Data Page')
       const u = getUser()
+      const personalPosts = u.getAllPosts()
       this.output = (
         <View style={styles.container}>
           <TouchableOpacity
@@ -423,9 +424,21 @@ export class ScreenGenerator {
           onPress={() => { setScreen(PAGES.SETTINGS) } }
         >
           <Image source={backBtn} style={styles.backBtn} />
-
         </TouchableOpacity>
-            <Text> Hi cole :)</Text>
+
+
+        <SafeAreaView style={styles.container}>
+          <SafeAreaView style={styles.postViewContainer}>
+            <FlatList
+              data={personalPosts}
+              renderItem={post => renderPost(post)}
+              keyExtractor={post => post.postID}
+            />
+          <Text>{ "Size of post data:  " + dataOccupied(u) + " bytes." }</Text>
+          </SafeAreaView>
+        </SafeAreaView>
+
+
         </View> 
       )
     }
