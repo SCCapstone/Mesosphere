@@ -135,7 +135,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10
   },
   inputView: {
-    backgroundColor: '#FFD89F',
+    backgroundColor: '#D0DB97',
     borderRadius: 30,
     width: '70%',
     height: 45,
@@ -144,7 +144,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   inputViewBio: {
-    backgroundColor: '#FFD89F',
+    backgroundColor: '#D0DB97',
     borderRadius: 30,
     width: '70%',
     height: 80,
@@ -165,7 +165,16 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 40,
-    backgroundColor: '#FFA31B'
+    backgroundColor: '#3A7D44'
+  },
+  registerBtn:{
+    width: '80%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    backgroundColor: '#254D32'
   },
   loginText: {
     alignItems: 'center',
@@ -173,7 +182,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center'
   },
   postBtn: {
-    backgroundColor: '#FFA31B',
+    backgroundColor: '#3A7D44',
     height: 50,
     width: '80%',
     marginTop: 10,
@@ -181,12 +190,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  imageBtn: {
-    backgroundColor: '#FFA31B',
-    width: '20%',
+  mediaBtn: {
+    backgroundColor: '#A9A9A9',
+    width: '80%',
     borderRadius: 25,
     height: 50,
-    marginTop: 40,
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -206,7 +215,7 @@ export const styles = StyleSheet.create({
     height: '15%',
     bottom: 0,
     borderWidth: 0,
-    borderColor: '#FFA31B'
+    borderColor: '#181D27'
   },
   userButton: {
     position: 'absolute',
@@ -216,7 +225,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#FFD89F'
+    backgroundColor: '#181D27'
   },
   userButtonSelected: {
     position: 'absolute',
@@ -227,7 +236,7 @@ export const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 2,
     borderColor: '#FFA31B',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#181D27'
   },
   networkButton: {
     position: 'absolute',
@@ -238,7 +247,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#FFD89F'
+    backgroundColor: '#181D27'
   },
   networkButtonSelected: {
     position: 'absolute',
@@ -249,7 +258,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#181D27'
   },
   friendButton: {
     position: 'absolute',
@@ -260,7 +269,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#FFD89F'
+    backgroundColor: '#181D27'
   },
   friendButtonSelected: {
     position: 'absolute',
@@ -272,7 +281,7 @@ export const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 2,
     borderColor: '#FFA31B',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#181D27'
   },
   friendsAvatar: {
     width: '10%',
@@ -291,7 +300,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#FFD89F'
+    backgroundColor: '#181D27'
   },
   postButtonSelected: {
     position: 'absolute',
@@ -302,7 +311,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#181D27'
   },
   friendsLogo: {
     top: '17%',
@@ -319,7 +328,8 @@ export const styles = StyleSheet.create({
   },
   bottomButtonText: {
     position: 'absolute',
-    bottom: 0
+    bottom: 0,
+    color: '#F5F5F5'
   },
   bottomButtonIcon: {
     position: 'absolute',
@@ -341,7 +351,7 @@ export const styles = StyleSheet.create({
   },
   postContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#CCE3DE',
     width: '100%',
     marginBottom: '5%',
     padding: '2%',
@@ -350,11 +360,13 @@ export const styles = StyleSheet.create({
     // shadowOffset: {width: -2, height: 4},
     // shadowOpacity: 0.1,
     // shadowRadius: 3, these shadows look best on web/iOS, below is the necessary shadow element for Android
-    elevation: 20
+    elevation: 20,
+    borderWidth: 2,
+    borderColor: '#000',
   },
   postViewContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#181D27',
     width: '100%',
     marginBottom: '22%',
     padding: '2%',
@@ -364,9 +376,17 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3
   },
+  secondPostView:{
+    backgroundColor: 'black'
+  },
   postContainerText: {
     padding: '0.5%',
     fontWeight: '400'
+  },
+  postContainerUsername: {
+    padding: '0.5%',
+    fontWeight: 'bold',
+    fontSize: 16
   },
   bigText: {
     fontSize: 24,
@@ -378,8 +398,27 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#A4C3B2',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  smallerPostIDText:{
+    fontSize: 10,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  scoreButtonStyle:{
+    flexDirection: 'row',
+  },
+  scoreButton:{
+    justifyContent: 'space-between'
+  },
+  spacing:{
+    width: 15,
+    height: 15
+  },
+  moreSpacing:{
+    width: 15
   }
 })
