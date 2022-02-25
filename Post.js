@@ -5,7 +5,7 @@ import { generatePostID, getUser, setScreen, styles, PAGES, getData } from './Ut
 
 export class Post extends React.Component {
   // Post objects will be constructed from postPage() prompt
-  constructor (attachedMiD, postID, mediaContent, textContent, starting_score, timestamp, interactiveUsers) {
+  constructor (attachedMiD, postID, mediaContent, textContent, starting_score, timestamp, interactedUsers) {
     super()
     // TODO(Gazdecki) Supposedly we need this, but it doesn't work and I don't need it for some reason?
     // this.incrementScore = this.incrementScore.bind(this)
@@ -15,7 +15,7 @@ export class Post extends React.Component {
     this.textContent = textContent
     this.stateOfScore = { score:starting_score };
     this.timestamp = timestamp
-    this.interactiveUsers = interactiveUsers
+    this.interactedUsers = interactedUsers
   }
 }  // End of Post Class.
 // Must be an external function in order to be hooked correctly.
