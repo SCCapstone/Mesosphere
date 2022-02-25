@@ -42,6 +42,7 @@
     "detox": "^19.4.2",
     "detox-expo-helpers": "^0.6.0",
     "expo-detox-hook": "^1.0.10",
+    "expo-module-scripts": "^2.0.0",
     "jest-expo": "^44.0.1",
     "react-test-renderer": "^17.0.2"
   },
@@ -50,7 +51,7 @@
     "configurations": {
       "android.sim": {
         "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
-        "build": "cd android && gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
+        "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
         "type": "android.emulator",
         "name": "Pixel_2_API_28"
       }

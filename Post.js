@@ -1,60 +1,77 @@
 import React from 'react'
-import { View, Text, Alert } from 'react-native'
-import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
+import { View, Text, Alert, Button } from 'react-native'
+import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
+import { generatePostID, getUser, setScreen, styles, PAGES, getData } from './Utility'
 
-// Tasks:
-// Posts must consist of plaintext and optional image components
-// Users must be able to attach images via a pointer to their phone library
-// Posts generate unique IDs after checking with firebase
-// Posts have associated score variables
-// Post data is to be stored locally
-
-export class Post { // Post objects will be constructed from postPage() prompt
-  constructor (postID, mediaContent, textContent, score, timestamp) {
+export class Post extends React.Component {
+  // Post objects will be constructed from postPage() prompt
+  constructor (attachedMiD, postID, mediaContent, textContent, starting_score, timestamp, interactiveUsers) {
+    super()
+    // TODO(Gazdecki) Supposedly we need this, but it doesn't work and I don't need it for some reason?
+    // this.incrementScore = this.incrementScore.bind(this)
+    this.attachedMiD = attachedMiD
     this.postID = postID
     this.mediaContent = mediaContent
     this.textContent = textContent
-    this.score = score
+    this.stateOfScore = { score:starting_score };
     this.timestamp = timestamp
+    this.interactiveUsers = interactiveUsers
   }
-
-  getID () {
-    return this.postID
-  }
-
-  incrementScore () {
-    this.score += 1
-  }
-
-  decrementScore () {
-    this.score -= 1
-  }
+}  // End of Post Class.
+// Must be an external function in order to be hooked correctly.
+// Must be async inorder to rerender.
+export async function changeScore(post, change) {
+  post.stateOfScore = { score:(post.stateOfScore.score + change) }
+  console.log("Upvote button pressed, score is now: " + post.stateOfScore.score + ".")
+  alterPostScore(post.postID, 0.5)
 }
 
-// where it all comes together
-// will add const media, const score, const id as created
-
-export async function savePost (text, media) { // call with postText$.get() and postMedia$.get() as the two parameters
-  media = null // placeholder for eventual media content
+// call with postText$.get() and postMedia$.get() as the two parameters
+export async function savePost (text) {
   if (text.length > 50) {
-    Alert.alert('Post too long', 'Posts can be, at most, 50 characers.', { text: 'OK.' })
+    Alert.alert('Post too long',
+                'Posts can be, at most, 50 characers.',
+                { text: 'OK.' })
   }
-  const p = new Post(generatePostID(), media, text, 0, new Date().toString())
   const u = getUser()
-  u.addPost(p)
+  const new_post = new Post(u.MiD, generatePostID(), null, text, 1,
+                            new Date().toString())
+  u.addPost(new_post)
   u.storeLocally()
+  pushPostToDatabase(new_post)
   setScreen(PAGES.VIEWPOSTS)
 }
 
 export function renderPost (post) {
   const p = post.item
+  const u = getUser()
   return (
     <View style={styles.postContainer}>
-      <Text style={styles.postContainerText}>Post ID: {p.postID} </Text>
-      <Text style={styles.postContainerText}>{p.timestamp} </Text>
-      <Text style={styles.postContainerText}>Media content: {p.mediaContent} </Text>
-      <Text style={styles.postContainerText}>Text content: {p.textContent} </Text>
-      <Text style={styles.postContainerText}>Score: {p.score} </Text>
+      <Text style={styles.postContainerUsername}>{u.realName} </Text>
+      <View style={{borderBottomColor: 'black',
+                    borderBottomWidth: 1,}}/>
+      <Text style={styles.postContainerText}>{p.textContent} </Text>
+      <Text style={styles.postContainerText}>{new Date().toLocaleString()} </Text>
+      <View style={styles.scoreButtonStyle}>
+        <View style={styles.scoreButton}/>
+          <Button
+              onPress={() => {changeScore(p, 1)}}
+              title="Like"
+              color="#254D32"
+              borderRadius='12'
+          />
+        <View style={styles.spacing}/>
+        <View style={styles.scoreButton}/>
+          <Button
+              onPress={() => {changeScore(p, -1)}}
+              title="Dislike"
+              color="#3A7D44"
+          />
+        <View style={styles.spacing}/>
+        <Text style={styles.postContainerText}>{p.stateOfScore.score}</Text>
+        <View style={styles.spacing}/>        
+      </View>
     </View>
   )
-} // TO BE FORMATTED
+}
+
