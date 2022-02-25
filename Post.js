@@ -17,6 +17,28 @@ export class Post extends React.Component {
     this.timestamp = timestamp
     this.interactedUsers = interactedUsers
   }
+
+  getAttachedMID () {
+    return this.MiD
+  }
+
+  getPostID () {
+    return this.postID
+  }
+
+  incrementScore () {
+    this.score += 1
+    alterPostScore(this.postID, 0.5)
+  }
+
+  decrementScore () {
+    this.score -= 1
+    alterPostScore(this.postID, -0.5)
+  }
+
+  getInteractedUsers () {
+    return this.interactedUsers
+  }
 }  // End of Post Class.
 // Must be an external function in order to be hooked correctly.
 // Must be async inorder to rerender.
@@ -33,10 +55,10 @@ export async function savePost (text) {
                 'Posts can be, at most, 50 characers.',
                 { text: 'OK.' })
   }
+  
   const u = getUser()
-  const new_post = new Post(u.MiD, generatePostID(), null, text, 1,
-                            new Date().toString())
-  u.addPost(new_post)
+  const p = new Post(u.MiD, generatePostID(), 0, text, [], new Date().toString())
+  u.addPost(p)
   u.storeLocally()
   pushPostToDatabase(new_post)
   setScreen(PAGES.VIEWPOSTS)
@@ -74,4 +96,3 @@ export function renderPost (post) {
     </View>
   )
 }
-

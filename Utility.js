@@ -13,7 +13,12 @@ export const PAGES = {
   NEWFRIEND: 5,
   FRIEND: 6,
   MAKEPOST: 7,
-  VIEWPOSTS: 8
+  VIEWPOSTS: 8,
+  SETTINGS: 9,
+  CHANGEACCOUNT_DISP: 10,
+  CHANGEACCOUNT_PASS: 11,
+  CHANGEACCOUNT_BIO: 12,
+  VIEW_LOCAL_DATA: 13, 
 }
 
 const currUser$ = atom(null)
@@ -110,6 +115,19 @@ export function generatePostID () {
 }
 
 export const styles = StyleSheet.create({
+  backBtnLoc: {
+    position: 'absolute',
+    borderRadius: 25,
+    top: 0,
+    left: 5,
+    borderWidth: 5,
+    backgroundColor: '#FFA31B',
+  },
+  backBtn: {
+    height: 40, //made bigger so they could be clickable on android
+    width: 40,
+    
+  },
   logo: {
     width: 200,
     height: 200,

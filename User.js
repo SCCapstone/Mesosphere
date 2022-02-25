@@ -1,8 +1,7 @@
-import { Alert } from 'react-native'
-import { deleteAll, storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
+import { Alert, AsyncStorage } from 'react-native'
+import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
-import { pushAccountToDatabase, removeAccountFromDatabase, removePostFromDatabase } from './firebaseConfig'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
+import { doesAccountExist, pushAccountToDatabase, removeAccountFromDatabase } from './firebaseConfig'
 
 export class User {
   constructor (username, password, realName, biography, MiD, myPosts, myPeers) {
@@ -33,7 +32,6 @@ export class User {
 
   addPost (p) {
     this.myPosts.push(p)
-    //update account in Firebase to reflect added postID
   }
 
   getAllPosts () {
@@ -49,9 +47,22 @@ export class User {
   }
 
   addPeer (MID) {
-    if (MID.length === 16 && MID.substring(0, 5) === 'meso-') { // validates format, not existence
+    if (MID.length === 16 && MID.substring(0, 5) === 'meso-' && doesAccountExist(MID)) {
       this.myPeers.push(MID)
+      addPeerToDatabase(this, MID)
     }
+  }
+
+  setRealName (newName) {
+    this.realName = newName
+  }
+
+  setNewPassword (newPassword) {
+    this.password = newPassword
+  }
+
+  setNewBiography (newBiography) {
+    this.biography = newBiography
   }
 }
 
@@ -62,8 +73,6 @@ export async function checkLogin (username, password) {
     const temp = await getData(MiD)
     if (temp != null) {
       const u = new User(temp.username, temp.password, temp.realName, temp.biography, temp.MiD, temp.myPosts, temp.myPeers)
-      // console.log("Comparing for ID: " + u.getMiD())
-      // console.log("Incoming: " + username + " | Expected: " + u.getUsername())
       if (username === u.username) {
         found = true
         if (String(sha224(String(password))) === u.password) {
@@ -99,26 +108,9 @@ export async function makeAcc (username, password, realName, bio) {
   setScreen(PAGES.ACCOUNTPAGE)
 }
 
-// export async function makeAdminAcc () {
-//   const u = new User('admin', '8f95cfb66890ae8130f3ae7ec288d43ba0d898d60a0823788c6b3408', 'Administrator', 'It\'s a Messosphere in here.', 'meso-0', 'new', 'new')
-//   await storeData('meso-0', u)
-// }
-
-// export async function makeDemoAcc () {
-//   const u = new User('Demo', 'ccc9c73a37651c6b35de64c3a37858ccae045d285f57fffb409d251d', 'VeryReal Nameson', 'I do so enjoy my <activies>', 'meso-1', 'new', 'new')
-//   await storeData('meso-1', u)
-// }
-
-// export async function adminButton () {
-//   console.log('Removing everything!')
-//   await deleteAll()
-//   console.log('Data removed.  Recreating admin acc...')
-//   await makeAdminAcc()
-//   await makeDemoAcc()
-//   console.log('Done.  Moving to login...')
-//   setUser(null)
-//   setScreen(PAGES.LOGIN)
-// }
+export function changeRealName () {
+  alert(this.MiD)
+}
 
 export async function deleteCurrUser () {
   const u = getUser()
@@ -127,5 +119,21 @@ export async function deleteCurrUser () {
   setUser(null)
   setScreen(PAGES.LOGIN)
 }
+
+export function dataOccupied(user) { //returns number of bytes
+  let bytes = 0
+  let posts = user.getAllPosts()
+  for (let i = 0; i < user.myPosts.length; i++) {
+    bytes += ~-encodeURI(
+      posts[i].attachedMiD +
+      posts[i].postID + 
+      posts[i].score + 
+      posts[i].textContent +
+      posts[i].timestamp
+    ).split(/%..|./).length
+  }
+  return bytes
+}
+
 
 export default User
