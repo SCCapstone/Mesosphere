@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView, Button} from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
-import { checkLogin, dataOccupied, makeAcc } from './User'
+import { checkLogin, dataOccupied, deleteCurrUser, makeAcc } from './User'
 import { renderPost, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase } from './firebaseConfig'
 
@@ -264,6 +264,7 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>View Local Data</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -272,6 +273,14 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Change Display Name</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => deleteCurrUser()}
+          >
+            <Text style={styles.loginText}>Delete All Data</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -280,6 +289,7 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Change Password</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -288,6 +298,7 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Change Bio</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
