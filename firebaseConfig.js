@@ -83,6 +83,7 @@ export async function pullAccountFromDatabase (mesosphereID) {
   }
   else {
     console.log("Error: Requested post does not exist.")
+    return null;
   }
 }
 

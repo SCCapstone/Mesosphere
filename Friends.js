@@ -30,18 +30,32 @@ export default class Friends extends Component {
         this.setState({loading: true});
         this.allIDs = await returnMIDSDatabaseArray();
         if(getUser() == null) {
-            console.log("Null getUser!");
+            console.log("Null getUser! (This is an error state)");
         }
         const myPeers = getUser().getAllPeers();
             
         for (const ID of this.allIDs) {
             console.log("Checking ID " + ID + " against list of peers:" + myPeers);
+            //If this is one of of my peers and I haven't already counted them
             if(myPeers.includes(ID) && !(this.arrayholder.includes(ID))) {
-                //Reciprocity: Check if this peer has ME
+                //Pull the peer from firebase
                 const peer = await pullAccountFromDatabase(ID);
+                console.log("Peer is found and exists.  Adding.");
+                //If the peer exists...
+               //Reciprocity: Check if this peer has ME
                 if(peer.getAllPeers().includes(getUser().getMiD())) {
+                    //Add them to the list!! :) my friend
                     this.arrayholder.push(peer.getDisplayName());
                 }
+            }
+        }
+        for (const Peer of myPeers) {
+            //If the peer is does not exist (doesn't appear on firebase)
+            if(!(this.allIDs.includes(Peer))) {
+                console.log("Peer is null! Removing...");
+                //Realistically, we should remove the peer from my list because it no longer exists (it cannot be restored)
+                getUser().removePeer(Peer);
+                //Don't add anything to the arrayholder list.  We're done!
             }
         }
         this.setState({
