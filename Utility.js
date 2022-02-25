@@ -118,7 +118,7 @@ export const styles = StyleSheet.create({
   backBtnLoc: {
     position: 'absolute',
     borderRadius: 25,
-    top: 5,
+    top: 25,
     left: 5,
     borderWidth: 4,
     //backgroundColor: '#FFA31B',
