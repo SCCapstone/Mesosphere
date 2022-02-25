@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Text, Alert, Button } from 'react-native'
 import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
-import { generatePostID, getUser, setScreen, styles, PAGES, getData } from './Utility'
+import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
 
 export class Post extends React.Component {
   // Post objects will be constructed from postPage() prompt
-  constructor (attachedMiD, postID, mediaContent, textContent, starting_score, timestamp, interactedUsers) {
+  constructor (attachedMiD, postID, mediaContent, textContent, starting_score, interactedUsers, timestamp) {
     super()
     // TODO(Gazdecki) Supposedly we need this, but it doesn't work and I don't need it for some reason?
     // this.incrementScore = this.incrementScore.bind(this)
@@ -14,8 +14,8 @@ export class Post extends React.Component {
     this.mediaContent = mediaContent
     this.textContent = textContent
     this.stateOfScore = { score:starting_score };
-    this.timestamp = timestamp
     this.interactedUsers = interactedUsers
+    this.timestamp = timestamp
   }
 
   getAttachedMID () {
@@ -48,7 +48,6 @@ export async function changeScore(post, change) {
   alterPostScore(post.postID, 0.5)
 }
 
-// call with postText$.get() and postMedia$.get() as the two parameters
 export async function savePost (text) {
   if (text.length > 50) {
     Alert.alert('Post too long',
@@ -57,10 +56,10 @@ export async function savePost (text) {
   }
   
   const u = getUser()
-  const p = new Post(u.MiD, generatePostID(), 0, text, [], new Date().toString())
+  const p = new Post(u.MiD, generatePostID(), text, 0, [], new Date().toString())
   u.addPost(p)
   u.storeLocally()
-  pushPostToDatabase(new_post)
+  pushPostToDatabase(p)
   setScreen(PAGES.VIEWPOSTS)
 }
 
