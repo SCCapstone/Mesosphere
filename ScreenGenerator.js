@@ -462,7 +462,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.userButtonSelected}
             onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
-          >
+          ></TouchableOpacity>
             <Image source={logo} style={styles.bottomButtonIcon} />
           <TouchableOpacity style={styles.userButtonSelected}>
             <Image source={persons} style={styles.bottomButtonIcon} />
