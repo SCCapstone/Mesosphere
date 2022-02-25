@@ -56,7 +56,7 @@ export async function savePost (text) {
   }
   
   const u = getUser()
-  const p = new Post(u.MiD, generatePostID(), text, 0, [], new Date().toString())
+  const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString())
   u.addPost(p)
   u.storeLocally()
   pushPostToDatabase(p)
