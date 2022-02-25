@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Alert, Button } from 'react-native'
-import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
+import { alterPostScore, pushPostToDatabase, getScoreFromPostInDatabase } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
 
 export class Post extends React.Component {
@@ -27,12 +27,12 @@ export class Post extends React.Component {
   }
 
   incrementScore () {
-    this.score += 1
+    this.stateOfScore.score += 1
     alterPostScore(this.postID, 0.5)
   }
 
   decrementScore () {
-    this.score -= 1
+    this.stateOfScore.score -= 1
     alterPostScore(this.postID, -0.5)
   }
 
@@ -43,12 +43,15 @@ export class Post extends React.Component {
 // Must be an external function in order to be hooked correctly.
 // Must be async inorder to rerender.
 export async function changeScore(post, change) {
+  console.log('CHANGE SCORE')
+  const u = getUser()
   post.stateOfScore = { score:(post.stateOfScore.score + change) }
   console.log("Upvote button pressed, score is now: " + post.stateOfScore.score + ".")
-  alterPostScore(post.postID, 0.5)
+  alterPostScore(u, post.postID, change)
 }
 
 export async function savePost (text) {
+  console.log('SAVE POST')
   if (text.length > 50) {
     Alert.alert('Post too long',
                 'Posts can be, at most, 50 characers.',
@@ -66,13 +69,15 @@ export async function savePost (text) {
 export function renderPost (post) {
   const p = post.item
   const u = getUser()
+  //const scoreBoy = 
+  //console.log("THIS IS SCORE" + scoreBoy)
   return (
     <View style={styles.postContainer}>
       <Text style={styles.postContainerUsername}>{u.realName} </Text>
       <View style={{borderBottomColor: 'black',
                     borderBottomWidth: 1,}}/>
       <Text style={styles.postContainerText}>{p.textContent} </Text>
-      <Text style={styles.postContainerText}>{new Date().toLocaleString()} </Text>
+      <Text style={styles.postContainerText}>{p.timestamp} </Text>
       <View style={styles.scoreButtonStyle}>
         <View style={styles.scoreButton}/>
           <Button
@@ -89,7 +94,7 @@ export function renderPost (post) {
               color="#3A7D44"
           />
         <View style={styles.spacing}/>
-        <Text style={styles.postContainerText}>{p.stateOfScore.score}</Text>
+        <Text style={styles.postContainerText}>{getScoreFromPostInDatabase(p.postID)}</Text>
         <View style={styles.spacing}/>        
       </View>
     </View>
