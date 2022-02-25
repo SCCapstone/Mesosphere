@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ActivityIndicator, View, FlatList } from 'react-native';
 import { styles, getUser} from './Utility';
 import { Post, renderPost } from './Post'
-import { pullAccountFromDatabase, pullPostFromDataBase } from './firebaseConfig'
+import { pullAccountFromDatabase, pullPostFromDatabase } from './firebaseConfig'
 
 export default class PostsPage extends Component {
     constructor(props) {
@@ -40,7 +40,7 @@ export default class PostsPage extends Component {
                 //For each of their posts:
                 for(const p of peerPosts) {
                     //Fetch the post from firebase using ID
-                    const post = await pullPostFromDataBase(p);
+                    const post = await pullPostFromDatabase(p);
                     allPosts.push(post);
                 }
             }

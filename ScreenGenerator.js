@@ -259,7 +259,7 @@ export class ScreenGenerator {
           <SafeAreaView style={styles.postViewContainer}>
               <PostsPage/>
             </SafeAreaView>
-            {this.generateBottomBar(4)}
+            {this.generateBottomBar(2)}
           </SafeAreaView>
         </>
       )
