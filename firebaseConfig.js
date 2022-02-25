@@ -126,10 +126,10 @@ export async function alterPostScore (u, postID, change) { // increment/decremen
 
   var actionTaken = ""
   switch(change) {
-    case 0.5:
+    case 1:
       actionTaken = 'like'
       break
-    case -0.5:
+    case -1:
       actionTaken = 'dislike'
   }
 
@@ -186,6 +186,21 @@ export async function pullPostFromDatabase (postID) {
     const data = docSnap.data()
     console.log('Document data:', docSnap.data())
     return new Post(data.MID, data.postID, data.score, data.text, data.interactedUsers, data.timestamp)
+  } else {
+    console.log('Error: Requested post does not exist.')
+  }
+}
+
+export async function getScoreFromPostInDatabase(postID){
+  const postRef = doc(database, 'posts', postID)
+  const docSnap = await getDoc(postRef)
+  if (docSnap.exists()) {
+    const data = docSnap.data()
+    try{
+    return data.score
+    } catch(error){
+      console.error(error)
+    }
   } else {
     console.log('Error: Requested post does not exist.')
   }
