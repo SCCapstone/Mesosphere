@@ -244,7 +244,7 @@ export class ScreenGenerator {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.postBtn} onPress={
-              () => { savePost(String(postText$.get()), null) }
+              () => { savePost(String(postText$.get())) }
             }
           >
             <Text style={styles.buttonText}> Submit </Text>

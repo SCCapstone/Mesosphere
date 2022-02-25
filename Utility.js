@@ -130,14 +130,14 @@ export const styles = StyleSheet.create({
   backBtnLoc: {
     position: 'absolute',
     borderRadius: 25,
-    top: 0,
+    top: 25,
     left: 5,
-    borderWidth: 5,
-    backgroundColor: '#FFA31B',
+    borderWidth: 4,
+    //backgroundColor: '#FFA31B',
   },
   backBtn: {
-    height: 40, //made bigger so they could be clickable on android
-    width: 40,
+    height: 20, //made bigger so they could be clickable on android
+    width: 20,
     
   },
   logo: {
