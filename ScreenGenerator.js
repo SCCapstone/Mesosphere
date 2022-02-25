@@ -325,7 +325,6 @@ export class ScreenGenerator {
               <TouchableOpacity
                 style={styles.loginBtn}
                 onPress={() => {
-                  // alert("Functionality not yet linked, but display name in the process of being changed!")
                   changeUserDisplayNameInDatabase(u.MiD, String(newUsername$.get()))
                   u.setRealName(String(newUsername$.get()))
                   AsyncStorage.getItem(u.MiD).then(data => {
@@ -407,7 +406,6 @@ export class ScreenGenerator {
               <TouchableOpacity
                 style={styles.loginBtn}
                 onPress={() => {
-                  alert('Functionality not yet linked, but bio in the process of being changed!') // bmark
                   changeUserBiographyInDatabase(u.MiD, String(newBiography$.get()))
                   u.setNewBiography(String(newBiography$.get()))
                   AsyncStorage.getItem(u.MiD).then(data => {
