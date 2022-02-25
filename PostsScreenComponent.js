@@ -40,6 +40,7 @@ export default class PostsPage extends Component {
                 //For each of their posts:
                 for(const p of peerPosts) {
                     //Fetch the post from firebase using ID
+                    console.log("Adding posts of peer: " + peer.getMiD())
                     const post = await pullPostFromDatabase(p);
                     allPosts.push(post);
                 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
-import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
+import { PAGES, styles, setScreen, getUser, setUser, getFocus } from './Utility'
 import { checkLogin, dataOccupied, makeAcc } from './User'
 import { renderPost, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase } from './firebaseConfig'

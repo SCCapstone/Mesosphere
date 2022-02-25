@@ -45,7 +45,7 @@ export default class Friends extends Component {
                //Reciprocity: Check if this peer has ME
                 if(peer.getAllPeers().includes(getUser().getMiD())) {
                     //Add them to the list!! :) my friend
-                    this.arrayholder.push(peer.getDisplayName());
+                    this.arrayholder.push(peer);
                 }
             }
         }
@@ -84,14 +84,29 @@ export default class Friends extends Component {
         });
 
         const newData = this.arrayholder.filter(item => {
-            const itemData = `${item.toUpperCase()}`;
+            const itemData = `${item.getDisplayName().toUpperCase()}`;
             const textData = text.toUpperCase();
             return itemData.indexOf(textData) > -1;
         });
         //If: There are no friends in the search field & ID exists & ID is not you
         if(newData.length == 0 && this.allIDs.length > 0 && text.length == 16 && this.allIDs.includes(text) &&
             text != getUser().getMiD()) {
-            const dummyData = ["Add Friend " + text +  "?"];
+            class dummyUserClass {
+                constructor(fakeID, fakeName) {
+                    this.fakeID = fakeID;
+                    this.fakeName = fakeName;
+                }
+
+                getDisplayName() {
+                    return this.fakeName;
+                }
+
+                getMiD() {
+                    return this.fakeID;
+                }
+            }
+            const dummyUser = new dummyUserClass(0, "Add Friend " + text +  "?");
+            const dummyData = [dummyUser];
             this.setState({
                 data: dummyData,
             })
@@ -104,14 +119,17 @@ export default class Friends extends Component {
 
     renderHeader = () => {
         return (
+            <View style={{marginBottom: '2%'}}>
             <SearchBar
-                placeholder="Type Here..."
+                placeholder="Enter an MiD to add a friend!"
                 color='#000000'
                 lightTheme
                 round
+                
                 onChangeText={text => this.searchFilterFunction(text)}
                 value={this.state.value}
             />
+            </View>
         );
     };
 
@@ -139,12 +157,12 @@ export default class Friends extends Component {
                                         textAlign: 'center',
                                         color: '#000'
                                     //}}>{`${item.name.first} ${item.name.last}`}
-                                    }}>{`${item}`}
+                                    }}>{`${item.getDisplayName()}`}
                                 </Text>
                             </View>
                         </TouchableOpacity>
                     )}
-                    keyExtractor={item => item}
+                    keyExtractor={item => item.getMiD()}
                     ItemSeparatorComponent={this.renderSeparator}
                     ListFooterComponent={this.renderFooter}
                 />
@@ -154,9 +172,9 @@ export default class Friends extends Component {
 
     async itemTapped(item) {
         //alert('Item pressed! ' + item);
-        if(item.includes("Add Friend")) {
-            console.log(item.substring(11,27));
-            const newFriendID = item.substring(11,27);
+        if(item.getDisplayName().includes("Add Friend")) {
+            console.log(item.getDisplayName().substring(11,27));
+            const newFriendID = item.getDisplayName().substring(11,27);
             Alert.alert(
                 "Add Friend?",
                 "Are you sure you want to add " + newFriendID + "?",
@@ -172,7 +190,10 @@ export default class Friends extends Component {
         } else {
             console.log("Real item pushed! Should move to User screen.");
             //Construct a User object from item using Firebase
-            const u = await pullAccountFromDatabase(item);
+            const u = await pullAccountFromDatabase(item.getMiD());
+            if(u == null) {
+                console.log("User doesn't... exist? That seems wrong." + item.getMiD());
+            }
             //Set that user object to our "current focus"
             setFocus(u);
             console.log(u.getDisplayName());

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Alert, Button } from 'react-native'
 import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
-import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
+import { generatePostID, getUser, setScreen, styles, PAGES,  } from './Utility'
 
 export class Post extends React.Component {
   // Post objects will be constructed from postPage() prompt
@@ -65,10 +65,17 @@ export async function savePost (text) {
 
 export function renderPost (post) {
   const p = post.item
-  const u = getUser()
+  
+  //This logic needs to be changed to grab the display name (realName) from the passed in post's MiD)
+  /*  About that...
+  * In order to pull from the database, this would need to be made ASYNC, which I don't like, considering how we use it
+  * in the flatlist.  But then again... this is a *fake* component.  It doesn't use any actual component-like features.
+  * It should be refactored to become an actual post component, mirroring Friends and PostsScreen.  After that,
+  * I think it could hypothetically pull and await (using similar logic to the other components.)  It's bandaid fixed for now.
+  */
   return (
     <View style={styles.postContainer}>
-      <Text style={styles.postContainerUsername}>{u.realName} </Text>
+      <Text style={styles.postContainerUsername}>{p.attachedMiD} </Text>
       <View style={{borderBottomColor: 'black',
                     borderBottomWidth: 1,}}/>
       <Text style={styles.postContainerText}>{p.textContent} </Text>

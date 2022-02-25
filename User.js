@@ -1,7 +1,7 @@
 import { Alert, AsyncStorage } from 'react-native'
 import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
-import { pushAccountToDatabase, removeAccountFromDatabase, addPeerToDatabase} from './firebaseConfig'
+import { pushAccountToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase} from './firebaseConfig'
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 

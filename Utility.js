@@ -359,6 +359,7 @@ export const styles = StyleSheet.create({
   },
   friendContainer: {
     flex: 1,
+    marginTop: '2%',
     backgroundColor: '#fff'
   },
   postContainer: {
@@ -381,8 +382,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#181D27',
     width: '100%',
     marginBottom: '22%',
-    padding: '2%',
-    borderRadius: 20,
+    //padding: '2%',
+    //borderRadius: 20,
     shadowColor: 'grey',
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
@@ -419,7 +420,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#A4C3B2',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: '5%'
   },
   smallerPostIDText:{
     fontSize: 10,
