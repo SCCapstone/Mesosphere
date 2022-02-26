@@ -95,7 +95,7 @@ export default class PostsPage extends Component {
             return (
               <FlatList
                 data={this.state.data}
-                renderItem={post => post}
+                renderItem={post => post.render()}
                 ItemSeparatorComponent={this.renderSeparator}
                 keyExtractor={item => JSON.stringify(item)}
               />

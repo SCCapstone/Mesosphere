@@ -3,11 +3,13 @@ import { View, Text, Alert, Button } from 'react-native'
 import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES,  } from './Utility'
 
-export class Post extends Component{
+export class Post extends Component {
   // Post objects will be constructed from postPage() prompt
   constructor (attachedMiD, postID, mediaContent, textContent, starting_score, interactedUsers, timestamp) {
     // TODO(Gazdecki) Supposedly we need this, but it doesn't work and I don't need it for some reason?
     // this.incrementScore = this.incrementScore.bind(this)
+    super();
+    console.log("Creating a new post! Passed in MiD:" + attachedMiD);
     this.attachedMiD = attachedMiD
     this.postID = postID
     this.mediaContent = mediaContent
@@ -105,8 +107,9 @@ export async function savePost (text) {
                 { text: 'OK.' })
                 return;
   }
-  
+  console.log("Saving post!");
   const u = getUser()
+  console.log("Current user:" + u);
   const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString())
   u.addPost(p)
   u.storeLocally()
