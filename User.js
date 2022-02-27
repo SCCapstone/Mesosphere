@@ -107,7 +107,7 @@ export async function checkLogin (username, password) {
     alert('Incorrect password.')
     return
   }
-  console.log('User does not exist!  Moving to create account screen...')
+  console.log('User (' + username + ') does not exist!')
   alert('Incorrect username.')
 }
 

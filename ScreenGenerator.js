@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser, getFocus } from './Utility'
-import { checkLogin, dataOccupied, makeAcc } from './User'
+import { checkLogin, dataOccupied, makeAcc, deleteCurrUser } from './User'
 import { renderPost, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase } from './firebaseConfig'
 
@@ -69,14 +69,14 @@ export class ScreenGenerator {
           </View>
           <TouchableOpacity
             style={styles.loginBtn}
-            onPress={() => checkLogin(String(username$.get()), String(password$.get())) && username$.actions.set() && password$.actions.set()}
+            onPress={() => checkLogin(String(username$.get()), String(password$.get()))}//&& username$.actions.set() && password$.actions.set()}
             testID='LoginButton'
           >
             <Text style={styles.loginText}>LOGIN</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.loginBtn}
-            onPress={() => setScreen(PAGES.goACC)}
+            onPress={() => setScreen(PAGES.MAKEACC)}
             testID='RegisterButton'
           >
             <Text style={styles.loginText}>REGISTER</Text>
@@ -269,6 +269,13 @@ export class ScreenGenerator {
 
       this.output = (
         <View style={styles.container}>
+          <SafeAreaView style={{marginBottom: '20%', width: '90%', justifyContent: 'center', alignItems: 'center'}}>
+          <TouchableOpacity
+          style={styles.backBtnLoc}
+          onPress={() => { setScreen(PAGES.ACCOUNTPAGE) } }
+        >
+          <Image source={backBtn} style={styles.backBtn} />
+        </TouchableOpacity>
           <Text style={styles.bigText}>{u.realName}</Text>
           <Text style={styles.text}>{u.getMiD()}</Text>
           {/* {adminCheck()} */}
@@ -313,10 +320,15 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Logout</Text>
           </TouchableOpacity>
-
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => deleteCurrUser()}
+          >
+            <Text style={styles.loginText}>Delete This Account</Text>
+          </TouchableOpacity>
+          </SafeAreaView>
           {this.generateBottomBar(1)}
-        </View>
-
+          </View>
       )
     } else if (this.page === PAGES.CHANGEACCOUNT_DISP) {
       console.log('changing some aspect of the account (user)')
@@ -338,6 +350,7 @@ export class ScreenGenerator {
                 returnKeyType='next'
                 maxLength={30}
                 onChangeText={(newusername) => newUsername$.actions.set(newusername)} />
+              </View>
               <TouchableOpacity
                 style={styles.loginBtn}
                 onPress={() => {
@@ -355,7 +368,6 @@ export class ScreenGenerator {
               >
                 <Text style={styles.loginText}>Change Display Name</Text>
               </TouchableOpacity>
-            </View>
           </View>
       )
     } else if (this.page === PAGES.CHANGEACCOUNT_PASS) {
@@ -379,6 +391,7 @@ export class ScreenGenerator {
                 returnKeyType='next'
                 maxLength={50}
                 onChangeText={(newpassword) => newPassword$.actions.set(newpassword)} />
+              </View>
               <TouchableOpacity
                 style={styles.loginBtn}
                 onPress={() => {
@@ -393,7 +406,6 @@ export class ScreenGenerator {
               >
                 <Text style={styles.loginText}>Change Password</Text>
               </TouchableOpacity>
-            </View>
           </View>
       )
     } else if (this.page === PAGES.CHANGEACCOUNT_BIO) {
@@ -419,6 +431,7 @@ export class ScreenGenerator {
                 blurOnSubmit
                 maxLength={240}
                 onChangeText={(biography) => newBiography$.actions.set(biography)} />
+              </View>
               <TouchableOpacity
                 style={styles.loginBtn}
                 onPress={() => {
@@ -434,7 +447,6 @@ export class ScreenGenerator {
               >
                 <Text style={styles.loginText}>Change Bio</Text>
               </TouchableOpacity>
-            </View>
           </View>
       )
     } else if (this.page === PAGES.VIEW_LOCAL_DATA) {
@@ -452,14 +464,14 @@ export class ScreenGenerator {
 
 
         <SafeAreaView style={styles.container}>
-          <SafeAreaView style={styles.postViewContainer}>
+          <SafeAreaView style={styles.postViewContainer, {width: '100%'}}>
             <FlatList
               data={personalPosts}
               renderItem={post => renderPost(post)}
               keyExtractor={post => post.postID}
             />
-          <Text>{ "Size of post data:  " + dataOccupied(u) + " bytes." }</Text>
           </SafeAreaView>
+          <Text>{ "Size of post data:  " + dataOccupied(u) + " bytes." }</Text>
         </SafeAreaView>
 
 

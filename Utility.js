@@ -176,7 +176,7 @@ export const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
+    marginTop: '8%',
     backgroundColor: '#3A7D44'
   },
   registerBtn:{
@@ -185,7 +185,7 @@ export const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
+    marginTop: '8%',
     backgroundColor: '#254D32'
   },
   loginText: {
@@ -421,7 +421,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#A4C3B2',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '5%'
+    marginTop: '5%',
   },
   smallerPostIDText:{
     fontSize: 10,
