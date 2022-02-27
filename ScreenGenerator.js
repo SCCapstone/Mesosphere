@@ -280,6 +280,7 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>View Local Data</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -288,6 +289,14 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Change Display Name</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => deleteCurrUser()}
+          >
+            <Text style={styles.loginText}>Delete All Data</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -296,6 +305,7 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Change Password</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -304,6 +314,7 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Change Bio</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {

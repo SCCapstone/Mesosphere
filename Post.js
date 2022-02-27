@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES,  } from './Utility'
-
 import PostComponent from './PostComponent'
 
 export class Post {
@@ -50,6 +49,7 @@ export class Post {
 
 
 export async function savePost (text) {
+  console.log('SAVE POST')
   if (text.length > 50) {
     Alert.alert('Post too long',
                 'Posts can be, at most, 50 characers.',
@@ -82,13 +82,14 @@ export function renderPost (post) {
   * It should be refactored to become an actual post component, mirroring Friends and PostsScreen.  After that,
   * I think it could hypothetically pull and await (using similar logic to the other components.)  It's bandaid fixed for now.
   */
+
   return (
     <View style={styles.postContainer}>
       <Text style={styles.postContainerUsername}>{p.attachedMiD} </Text>
       <View style={{borderBottomColor: 'black',
                     borderBottomWidth: 1,}}/>
       <Text style={styles.postContainerText}>{p.textContent} </Text>
-      <Text style={styles.postContainerText}>{new Date().toLocaleString()} </Text>
+      <Text style={styles.postContainerText}>{p.timestamp} </Text>
       <View style={styles.scoreButtonStyle}>
         <View style={styles.scoreButton}/>
           <Button

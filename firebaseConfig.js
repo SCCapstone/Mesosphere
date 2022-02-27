@@ -207,6 +207,21 @@ export async function pullPostFromDatabase (postID) {
   }
 }
 
+export async function getScoreFromPostInDatabase(postID){
+  const postRef = doc(database, 'posts', postID)
+  const docSnap = await getDoc(postRef)
+  if (docSnap.exists()) {
+    const data = docSnap.data()
+    try{
+    return data.score
+    } catch(error){
+      console.error(error)
+    }
+  } else {
+    console.log('Error: Requested post does not exist.')
+  }
+}
+
 export async function updatePostInteractionsFromDatabase (postID) { //used for keeping local copies of personal posts up to date with Firebase
   // const postRef = doc(database, 'posts', postID)
   // const postSnap = await getDoc(postRef)
