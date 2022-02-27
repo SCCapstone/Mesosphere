@@ -140,7 +140,7 @@ export async function deleteCurrUser () {
 
 export function dataOccupied(user) { //returns number of bytes
   let bytes = 0
-  let posts = user.getAllPosts()
+  let posts = user.getMyPosts()
   for (let i = 0; i < user.myPosts.length; i++) {
     bytes += ~-encodeURI(
       posts[i].attachedMiD +

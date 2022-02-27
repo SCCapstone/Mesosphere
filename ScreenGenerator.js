@@ -76,7 +76,7 @@ export class ScreenGenerator {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.loginBtn}
-            onPress={() => setScreen(PAGES.MAKEACC)}
+            onPress={() => setScreen(PAGES.goACC)}
             testID='RegisterButton'
           >
             <Text style={styles.loginText}>REGISTER</Text>
@@ -280,7 +280,6 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>View Local Data</Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -289,14 +288,6 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Change Display Name</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => deleteCurrUser()}
-          >
-            <Text style={styles.loginText}>Delete All Data</Text>
-          </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -305,7 +296,6 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Change Password</Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -314,7 +304,6 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Change Bio</Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
@@ -451,7 +440,7 @@ export class ScreenGenerator {
     } else if (this.page === PAGES.VIEW_LOCAL_DATA) {
       console.log('This is the Local Data Page')
       const u = getUser()
-      const personalPosts = u.getAllPosts()
+      const personalPosts = u.getMyPosts()
       this.output = (
         <View style={styles.container}>
           <TouchableOpacity
