@@ -26,16 +26,16 @@ export default class PostsPage extends Component {
         this.setState({loading: true});
         const allPosts = [];
         const currUser = getUser();
-        console.log("\\getAllPosts(): currUser: " + currUser.getMiD());
+        //console.log("\\getAllPosts(): currUser: " + currUser.getMiD());
         //For each of my peers:
         for(const u of currUser.getAllPeers()) {
             const peer = await pullAccountFromDatabase(u);
-            console.log(peer.getMiD());
-            console.log(peer.getMyPosts());
+            //console.log(peer.getMiD());
+            //console.log(peer.getMyPosts());
             const peerPosts = peer.getMyPosts();
             //Reciprocity: If this peer also has me as a peer...
-            console.log("This peer:" + JSON.stringify(peer));
-            console.log("Peer's peers:" + peer.getAllPeers());
+            //console.log("This peer:" + JSON.stringify(peer));
+            //console.log("Peer's peers:" + peer.getAllPeers());
             if(peer.getAllPeers().includes(currUser.getMiD())) {
                 //For each of their posts:
                 for(const p of peerPosts) {
@@ -47,9 +47,12 @@ export default class PostsPage extends Component {
             }
         }
         //Do the same for current user:
+        //TODO: This logic should be refactored so that local posts are also pulled from FB instead.
+        //Local data is ONLY for P2P functionality.  It should not be used in this context while we are using firebase.
         const myPostsArr = currUser.getMyPosts();
         for(const post of myPostsArr) {
-            allPosts.push(post);
+            const FBpost = await pullPostFromDatabase(post.postID);
+            allPosts.push(FBpost);
         }
         //console.log("All posts:" + JSON.stringify(allPosts));
         //console.log(allPosts.includes(null))
@@ -64,7 +67,8 @@ export default class PostsPage extends Component {
                 }
             } 
         }
-        console.log("All posts:" + JSON.stringify(allPosts));
+        //console.log("All posts:" + JSON.stringify(allPosts));
+        this.sortPostsArray(allPosts);
         //Update the state
         this.setState({
             data: allPosts,
@@ -72,6 +76,19 @@ export default class PostsPage extends Component {
             loading: false,
         });
     }
+
+    sortPostsArray(allPosts) {
+        //Logic for sorting by date goes here.
+        //console.log(allPosts[0].timestamp);
+        //const check = new Date(allPosts[0].timestamp);
+        //console.log(check);
+        allPosts.sort((b, a) =>
+            (new Date(a.timestamp)) - (new Date(b.timestamp))
+        )
+        //console.log("All posts:" + JSON.stringify(allPosts));
+    }
+
+
 
     renderSeparator = () => {
         return (

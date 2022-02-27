@@ -66,7 +66,7 @@ export async function pushAccountToDatabase (u) {
   await setDoc(doc(database, 'accounts', u.MiD), {
     MID: u.MiD,
     biography: u.biography,
-    displayname: u.username,
+    displayname: u.realName,
     friends: u.myPeers,
     posts: u.myPosts
   })
@@ -136,11 +136,9 @@ export async function alterPostScore (u, postID, change) { // increment/decremen
   })
 
   var actionTaken = ""
-  switch(change) {
-    case 0.5:
+  if(change > 0) {
       actionTaken = 'like'
-      break
-    case -0.5:
+  } else {
       actionTaken = 'dislike'
   }
 
@@ -197,11 +195,11 @@ export async function pullPostFromDatabase (postID) {
     const data = docSnap.data()
     console.log("Document data:", docSnap.data());
     console.log(data.timestamp);
-    const realstamp = new Date(1970, 0, 1);
-    realstamp.setSeconds(data.timestamp.seconds);
-    realstamp.setMilliseconds(data.timestamp.nanoseconds)
-    console.log(realstamp);
-    return new Post(data.MID, data.postID, data.score, data.text, realstamp.toString())
+    //const realstamp = new Date(1970, 0, 1);
+    //realstamp.setSeconds(data.timestamp.seconds);
+    //realstamp.setMilliseconds(data.timestamp.nanoseconds)
+    //console.log("timestamp pulled down:" + realstamp);
+    return new Post(data.MID, data.postID, null, data.text, data.score, data.interactedUsers, data.timestamp)
   }
   else {
     console.log("Error: Requested post does not exist.")

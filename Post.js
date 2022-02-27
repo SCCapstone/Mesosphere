@@ -59,15 +59,18 @@ export async function savePost (text) {
   console.log("Saving post!");
   const u = getUser()
   console.log("Current user:" + u);
-  const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString())
+  if(u == null) {
+    console.log("Current user is null! This is an error state.")
+    return;
+  }
+  const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString().substring(0,21))
   u.addPost(p)
   u.storeLocally()
-  pushPostToDatabase(p)
+  await pushPostToDatabase(p)
   setScreen(PAGES.VIEWPOSTS)
 }
 
 export function renderPost (post) {
-  console.log("Hi mom!!!");
   const p = post.item;
   return <PostComponent postObj = {p} />
   if (false) {
