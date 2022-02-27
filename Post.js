@@ -1,19 +1,18 @@
-import React from 'react'
-import { View, Text, Alert, Button } from 'react-native'
-import { alterPostScore, pushPostToDatabase, getScoreFromPostInDatabase } from './firebaseConfig'
-import { generatePostID, getUser, setScreen, styles, PAGES } from './Utility'
+import React, { Component } from 'react'
+import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
+import { generatePostID, getUser, setScreen, styles, PAGES,  } from './Utility'
+import PostComponent from './PostComponent'
 
-export class Post extends React.Component {
+export class Post {
   // Post objects will be constructed from postPage() prompt
   constructor (attachedMiD, postID, mediaContent, textContent, starting_score, interactedUsers, timestamp) {
-    super()
     // TODO(Gazdecki) Supposedly we need this, but it doesn't work and I don't need it for some reason?
     // this.incrementScore = this.incrementScore.bind(this)
     this.attachedMiD = attachedMiD
     this.postID = postID
     this.mediaContent = mediaContent
     this.textContent = textContent
-    this.stateOfScore = { score:starting_score };
+    this.starting_score = starting_score;
     this.interactedUsers = interactedUsers
     this.timestamp = timestamp
   }
@@ -27,28 +26,27 @@ export class Post extends React.Component {
   }
 
   incrementScore () {
-    this.stateOfScore.score += 1
+    this.starting_score++;
     alterPostScore(this.postID, 0.5)
   }
 
   decrementScore () {
-    this.stateOfScore.score -= 1
+    this.starting_score--;
     alterPostScore(this.postID, -0.5)
   }
 
   getInteractedUsers () {
     return this.interactedUsers
   }
-}  // End of Post Class.
-// Must be an external function in order to be hooked correctly.
-// Must be async inorder to rerender.
-export async function changeScore(post, change) {
-  console.log('CHANGE SCORE')
-  const u = getUser()
-  post.stateOfScore = { score:(post.stateOfScore.score + change) }
-  console.log("Upvote button pressed, score is now: " + post.stateOfScore.score + ".")
-  alterPostScore(u, post.postID, change)
 }
+
+  export async function changeScore(post, change) {
+    post.starting_score += change;
+    console.log("Upvote button pressed, score is now: " + post.state.score + ".")
+    alterPostScore(post.postID, 0.5)
+    //This should also add the current user to my interacted users.
+  }
+
 
 export async function savePost (text) {
   console.log('SAVE POST')
@@ -56,24 +54,38 @@ export async function savePost (text) {
     Alert.alert('Post too long',
                 'Posts can be, at most, 50 characers.',
                 { text: 'OK.' })
+                return;
   }
-  
+  console.log("Saving post!");
   const u = getUser()
-  const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString())
+  console.log("Current user:" + u);
+  if(u == null) {
+    console.log("Current user is null! This is an error state.")
+    return;
+  }
+  const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString().substring(0,21))
   u.addPost(p)
   u.storeLocally()
-  pushPostToDatabase(p)
+  await pushPostToDatabase(p)
   setScreen(PAGES.VIEWPOSTS)
 }
 
 export function renderPost (post) {
-  const p = post.item
-  const u = getUser()
-  //const scoreBoy = 
-  //console.log("THIS IS SCORE" + scoreBoy)
+  const p = post.item;
+  return <PostComponent postObj = {p} />
+  if (false) {
+  
+  //This logic needs to be changed to grab the display name (realName) from the passed in post's MiD)
+  /*  About that...
+  * In order to pull from the database, this would need to be made ASYNC, which I don't like, considering how we use it
+  * in the flatlist.  But then again... this is a *fake* component.  It doesn't use any actual component-like features.
+  * It should be refactored to become an actual post component, mirroring Friends and PostsScreen.  After that,
+  * I think it could hypothetically pull and await (using similar logic to the other components.)  It's bandaid fixed for now.
+  */
+
   return (
     <View style={styles.postContainer}>
-      <Text style={styles.postContainerUsername}>{u.realName} </Text>
+      <Text style={styles.postContainerUsername}>{p.attachedMiD} </Text>
       <View style={{borderBottomColor: 'black',
                     borderBottomWidth: 1,}}/>
       <Text style={styles.postContainerText}>{p.textContent} </Text>
@@ -94,9 +106,11 @@ export function renderPost (post) {
               color="#3A7D44"
           />
         <View style={styles.spacing}/>
-        <Text style={styles.postContainerText}>{getScoreFromPostInDatabase(p.postID)}</Text>
+        <Text style={styles.postContainerText}>{p.score}</Text>
         <View style={styles.spacing}/>        
       </View>
     </View>
   )
+  }
+
 }

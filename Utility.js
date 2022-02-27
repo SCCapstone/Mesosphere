@@ -23,6 +23,7 @@ export const PAGES = {
 
 const currUser$ = atom(null)
 const currScreen$ = atom(null)
+const currFocus$ = atom(null)
 
 export function setUser (u) {
   currUser$.actions.set(u)
@@ -33,6 +34,9 @@ export function setScreen (s) {
 }
 
 export function getUser () {
+  if(currUser$ == null)
+    console.log("Null current user! (Error state)")
+  //console.log("\Utility: Current User:" + JSON.stringify(currUser$.get()));
   return currUser$.get()
 }
 
@@ -42,6 +46,14 @@ export function getScreen () {
 
 export function returnScreen () {
   return currScreen$
+}
+
+export function getFocus () {
+  return currFocus$.get()
+}
+
+export function setFocus (f) {
+  return currFocus$.actions.set(f);
 }
 
 export const storeData = async (key, value) => {
@@ -347,6 +359,7 @@ export const styles = StyleSheet.create({
   },
   friendContainer: {
     flex: 1,
+    marginTop: '2%',
     backgroundColor: '#fff'
   },
   postContainer: {
@@ -369,8 +382,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#181D27',
     width: '100%',
     marginBottom: '22%',
-    padding: '2%',
-    borderRadius: 20,
+    //padding: '2%',
+    //borderRadius: 20,
     shadowColor: 'grey',
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
@@ -396,11 +409,19 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: '5%'
   },
+  smallText: {
+    fontSize: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginBottom: '5%'
+  },
   container: {
     flex: 1,
     backgroundColor: '#A4C3B2',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: '5%'
   },
   smallerPostIDText:{
     fontSize: 10,

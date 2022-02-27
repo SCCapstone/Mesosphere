@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment, query, where, getDocs } from 'firebase/firestore/lite'
+import { getFirestore, doc, collectionGroup, getDoc, getDocs, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment, DocumentSnapshot } from 'firebase/firestore/lite'
 import { Post } from './Post'
 import { User } from './User'
 
@@ -25,12 +25,21 @@ export async function returnMIDSDatabaseLength () {
   return IDSSnap.data().MesosphereIDs.length
 }
 
-export async function searchMID (sMID) {
-  const IDSSnap = await getDoc(IDSRef)
-  if (IDSSnap.exists()) {
-    // console.log(IDSSnap.data().MesosphereIDs)
+export async function returnMIDSDatabaseArray () {
+  const userRef = collectionGroup(database, 'accounts')
+  const docSnap = await getDocs(userRef)
+  const activeIDs = []
+  if(docSnap.size != 0) {
+    //console.log(docSnap.docs)
+    for(const document of docSnap.docs) {
+      //console.log("Attempting to print MID:")
+      //console.log(document.data().MID)
+      activeIDs.push(document.data().MID)
+    }
+  } else {
+    console.log("No active IDs!")
   }
-  return IDSSnap.data().MesosphereIDs.includes(sMID)
+  return activeIDs;
 }
 
 export async function returnPostIDDatabaseLength () {
@@ -57,7 +66,7 @@ export async function pushAccountToDatabase (u) {
   await setDoc(doc(database, 'accounts', u.MiD), {
     MID: u.MiD,
     biography: u.biography,
-    displayname: u.username,
+    displayname: u.realName,
     friends: u.myPeers,
     posts: u.myPosts
   })
@@ -68,10 +77,12 @@ export async function pullAccountFromDatabase (mesosphereID) {
   const docSnap = await getDoc(userRef)
   if (docSnap.exists()) {
     const data = docSnap.data()
-    console.log('Document data:', docSnap.data())
-    return new User('', '', data.displayname, data.biography, data.MID, data.posts, data.friends)
-  } else {
-    console.log('Error: Requested post does not exist.')
+    console.log("Document data:", docSnap.data())
+    return new User("", "", data.displayname, data.biography, data.MID, data.posts, data.friends)
+  }
+  else {
+    console.log("Error: Requested acc does not exist.")
+    return null;
   }
 }
 
@@ -107,7 +118,7 @@ export async function pushPostToDatabase (p) {
   await setDoc(doc(database, 'posts', p.postID), {
     MID: p.attachedMiD,
     postID: p.postID,
-    score: p.stateOfScore.score,
+    score: p.starting_score,
     text: p.textContent,
     interactedUsers: p.interactedUsers,
     timestamp: p.timestamp
@@ -125,11 +136,9 @@ export async function alterPostScore (u, postID, change) { // increment/decremen
   })
 
   var actionTaken = ""
-  switch(change) {
-    case 1:
+  if(change > 0) {
       actionTaken = 'like'
-      break
-    case -1:
+  } else {
       actionTaken = 'dislike'
   }
 
@@ -184,10 +193,17 @@ export async function pullPostFromDatabase (postID) {
   const docSnap = await getDoc(postRef)
   if (docSnap.exists()) {
     const data = docSnap.data()
-    console.log('Document data:', docSnap.data())
-    return new Post(data.MID, data.postID, data.score, data.text, data.interactedUsers, data.timestamp)
-  } else {
-    console.log('Error: Requested post does not exist.')
+    console.log("Document data:", docSnap.data());
+    console.log(data.timestamp);
+    //const realstamp = new Date(1970, 0, 1);
+    //realstamp.setSeconds(data.timestamp.seconds);
+    //realstamp.setMilliseconds(data.timestamp.nanoseconds)
+    //console.log("timestamp pulled down:" + realstamp);
+    return new Post(data.MID, data.postID, null, data.text, data.score, data.interactedUsers, data.timestamp)
+  }
+  else {
+    console.log("Error: Requested post does not exist.")
+    return null;
   }
 }
 

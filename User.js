@@ -1,7 +1,9 @@
 import { Alert, AsyncStorage } from 'react-native'
 import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
-import { doesAccountExist, pushAccountToDatabase, removeAccountFromDatabase } from './firebaseConfig'
+import { pushAccountToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase} from './firebaseConfig'
+import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
+// import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export class User {
   constructor (username, password, realName, biography, MiD, myPosts, myPeers) {
@@ -16,6 +18,10 @@ export class User {
 
   getUsername () {
     return this.username
+  }
+
+  getDisplayName () {
+    return this.realName
   }
 
   getBiography () {
@@ -34,7 +40,7 @@ export class User {
     this.myPosts.push(p)
   }
 
-  getAllPosts () {
+  getMyPosts () {
     return this.myPosts
   }
 
@@ -47,10 +53,22 @@ export class User {
   }
 
   addPeer (MID) {
-    if (MID.length === 16 && MID.substring(0, 5) === 'meso-' && doesAccountExist(MID)) {
-      this.myPeers.push(MID)
-      addPeerToDatabase(this, MID)
+    console.log("Adding peer: "+ MID)
+    if (MID.length === 16 && MID.substring(0, 5) === 'meso-') { // validates format, not existence
+      console.log("Format validated!")
+      this.myPeers.push(MID);
+      addPeerToDatabase(this, MID);
     }
+    this.storeLocally ();
+  }
+
+  removePeer (MID) {
+    const index = this.myPeers.indexOf(MID);
+    if(index > -1) {
+      this.myPeers.splice(index, 1);
+      removePeerFromDatabase(this, MID);
+    }
+    this.storeLocally ();
   }
 
   setRealName (newName) {

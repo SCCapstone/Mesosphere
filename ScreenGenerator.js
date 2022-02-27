@@ -1,7 +1,7 @@
 import React from 'react'
-import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView, Button} from 'react-native'
-import { PAGES, styles, setScreen, getUser, setUser } from './Utility'
-import { checkLogin, dataOccupied, deleteCurrUser, makeAcc } from './User'
+import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
+import { PAGES, styles, setScreen, getUser, setUser, getFocus } from './Utility'
+import { checkLogin, dataOccupied, makeAcc } from './User'
 import { renderPost, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase } from './firebaseConfig'
 
@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { sha224 } from 'js-sha256'
 
 import FriendPage from './Friends'
+import PostsPage from './PostsScreenComponent'
 import logo from './assets/MesoSphere.png'
 import backBtn from './assets/BackBtn.png'
 import friends from './assets/friends.png'
@@ -186,9 +187,35 @@ export class ScreenGenerator {
           </SafeAreaView>
         </>
       )
-    // TODO(Gazdecki) Stretch text box to be the exact same size as the oval background. Good luck testing that.
-    } else if (this.page === PAGES.MAKEPOST) {  // "New Post" page.
-      // TODO(Gazdecki) Figure out what this does exactly.
+    } else if (this.page === PAGES.FRIEND) {
+      const u = getFocus();
+      this.output = (
+        <View style={styles.container}>
+          <Text style={styles.bigText}>{u.getDisplayName()}</Text>
+          <Text style={styles.smallText}>{u.getMiD()}</Text>
+          <Text style={styles.text}>{u.getBiography()}</Text>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              //Remove friend
+              getUser().removePeer(u.getMiD())
+              setScreen(PAGES.FRIENDSLIST);
+            }}
+          >
+            <Text style={styles.loginText}>REMOVE FRIEND</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              setScreen(PAGES.FRIENDSLIST);
+            }}
+          >
+            <Text style={styles.loginText}>BACK</Text>
+          </TouchableOpacity>
+          {this.generateBottomBar(3)}
+        </View>
+      )
+    } else if (this.page === PAGES.MAKEPOST) {
       const postText$ = atom('')
       this.output = (
         <View style={styles.container}>
@@ -224,26 +251,15 @@ export class ScreenGenerator {
           </TouchableOpacity>
           {this.generateBottomBar(4)}
         </View>
-      )  // End of `this.output =`.
-    // End of "New Post" page.
-    } else if (this.page === PAGES.VIEWPOSTS) { // AKA "Network" page currently.
-      // TODO(all) We need the bottom bar to sit ontop of a scrolling page. Like an embedded scroll bar.
-      // e.g. If there are lots of posts in the network page, you have to scroll past alllllllll of them to get to the bottom bar again...
-      // TODO(Gazdecki) Speaking of which the bottom bar changes hight in the webpage rendering. Network and Friends do it alone...
-      console.log('Fetching Post Array...')
-      const postsArray = getUser().getAllPosts()
-      console.log('Array of Posts' + postsArray)
+      )
+    } else if (this.page === PAGES.VIEWPOSTS) {
       this.output = (
-        <> 
-          <SafeAreaView style={styles.container}>    
-            <SafeAreaView style={styles.postViewContainer}>
-              <FlatList
-                data={postsArray}
-                renderItem={post => renderPost(post)}
-                keyExtractor={post => post.postID}
-              />
+        <>
+          <SafeAreaView style={styles.container}>
+          <SafeAreaView style={styles.postViewContainer}>
+              <PostsPage/>
             </SafeAreaView>
-            {this.generateBottomBar(4)}
+            {this.generateBottomBar(2)}
           </SafeAreaView>
         </>
       )
