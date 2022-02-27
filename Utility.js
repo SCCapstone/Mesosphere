@@ -421,7 +421,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#A4C3B2',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '5%',
   },
   smallerPostIDText:{
     fontSize: 10,
