@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, View, FlatList } from 'react-native';
-import { styles, getUser} from './Utility';
+import { styles, getUser, COLORS } from './Utility';
 import { Post, renderPost } from './Post'
 import { pullAccountFromDatabase, pullPostFromDatabase } from './firebaseConfig'
 
@@ -106,7 +106,7 @@ export default class PostsPage extends Component {
     render() {
         if(this.state.loading) {
             return (
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color={ COLORS.LOADING_CIRCLE } />
             );
         } else {
             return (
