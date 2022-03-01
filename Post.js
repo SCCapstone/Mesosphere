@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
-import { generatePostID, getUser, setScreen, styles, PAGES,  } from './Utility'
+import { generatePostID, getUser, setScreen, styles, PAGES, COLORS } from './Utility'
 import PostComponent from './PostComponent'
 
 export class Post {
@@ -95,7 +95,7 @@ export function renderPost (post) {
           <Button
               onPress={() => {changeScore(p, 1)}}
               title="Like"
-              color="#254D32"
+              color={COLORS.LIKE_BUTTON}
               borderRadius='12'
           />
         <View style={styles.spacing}/>
@@ -103,7 +103,7 @@ export function renderPost (post) {
           <Button
               onPress={() => {changeScore(p, -1)}}
               title="Dislike"
-              color="#3A7D44"
+              color={COLORS.DISLIKE_BUTTON}
           />
         <View style={styles.spacing}/>
         <Text style={styles.postContainerText}>{p.score}</Text>
