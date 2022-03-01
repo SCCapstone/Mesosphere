@@ -21,6 +21,7 @@ export const PAGES = {
   VIEW_LOCAL_DATA: 13, 
 }
 
+
 const currUser$ = atom(null)
 const currScreen$ = atom(null)
 const currFocus$ = atom(null)
@@ -125,6 +126,43 @@ export function generatePostID () {
   pushPostIDToDatabase(ID)
   return ID // this value is to be used when creating a new post! also should be added to the current User's array of post IDs
 }
+/*
+const PALETTE = {
+  ERROR_RED: "ff0000"
+}
+*/
+// TODO(Eventually) This should probably worked into a similar format to our styles pkg.
+// Right now, it just mirrors our page consts.
+// Also TODO: These names are just yanked out of their contexts and are unchanged... Not very reusable.
+export const COLORS = {
+  LIKE_BUTTON: "#254D32",
+  DISLIKE_BUTTON: "#3A7D44",
+  LOADING_CIRCLE: "#0000ff", // Default blue for Android OS.
+  //LOADING_SCREEN_BACKGROUND: "#ffffff", // This exists in app.json
+  BACKGROUND_COLOR: PALETTE.ERROR_RED,//"#D0DB97",
+  LOGIN_BUTTON: '#3A7D44',
+  REGISTER_BUTTON: '#ff0000', // Unused? Previously #254DFF
+  POST_BUTTON: '#3A7D44',
+  MEDIA_BUTTON: '#A9A9A9',
+  UNNAMED_BUTTON: '#FFA31B',
+  BOTTOM_BUTTON_BAR: '#181D27',
+  USER_BUTTON: '#181D27',
+  USER_BUTTON_PRESSED_BORDER: '#FFA31B',
+  NETWORK_BUTTON: '#181D27',
+  FRIEND_BUTTON: '#181D27',
+  FRIEND_BUTTON_PRESSED_BORDER: '#FFA31B',
+  FRIENDS_AVATAR: '#000',
+  POST_BUTTON: '#181D27',
+  BOTTOM_BUTTON_TEXT: '#F5F5F5',
+  FRIEND_CONTAINER: '#FFF',
+  POST_CONTAINER: '#CCE3DE',
+  POST_CONTAINER_SHADOW: 'grey',
+  POST_CONTAINER_BORDER: '#000',
+  POST_VIEW_CONTAINER: '#181D27',
+  POST_VIEW_CONTAINER_SHADOW: 'grey',
+  SECOND_POST_VIEW: 'black',
+  UNNAMED_CONTAINER: '#A4C3B2',
+}
 
 export const styles = StyleSheet.create({
   backBtnLoc: {
@@ -147,7 +185,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10
   },
   inputView: {
-    backgroundColor: '#D0DB97',
+    backgroundColor: COLORS.BACKGROUND_COLOR,
     borderRadius: 30,
     width: '70%',
     height: 45,
@@ -156,7 +194,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   inputViewBio: {
-    backgroundColor: '#D0DB97',
+    backgroundColor: COLORS.BACKGROUND_COLOR,
     borderRadius: 30,
     width: '70%',
     height: 80,
@@ -177,7 +215,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '8%',
-    backgroundColor: '#3A7D44'
+    backgroundColor: COLORS.LOGIN_BUTTON
   },
   registerBtn:{
     width: '80%',
@@ -186,7 +224,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '8%',
-    backgroundColor: '#254D32'
+    backgroundColor: COLORS.REGISTER_BUTTON
   },
   loginText: {
     alignItems: 'center',
@@ -194,7 +232,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center'
   },
   postBtn: {
-    backgroundColor: '#3A7D44',
+    backgroundColor: COLORS.POST_BUTTON,
     height: 50,
     width: '80%',
     marginTop: 10,
@@ -203,7 +241,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   mediaBtn: {
-    backgroundColor: '#A9A9A9',
+    backgroundColor: COLORS.MEDIA_BUTTON,
     width: '80%',
     borderRadius: 25,
     height: 50,
@@ -218,7 +256,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 0,
-    backgroundColor: '#FFA31B'
+    backgroundColor: COLORS.UNNAMED_BUTTON
   },
   bottomButtomBar: {
     position: 'absolute',
@@ -227,7 +265,7 @@ export const styles = StyleSheet.create({
     height: '15%',
     bottom: 0,
     borderWidth: 0,
-    borderColor: '#181D27'
+    borderColor: COLORS.BOTTOM_BUTTON_BAR
   },
   userButton: {
     position: 'absolute',
@@ -237,7 +275,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.USER_BUTTON
   },
   userButtonSelected: {
     position: 'absolute',
@@ -247,8 +285,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    borderColor: '#FFA31B',
-    backgroundColor: '#181D27'
+    borderColor: COLORS.USER_BUTTON_PRESSED_BORDER,
+    backgroundColor: COLORS.USER_BUTTON
   },
   networkButton: {
     position: 'absolute',
@@ -259,7 +297,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.NETWORK_BUTTON
   },
   networkButtonSelected: {
     position: 'absolute',
@@ -270,7 +308,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.NETWORK_BUTTON
   },
   friendButton: {
     position: 'absolute',
@@ -281,7 +319,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.FRIEND_BUTTON
   },
   friendButtonSelected: {
     position: 'absolute',
@@ -292,8 +330,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    borderColor: '#FFA31B',
-    backgroundColor: '#181D27'
+    borderColor: COLORS.FRIEND_BUTTON_PRESSED_BORDER,
+    backgroundColor: COLORS.FRIEND_BUTTON
   },
   friendsAvatar: {
     width: '10%',
@@ -301,7 +339,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginBottom: 10,
     marginRight: 20,
-    backgroundColor: '#000'
+    backgroundColor: COLORS.FRIENDS_AVATAR
   },
   postButton: {
     position: 'absolute',
@@ -312,7 +350,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.POST_BUTTON
   },
   postButtonSelected: {
     position: 'absolute',
@@ -323,7 +361,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.POST_BUTTON
   },
   friendsLogo: {
     top: '17%',
@@ -341,7 +379,7 @@ export const styles = StyleSheet.create({
   bottomButtonText: {
     position: 'absolute',
     bottom: 0,
-    color: '#F5F5F5'
+    color: COLORS.BOTTOM_BUTTON_TEXT
   },
   bottomButtonIcon: {
     position: 'absolute',
@@ -360,37 +398,37 @@ export const styles = StyleSheet.create({
   friendContainer: {
     flex: 1,
     marginTop: '2%',
-    backgroundColor: '#fff'
+    backgroundColor: COLORS.FRIEND_CONTAINER
   },
   postContainer: {
     flex: 1,
-    backgroundColor: '#CCE3DE',
+    backgroundColor: COLORS.POST_CONTAINER,
     width: '100%',
     marginBottom: '5%',
     padding: '2%',
     borderRadius: 20,
-    shadowColor: 'grey',
+    shadowColor: COLORS.POST_CONTAINER_SHADOW,
     // shadowOffset: {width: -2, height: 4},
     // shadowOpacity: 0.1,
     // shadowRadius: 3, these shadows look best on web/iOS, below is the necessary shadow element for Android
     elevation: 20,
     borderWidth: 2,
-    borderColor: '#000',
+    borderColor: COLORS.POST_CONTAINER_BORDER,
   },
   postViewContainer: {
     flex: 1,
-    backgroundColor: '#181D27',
+    backgroundColor: COLORS.POST_VIEW_CONTAINER,
     width: '100%',
     marginBottom: '22%',
     //padding: '2%',
     //borderRadius: 20,
-    shadowColor: 'grey',
+    shadowColor: COLORS.POST_VIEW_CONTAINER_SHADOW,
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 3
   },
   secondPostView:{
-    backgroundColor: 'black'
+    backgroundColor: COLORS.SECOND_POST_VIEW
   },
   postContainerText: {
     padding: '0.5%',
@@ -418,7 +456,7 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#A4C3B2',
+    backgroundColor: COLORS.UNNAMED_CONTAINER,
     alignItems: 'center',
     justifyContent: 'center',
   },
