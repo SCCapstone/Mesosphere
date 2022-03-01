@@ -126,42 +126,50 @@ export function generatePostID () {
   pushPostIDToDatabase(ID)
   return ID // this value is to be used when creating a new post! also should be added to the current User's array of post IDs
 }
-/*
-const PALETTE = {
-  ERROR_RED: "ff0000"
+
+const CARLEIGHS_PALETTE = {
+  BLUE_GREEN: '#A4C3B2', // Background of login, user, post pages
+  LIGHTER_GREEN: '#CCE3DE', // Post boxes
+  LIGHT_GREEN: '#D0DB97', // Username, password, New post text
+  DARK_GREEN: '#3A7D44', // Dislike, submit/save post, login
+  DARKER_GREEN: '#254D32', // Like
+  GRAYED_OUT: '#A9A9A9', // Media
+  DARK_GRAY: '#181D27', // Four bar buttons
+  BOTTOM_TEXT: '#F5F5F5', // Names on bar buttons
+  MESOSPHERE_ORANGE: '#FFA31B', // Unused
+  MESOSPHERE_BLUE: '#254DFF', // Unused
 }
-*/
 // TODO(Eventually) This should probably worked into a similar format to our styles pkg.
 // Right now, it just mirrors our page consts.
 // Also TODO: These names are just yanked out of their contexts and are unchanged... Not very reusable.
 export const COLORS = {
-  LIKE_BUTTON: "#254D32",
-  DISLIKE_BUTTON: "#3A7D44",
-  LOADING_CIRCLE: "#0000ff", // Default blue for Android OS.
+  LIKE_BUTTON: CARLEIGHS_PALETTE.DARKER_GREEN,
+  DISLIKE_BUTTON: CARLEIGHS_PALETTE.DARK_GREEN,
+  LOADING_CIRCLE: "#0000FF", // Default blue for Android OS.
   //LOADING_SCREEN_BACKGROUND: "#ffffff", // This exists in app.json
-  BACKGROUND_COLOR: PALETTE.ERROR_RED,//"#D0DB97",
-  LOGIN_BUTTON: '#3A7D44',
-  REGISTER_BUTTON: '#ff0000', // Unused? Previously #254DFF
-  POST_BUTTON: '#3A7D44',
-  MEDIA_BUTTON: '#A9A9A9',
-  UNNAMED_BUTTON: '#FFA31B',
-  BOTTOM_BUTTON_BAR: '#181D27',
-  USER_BUTTON: '#181D27',
-  USER_BUTTON_PRESSED_BORDER: '#FFA31B',
-  NETWORK_BUTTON: '#181D27',
-  FRIEND_BUTTON: '#181D27',
-  FRIEND_BUTTON_PRESSED_BORDER: '#FFA31B',
-  FRIENDS_AVATAR: '#000',
-  POST_BUTTON: '#181D27',
-  BOTTOM_BUTTON_TEXT: '#F5F5F5',
-  FRIEND_CONTAINER: '#FFF',
-  POST_CONTAINER: '#CCE3DE',
-  POST_CONTAINER_SHADOW: 'grey',
-  POST_CONTAINER_BORDER: '#000',
-  POST_VIEW_CONTAINER: '#181D27',
-  POST_VIEW_CONTAINER_SHADOW: 'grey',
-  SECOND_POST_VIEW: 'black',
-  UNNAMED_CONTAINER: '#A4C3B2',
+  BACKGROUND_COLOR: CARLEIGHS_PALETTE.LIGHT_GREEN, // Username and password and new post textbox
+  LOGIN_BUTTON: CARLEIGHS_PALETTE.DARK_GREEN,
+  REGISTER_BUTTON: '#FF0000', // TODO(Gazdecki) Make Register button use it's own style/color
+  POST_BUTTON: CARLEIGHS_PALETTE.DARK_GREEN,
+  MEDIA_BUTTON: CARLEIGHS_PALETTE.GRAYED_OUT,
+  UNNAMED_BUTTON: '#FF0000', // TODO(Gazdecki) Unused variable.
+  BOTTOM_BUTTON_BAR: CARLEIGHS_PALETTE.DARK_GRAY, // TODO(Gazdecki) Unused variable.
+  USER_BUTTON: CARLEIGHS_PALETTE.DARK_GRAY,
+  USER_BUTTON_PRESSED_BORDER: '#FF0000', // TODO(Gazdecki) Unused variable.
+  NETWORK_BUTTON: CARLEIGHS_PALETTE.DARK_GRAY,
+  FRIEND_BUTTON: CARLEIGHS_PALETTE.DARK_GRAY,
+  FRIEND_BUTTON_PRESSED_BORDER: '#FF0000', // TODO(Gazdecki) Unused variable.
+  FRIENDS_AVATAR: '#FF0000', // TODO(Gazdecki) Unused variable.
+  POST_BUTTON: CARLEIGHS_PALETTE.DARK_GRAY,
+  BOTTOM_BUTTON_TEXT: CARLEIGHS_PALETTE.BOTTOM_TEXT,
+  FRIEND_CONTAINER: '#FFFFFF', // Background for list.
+  POST_CONTAINER: CARLEIGHS_PALETTE.LIGHTER_GREEN,
+  POST_CONTAINER_SHADOW: '#FF0000', // TODO(Gazdecki) Unused variable.
+  POST_CONTAINER_BORDER: '#000000',
+  POST_VIEW_CONTAINER: CARLEIGHS_PALETTE.DARK_GRAY, // Background for list.
+  POST_VIEW_CONTAINER_SHADOW: '#FF0000', // TODO(Gazdecki) Unused variable.
+  SECOND_POST_VIEW: '#FF0000', // TODO(Gazdecki) Unused variable.
+  UNNAMED_CONTAINER: CARLEIGHS_PALETTE.BLUE_GREEN, // Login, user, and post background.
 }
 
 export const styles = StyleSheet.create({
