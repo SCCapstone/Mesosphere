@@ -134,7 +134,11 @@ export async function alterPostScore (u, postID, change) { // increment/decremen
   await updateDoc(doc(database, 'posts', postID), {
     score: increment(change)
   })
+  // Post component handles interaction
+  //await addUserInteraction (u, postID, change)
+}
 
+export async function addUserInteraction (u, postID, change) {
   var actionTaken = ""
   if(change > 0) {
       actionTaken = 'like'
@@ -152,16 +156,18 @@ export async function alterPostScore (u, postID, change) { // increment/decremen
   })
 } //NOTE: arrayUnion ensures that an interaction either like/dislike can only appear once each time per user, however, the score can keep increasing if validation isn't ensured
 
-export async function removeInteraction (u, postID) {
-  const actionTaken = await returnInteractionFromDatabase(u, postID)
-  await updateDoc(doc(database, 'posts', postID), {
-    interactedUsers: arrayRemove(
-      {
-        user: u.MiD,
-        action: actionTaken
-      }
-    )
-  })
+export async function removeInteractions (u, postID) {
+  while(await hasInteractedWith(u, postID)) {
+    const actionTaken = await returnInteractionFromDatabase(u, postID)
+    await updateDoc(doc(database, 'posts', postID), {
+      interactedUsers: arrayRemove(
+        {
+          user: u.MiD,
+          action: actionTaken
+        }
+      )
+    })
+  }
 }
 
 export async function returnInteractionFromDatabase (u, postID) {

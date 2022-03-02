@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native'
-import { alterPostScore, pullAccountFromDatabase, removeInteraction } from './firebaseConfig'
+import { alterPostScore, pullAccountFromDatabase, removeInteractions, addUserInteraction, hasInteractedWith } from './firebaseConfig'
 import { getUser, styles } from './Utility'
 
 export default class PostComponent extends Component {
@@ -37,7 +37,7 @@ export default class PostComponent extends Component {
         });
     }
 
-    async updateScore (change) {
+    updateScore (change) {
         //Check if this user has already interacted
         for (const entry of [...this.postObj.interactedUsers]) {
             //If they have...
@@ -45,11 +45,10 @@ export default class PostComponent extends Component {
                 //If they have already made this interaction
                 if((entry.action == "like" && change > 0) || (entry.action == "dislike" && change < 0)) {
                     //TODO: Update this code to remove the interaction instead (I think it'll confusing without the buttons changing)
-                    await removeInteraction(getUser(), this.postObj.postID)
                     console.log("This user has already interacted! Removing old interaction...");
                     if(entry.action == "like") {
                         console.log("Old score: " + this.postObj.starting_score);
-                        await alterPostScore(getUser(), this.postObj.postID, -1);
+                        alterPostScore(getUser(), this.postObj.postID, -1);
                         console.log("About to subtract 1.");
                         this.postObj.starting_score += -1;
                         console.log("New score: " + this.postObj.starting_score);
@@ -58,22 +57,20 @@ export default class PostComponent extends Component {
                         });
                     } else {
                         console.log("Old score: " + this.postObj.starting_score);
-                        await alterPostScore(getUser(), this.postObj.postID, 1);
+                        alterPostScore(getUser(), this.postObj.postID, 1);
                         this.postObj.starting_score += 1;
                         console.log("New score: " + this.postObj.starting_score);
                         this.setState({ 
                             score: this.postObj.starting_score,
                         });
                     }
-                    await removeInteraction(getUser(), this.postObj.postID);
                     //Remove the interaction locally
                     this.postObj.interactedUsers = this.postObj.interactedUsers.filter(
                         int => int.user != entry.user
                     );
+                    this.updateFirebaseInteractions();
                     return;
                 } else {
-                    //Remove the old interaction.  The rest of the code runs as normal.
-                    await removeInteraction(getUser(), this.postObj.postID);
                     //Flip the interaction internally
                     console.log("Flipping internally...");
                     if(entry.action == "like") {entry.action = "dislike";change--} else {entry.action = "like";change++};
@@ -86,7 +83,7 @@ export default class PostComponent extends Component {
             score: this.postObj.starting_score,
         });
         console.log("Upvote button pressed, score is now: " + this.postObj.starting_score + ". (change:" + change )
-        await alterPostScore(getUser(), this.postObj.postID, change);
+        alterPostScore(getUser(), this.postObj.postID, change);
         //Add it locally too, if its' the first interaction
         if(!(JSON.stringify(this.postObj.interactedUsers).includes(getUser().MiD))) {
             console.log("Adding entry locally!");
@@ -99,6 +96,26 @@ export default class PostComponent extends Component {
             var currentInteraction = new interactionFormat();
             this.postObj.interactedUsers.push(currentInteraction)
         }
+        //TODO: Move store firebase options to here (since our local copy is always correct)
+        this.updateFirebaseInteractions();
+    }
+
+    // Update firebase to match our local copy
+    async updateFirebaseInteractions() {
+        //Remove all old interactions
+        await removeInteractions(getUser(), this.postObj.postID);
+        //Check if this user has an end-result-interaction
+        for (const entry of [...this.postObj.interactedUsers]) {
+            //If they do, add it to firebase
+            if(entry.user == getUser().MiD) {
+                console.log("Adding new interaction!");
+                if(entry.action == "like") {addUserInteraction(getUser(), this.postObj.postID, 1)} else {
+                    addUserInteraction(getUser(), this.postObj.postID, -1)
+                }
+                return;
+            }
+        }
+        //If this user has no end-result-interactions, do nothing!
     }
 
   render () {
