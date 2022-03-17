@@ -1,9 +1,9 @@
 import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
-import { PAGES, styles, setScreen, getUser, setUser, getFocus } from './Utility'
-import { checkLogin, dataOccupied, makeAcc, deleteCurrUser } from './User'
+import { PAGES, styles, setScreen, getUser, setUser, getFocus, getData, removeValue } from './Utility'
+import { checkLogin, dataOccupied, makeAcc, deleteCurrUser, lru } from './User'
 import { renderPost, savePost } from './Post'
-import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase } from './firebaseConfig'
+import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase, pullPostFromDatabase } from './firebaseConfig'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { sha224 } from 'js-sha256'
@@ -30,7 +30,18 @@ export class ScreenGenerator {
   constructor() {
     this.page = -1
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
-    setScreen(PAGES.LOGIN)
+
+    //setScreen(PAGES.LOGIN)
+    const lastRememberedUser = lru()
+
+    if (lastRememberedUser === undefined || lastRememberedUser === null) {
+      setScreen(PAGES.LOGIN)
+    }
+    else if (lastRememberedUser !== null || lastRememberedUser !== undefined) {
+      setUser(lastRememberedUser)
+      setScreen(PAGES.ACCOUNTPAGE)
+    }
+
   }
 
   selectScreen(input) {
@@ -40,6 +51,7 @@ export class ScreenGenerator {
 
   generateScreen() {
     console.log('Generating: ' + this.page)
+    
     if (this.page === PAGES.LOGIN) {
       this.output = (
         <View style={styles.container}>
@@ -149,6 +161,7 @@ export class ScreenGenerator {
       )
     } else if (this.page === PAGES.ACCOUNTPAGE) {
       const u = getUser()
+
       this.output = (
         <View style={styles.container}>
           <Text style={styles.bigText}>Welcome back, {u.realName}</Text>
@@ -158,6 +171,7 @@ export class ScreenGenerator {
             style={styles.loginBtn}
             onPress={() => {
               setUser(null)
+              removeValue('lastRememberedUser')
               setScreen(PAGES.LOGIN)
             }}
           >
@@ -452,12 +466,22 @@ export class ScreenGenerator {
     } else if (this.page === PAGES.VIEW_LOCAL_DATA) {
       console.log('This is the Local Data Page')
       const u = getUser()
+
+      // AsyncStorage.getItem(u.MiD).then(data => {
+      //   data = JSON.parse(data)
+      //   let myRemotePostData = []
+      //   for (let i = 0; i < u.getMyPosts().length; i++) {
+      //     data.myPosts[i] = pullPostFromDatabase(u.myPosts[i].postID)
+      //   }
+      //   AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+      // })
+
       const personalPosts = u.getMyPosts()
       this.output = (
         <View style={styles.container}>
           <TouchableOpacity
           style={styles.backBtnLoc}
-          onPress={() => { setScreen(PAGES.SETTINGS) } }
+          onPress={() => { setScreen(PAGES.SETTINGS)} }
         >
           <Image source={backBtn} style={styles.backBtn} />
         </TouchableOpacity>

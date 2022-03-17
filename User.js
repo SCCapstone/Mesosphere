@@ -1,9 +1,9 @@
-import { Alert, AsyncStorage } from 'react-native'
+//import { Alert, AsyncStorage } from 'react-native'
 import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
 import { pushAccountToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase} from './firebaseConfig'
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export class User {
   constructor (username, password, realName, biography, MiD, myPosts, myPeers) {
@@ -96,6 +96,7 @@ export async function checkLogin (username, password) {
         if (String(sha224(String(password))) === u.password) {
           console.log('Password match!  Logging in...')
           setUser(u)
+          await storeData('lastRememberedUser', u)
           setScreen(PAGES.ACCOUNTPAGE)
           return
         }
@@ -123,6 +124,7 @@ export async function makeAcc (username, password, realName, bio) {
   await storeData(u.getMiD(), u)
   pushAccountToDatabase(u)
   setUser(u)
+  await storeData('lastRememberedUser', u)
   setScreen(PAGES.ACCOUNTPAGE)
 }
 
@@ -135,6 +137,7 @@ export async function deleteCurrUser () {
   removeAccountFromDatabase(u)
   removeValue(u.getMiD())
   setUser(null)
+  removeValue('lastRememberedUser')
   setScreen(PAGES.LOGIN)
 }
 
@@ -151,6 +154,19 @@ export function dataOccupied(user) { //returns number of bytes
     ).split(/%..|./).length
   }
   return bytes
+}
+
+export async function lru () {
+  AsyncStorage.getItem('lastRememberedUser').then(data => {
+    data = JSON.parse(data)
+    if (data) {
+      console.log(data.MiD)
+      return new User(data.username, data.password, data.realName, data.biography, data.MiD, data.myPosts, data.myPeers)
+    }
+    else {
+      return null
+    }
+  })
 }
 
 
