@@ -157,11 +157,11 @@ export function dataOccupied(user) { //returns number of bytes
 }
 
 export async function lru () {
-  AsyncStorage.getItem('lastRememberedUser').then(data => {
-    data = JSON.parse(data)
+  await AsyncStorage.getItem('lastRememberedUser').then(value => {
+    const data = JSON.parse(value)
     if (data) {
-      console.log(data.MiD)
-      return new User(data.username, data.password, data.realName, data.biography, data.MiD, data.myPosts, data.myPeers)
+      console.log(data)
+      return new User(data.username, data.password, data.realName, data.biography, data.MiD, data.myPosts, data.myPeers)    
     }
     else {
       return null

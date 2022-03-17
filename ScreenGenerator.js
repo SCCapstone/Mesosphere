@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
-import { PAGES, styles, setScreen, getUser, setUser, getFocus, getData, removeValue } from './Utility'
-import { checkLogin, dataOccupied, makeAcc, deleteCurrUser, lru } from './User'
+import { PAGES, styles, setScreen, getUser, setUser, getFocus, storeData } from './Utility'
+import { checkLogin, dataOccupied, makeAcc, deleteCurrUser, lru, User } from './User'
 import { renderPost, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase, pullPostFromDatabase } from './firebaseConfig'
 
@@ -30,18 +30,7 @@ export class ScreenGenerator {
   constructor() {
     this.page = -1
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
-
-    //setScreen(PAGES.LOGIN)
-    const lastRememberedUser = lru()
-
-    if (lastRememberedUser === undefined || lastRememberedUser === null) {
-      setScreen(PAGES.LOGIN)
-    }
-    else if (lastRememberedUser !== null || lastRememberedUser !== undefined) {
-      setUser(lastRememberedUser)
-      setScreen(PAGES.ACCOUNTPAGE)
-    }
-
+    setScreen(PAGES.LOGIN)
   }
 
   selectScreen(input) {
@@ -53,48 +42,53 @@ export class ScreenGenerator {
     console.log('Generating: ' + this.page)
     
     if (this.page === PAGES.LOGIN) {
-      this.output = (
-        <View style={styles.container}>
-          <Image source={logo} style={styles.logo} />
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder='Username.'
-              placeholderTextColor='#003f5c'
-              returnKeyType='next'
-              maxLength={30}
-              onChangeText={(username) => username$.actions.set(username)}
-              testID='LoginUserPrompt'
-            />
+      if (lru() === null) { // it won't be null -- use === to test when passing in lru() as a User
+        this.output = (
+          <View style={styles.container}>
+            <Image source={logo} style={styles.logo} />
+            <View style={styles.inputView}>
+              <TextInput
+                style={styles.TextInput}
+                placeholder='Username.'
+                placeholderTextColor='#003f5c'
+                returnKeyType='next'
+                maxLength={30}
+                onChangeText={(username) => username$.actions.set(username)}
+                testID='LoginUserPrompt'
+              />
+            </View>
+            <View style={styles.inputView}>
+              <TextInput
+                style={styles.TextInput}
+                placeholder='Password.'
+                placeholderTextColor='#003f5c'
+                secureTextEntry
+                returnKeyType='done'
+                maxLength={50}
+                onChangeText={(password) => password$.actions.set(password)}
+                testID='LoginPassPrompt'
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => checkLogin(String(username$.get()), String(password$.get()))}//&& username$.actions.set() && password$.actions.set()}
+              testID='LoginButton'
+            >
+              <Text style={styles.loginText}>LOGIN</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => setScreen(PAGES.MAKEACC)}
+              testID='RegisterButton'
+            >
+              <Text style={styles.loginText}>REGISTER</Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder='Password.'
-              placeholderTextColor='#003f5c'
-              secureTextEntry
-              returnKeyType='done'
-              maxLength={50}
-              onChangeText={(password) => password$.actions.set(password)}
-              testID='LoginPassPrompt'
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => checkLogin(String(username$.get()), String(password$.get()))}//&& username$.actions.set() && password$.actions.set()}
-            testID='LoginButton'
-          >
-            <Text style={styles.loginText}>LOGIN</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => setScreen(PAGES.MAKEACC)}
-            testID='RegisterButton'
-          >
-            <Text style={styles.loginText}>REGISTER</Text>
-          </TouchableOpacity>
-        </View>
-      )
+        )
+      } else {
+        setUser(lru())
+        setScreen(PAGES.ACCOUNTPAGE)
+      }
     } else if (this.page === PAGES.MAKEACC) {
       newUsername$.actions.set(username$.get())
       newPassword$.actions.set(password$.get())
@@ -171,7 +165,7 @@ export class ScreenGenerator {
             style={styles.loginBtn}
             onPress={() => {
               setUser(null)
-              removeValue('lastRememberedUser')
+              storeData('lastRememberedUser', null)
               setScreen(PAGES.LOGIN)
             }}
           >
