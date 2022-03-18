@@ -102,7 +102,7 @@ export class ScreenGenerator {
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
-              placeholder='           Password.'
+              placeholder='Password.'
               placeholderTextColor='#003f5c'
               secureTextEntry
               returnKeyType='next'

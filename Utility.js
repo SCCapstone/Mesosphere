@@ -165,7 +165,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   TextInput: {
-    width: "100%",
+    width: "98%",
     height: 50,
     flex: 1,
     padding: 10,
