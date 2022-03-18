@@ -165,10 +165,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   TextInput: {
+    width: "100%",
     height: 50,
     flex: 1,
     padding: 10,
-    marginLeft: 20
+    marginLeft: 20,
+    textAlign:'center'
   },
   loginBtn: {
     width: '80%',
