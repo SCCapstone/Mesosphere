@@ -424,12 +424,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  smallerPostIDText:{
-    fontSize: 10,
-    fontWeight: 'bold',
-    alignItems: 'center',
-    textAlign: 'center'
-  },
   scoreButtonStyle:{
     flexDirection: 'row',
   },
