@@ -255,12 +255,12 @@ export class ScreenGenerator {
     } else if (this.page === PAGES.VIEWPOSTS) {
       this.output = (
         <>
-          <SafeAreaView style={styles.container}>
-          <SafeAreaView style={styles.postViewContainer}>
+          <View style={styles.container}>
+          <View style={styles.postViewContainer}>
               <PostsPage/>
-            </SafeAreaView>
+            </View>
             {this.generateBottomBar(2)}
-          </SafeAreaView>
+          </View>
         </>
       )
     } else if (this.page === PAGES.SETTINGS) {
@@ -461,10 +461,8 @@ export class ScreenGenerator {
         >
           <Image source={backBtn} style={styles.backBtn} />
         </TouchableOpacity>
-
-
         <SafeAreaView style={styles.container}>
-          <SafeAreaView style={styles.postViewContainer, {width: '100%'}}>
+          <SafeAreaView style={styles.postViewContainer}>
             <FlatList
               data={personalPosts}
               renderItem={post => renderPost(post)}
@@ -473,8 +471,6 @@ export class ScreenGenerator {
           </SafeAreaView>
           <Text>{ "Size of post data:  " + dataOccupied(u) + " bytes." }</Text>
         </SafeAreaView>
-
-
         </View> 
       )
     }

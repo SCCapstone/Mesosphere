@@ -84,13 +84,16 @@ export default class Friends extends Component {
         });
 
         const newData = this.arrayholder.filter(item => {
-            const itemData = `${item.getDisplayName().toUpperCase()}`;
+            var itemData = `${item.getDisplayName().toUpperCase()}`;
+            if(text.substring(0,5) == "meso-") {
+                itemData = `${item.getMiD().toUpperCase()}`;
+            }
             const textData = text.toUpperCase();
             return itemData.indexOf(textData) > -1;
         });
-        //If: There are no friends in the search field & ID exists & ID is not you
+        //If: There are no friends in the search field & ID exists & ID is not you & ID is not already your friend
         if(newData.length == 0 && this.allIDs.length > 0 && text.length == 16 && this.allIDs.includes(text) &&
-            text != getUser().getMiD()) {
+            text != getUser().getMiD() && !(getUser().getAllPeers().includes(text))) {
             class dummyUserClass {
                 constructor(fakeID, fakeName) {
                     this.fakeID = fakeID;

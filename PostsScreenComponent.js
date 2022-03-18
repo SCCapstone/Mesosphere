@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, View, FlatList } from 'react-native';
+import { ActivityIndicator, View, FlatList, RefreshControl } from 'react-native';
 import { styles, getUser} from './Utility';
 import { Post, renderPost } from './Post'
 import { pullAccountFromDatabase, pullPostFromDatabase } from './firebaseConfig'
@@ -10,9 +10,12 @@ export default class PostsPage extends Component {
 
         this.state = {
             loading: false,
+            refreshing: false,
             data: [],
             error: null,
         };
+
+        this.isRefreshing = false;
     }
 
     componentDidMount() {
@@ -104,19 +107,37 @@ export default class PostsPage extends Component {
     };
 
     render() {
-        if(this.state.loading) {
-            return (
-                <ActivityIndicator size="large" color="#0000ff" />
-            );
-        } else {
-            return (
-              <FlatList
-                data={this.state.data}
-                renderItem={post => renderPost(post)}
-                ItemSeparatorComponent={this.renderSeparator}
-                keyExtractor={item => JSON.stringify(item)}
+        return (
+          <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={() => this.refresh()}
               />
-            );
+           }
+            data={this.state.data}
+            renderItem={post => renderPost(post)}
+            ItemSeparatorComponent={this.renderSeparator}
+            keyExtractor={item => JSON.stringify(item)}
+            />
+        );
+    }
+
+    refresh() {
+        console.log("Refresh called...");
+        if(!this.isRefreshing) {
+            this.isRefreshing = true;
+            this.setState({refreshing: true});
+            console.log("Refreshing set to true!");
+            //Do something
+            this.getAllPosts();
+            wait(800).then(() => {this.setState({refreshing: false});
+                                    this.isRefreshing = false;
+                                    console.log("Refreshing set to false!");});
         }
     }
+}
+
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
 }
