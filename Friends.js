@@ -27,6 +27,7 @@ export default class Friends extends Component {
     }
 
     async fetchMiDs() {
+        this.arrayholder = [];
         this.setState({loading: true});
         this.allIDs = await returnMIDSDatabaseArray();
         if(getUser() == null) {
@@ -187,7 +188,7 @@ export default class Friends extends Component {
                     onPress: () => this.searchFilterFunction(""),//console.log("Cancel Pressed"),
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () =>  {getUser().addPeer(newFriendID); this.fetchMiDs();this.searchFilterFunction("");}}
+                  { text: "OK", onPress: () =>  {getUser().addPeer(newFriendID);this.searchFilterFunction("");this.fetchMiDs();}}
                 ]
               );
         } else {
