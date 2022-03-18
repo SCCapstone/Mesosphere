@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, View, FlatList, RefreshControl } from 'react-native';
-import { styles, getUser} from './Utility';
+import { View, FlatList, RefreshControl } from 'react-native';
+import { getUser} from './Utility';
 import { Post, renderPost } from './Post'
 import { pullAccountFromDatabase, pullPostFromDatabase } from './firebaseConfig'
 

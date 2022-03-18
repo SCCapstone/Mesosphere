@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Image, TouchableOpacity, Text, FlatList } from 'react-native';
+import { ActivityIndicator, Alert, View, Image, TouchableOpacity, Text, FlatList } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { styles, getUser, setFocus, setScreen, PAGES } from './Utility';
 import logo from './assets/MesoSphere.png'
@@ -138,6 +138,11 @@ export default class Friends extends Component {
     };
 
     render() {
+        if(this.state.loading) {
+            return (
+                <ActivityIndicator size="large" color="#0000ff" />
+            );
+        } else {
         return (
             <View style={styles.friendContainer}>
                 <FlatList
@@ -172,6 +177,7 @@ export default class Friends extends Component {
                 />
             </View>
         );
+        }
     }
 
     async itemTapped(item) {
