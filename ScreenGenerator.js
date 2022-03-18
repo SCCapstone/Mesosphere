@@ -18,6 +18,7 @@ import networking from './assets/networking.png'
 import persons from './assets/persons.png'
 import { atom } from 'elementos'
 import { FlatList } from 'react-native-gesture-handler'
+import CheckBox from '@react-native-community/checkbox'
 
 const username$ = atom('')
 const password$ = atom('')
@@ -40,57 +41,59 @@ export class ScreenGenerator {
 
   generateScreen() {
     console.log('Generating: ' + this.page)
-    
+    console.log(AsyncStorage.getItem('fakeItem'))
     if (this.page === PAGES.LOGIN) {
-      if (lru() === null) { //last remembered user exists, 
-        this.output = (
-          <View style={styles.container}>
-            <Image source={logo} style={styles.logo} />
-            <View style={styles.inputView}>
-              <TextInput
-                style={styles.TextInput}
-                placeholder='Username.'
-                placeholderTextColor='#003f5c'
-                returnKeyType='next'
-                maxLength={30}
-                onChangeText={(username) => username$.actions.set(username)}
-                testID='LoginUserPrompt'
-              />
-            </View>
-            <View style={styles.inputView}>
-              <TextInput
-                style={styles.TextInput}
-                placeholder='Password.'
-                placeholderTextColor='#003f5c'
-                secureTextEntry
-                returnKeyType='done'
-                maxLength={50}
-                onChangeText={(password) => password$.actions.set(password)}
-                testID='LoginPassPrompt'
-              />
-            </View>
-            <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={() => checkLogin(String(username$.get()), String(password$.get()))}//&& username$.actions.set() && password$.actions.set()}
-              testID='LoginButton'
-            >
-              <Text style={styles.loginText}>LOGIN</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={() => setScreen(PAGES.MAKEACC)}
-              testID='RegisterButton'
-            >
-              <Text style={styles.loginText}>REGISTER</Text>
-            </TouchableOpacity>
-
-            {/* checkbox goes here */}
-
-          </View>
-        )
-      } else {
+      if (AsyncStorage.getItem('lastRememberedUser') !== null) { //last remembered user does exist
         lru()
       }
+      this.output = (
+        <View style={styles.container}>
+          <Image source={logo} style={styles.logo} />
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder='Username.'
+              placeholderTextColor='#003f5c'
+              returnKeyType='next'
+              maxLength={30}
+              onChangeText={(username) => username$.actions.set(username)}
+              testID='LoginUserPrompt'
+            />
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder='Password.'
+              placeholderTextColor='#003f5c'
+              secureTextEntry
+              returnKeyType='done'
+              maxLength={50}
+              onChangeText={(password) => password$.actions.set(password)}
+              testID='LoginPassPrompt'
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => checkLogin(String(username$.get()), String(password$.get()))}//&& username$.actions.set() && password$.actions.set()}
+            testID='LoginButton'
+          >
+            <Text style={styles.loginText}>LOGIN</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => setScreen(PAGES.MAKEACC)}
+            testID='RegisterButton'
+          >
+            <Text style={styles.loginText}>REGISTER</Text>
+          </TouchableOpacity>
+
+          {/* checkbox goes here */}
+          {/* <CheckBox
+            value = {true}
+          ></CheckBox> */}
+
+        </View>
+      )
     } else if (this.page === PAGES.MAKEACC) {
       newUsername$.actions.set(username$.get())
       newPassword$.actions.set(password$.get())
@@ -166,9 +169,13 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
+              // AsyncStorage.getItem('lastRememberedUser').then(value => {
+              //   let data = JSON.parse(value)
+              //   data = null
+              //   AsyncStorage.setItem('lastRememberedUser', JSON.stringify(data))
+              // })
+              removeValue('lastRememberedUser')
               setUser(null)
-              storeData('lastRememberedUser', null)
-              //removeValue('lastRememberedUser')
               setScreen(PAGES.LOGIN)
             }}
           >

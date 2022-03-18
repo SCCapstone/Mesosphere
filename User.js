@@ -165,10 +165,11 @@ export async function lru () {
       setUser(nu)
       setScreen(PAGES.ACCOUNTPAGE)
     }
-    else {
-      return null
-    }
+    // else {
+    //   return null
+    // }
   })
+  return "empty"
 }
 
 export async function setRememberMe (bool) { //maybe
