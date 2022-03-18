@@ -161,11 +161,21 @@ export async function lru () {
     const data = JSON.parse(value)
     if (data) {
       console.log(data)
-      return new User(data.username, data.password, data.realName, data.biography, data.MiD, data.myPosts, data.myPeers)    
+      const nu = new User(data.username, data.password, data.realName, data.biography, data.MiD, data.myPosts, data.myPeers)    
+      setUser(nu)
+      setScreen(PAGES.ACCOUNTPAGE)
     }
     else {
       return null
     }
+  })
+}
+
+export async function setRememberMe (bool) { //maybe
+  await AsyncStorage.getItem('rememberMe').then(value => {
+    data = JSON.parse(value)
+    data = bool
+    AsyncStorage.setItem('rememberMe', JSON.stringify(data))
   })
 }
 

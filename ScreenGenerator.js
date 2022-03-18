@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
-import { PAGES, styles, setScreen, getUser, setUser, getFocus, storeData } from './Utility'
-import { checkLogin, dataOccupied, makeAcc, deleteCurrUser, lru, User } from './User'
+import { PAGES, styles, setScreen, getUser, setUser, getFocus, storeData, removeValue } from './Utility'
+import { checkLogin, dataOccupied, makeAcc, deleteCurrUser, lru } from './User'
 import { renderPost, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase, pullPostFromDatabase } from './firebaseConfig'
 
@@ -42,7 +42,7 @@ export class ScreenGenerator {
     console.log('Generating: ' + this.page)
     
     if (this.page === PAGES.LOGIN) {
-      if (lru() === null) { // it won't be null -- use === to test when passing in lru() as a User
+      if (lru() === null) { //last remembered user exists, 
         this.output = (
           <View style={styles.container}>
             <Image source={logo} style={styles.logo} />
@@ -83,11 +83,13 @@ export class ScreenGenerator {
             >
               <Text style={styles.loginText}>REGISTER</Text>
             </TouchableOpacity>
+
+            {/* checkbox goes here */}
+
           </View>
         )
       } else {
-        setUser(lru())
-        setScreen(PAGES.ACCOUNTPAGE)
+        lru()
       }
     } else if (this.page === PAGES.MAKEACC) {
       newUsername$.actions.set(username$.get())
@@ -166,6 +168,7 @@ export class ScreenGenerator {
             onPress={() => {
               setUser(null)
               storeData('lastRememberedUser', null)
+              //removeValue('lastRememberedUser')
               setScreen(PAGES.LOGIN)
             }}
           >
@@ -482,7 +485,7 @@ export class ScreenGenerator {
 
 
         <SafeAreaView style={styles.container}>
-          <SafeAreaView style={styles.postViewContainer, {width: '100%'}}>
+          <SafeAreaView style={styles.postViewContainer}>
             <FlatList
               data={personalPosts}
               renderItem={post => renderPost(post)}
