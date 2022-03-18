@@ -165,10 +165,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   TextInput: {
+    width: "98%",
     height: 50,
     flex: 1,
     padding: 10,
-    marginLeft: 20
+    marginLeft: 20,
+    textAlign:'center'
   },
   loginBtn: {
     width: '80%',
@@ -421,12 +423,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#A4C3B2',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  smallerPostIDText:{
-    fontSize: 10,
-    fontWeight: 'bold',
-    alignItems: 'center',
-    textAlign: 'center'
   },
   scoreButtonStyle:{
     flexDirection: 'row',
