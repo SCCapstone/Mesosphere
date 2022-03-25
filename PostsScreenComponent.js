@@ -123,7 +123,7 @@ export default class PostsPage extends Component {
 
     render() {
         return (
-            <View style={{marginBottom: '10%', marginTop: 0}}>
+            <View style={{marginTop: 0}}>
                 <View style={{ marginTop: 0, height: '8%', width: '45%', elevation: 2, position: 'absolute', borderRadius: 4, backgroundColor:'#181D27', alignSelf: 'flex-end'}}>
                     <Picker
                         selectedValue={this.state.sortingMode}

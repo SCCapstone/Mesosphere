@@ -401,7 +401,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#181D27',
     width: '100%',
-    marginBottom: '22%',
+    marginBottom: '23%',
     //padding: '2%',
     //borderRadius: 20,
     shadowColor: 'grey',
