@@ -1,9 +1,10 @@
 //import { Alert, AsyncStorage } from 'react-native'
 import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
-import { pushAccountToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase} from './firebaseConfig'
+import { pushAccountToDatabase, pushUsernameToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase, doesUsernameExist, parseRemoteLogin, pullAccountFromDatabase} from './firebaseConfig'
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { async } from '@firebase/util'
 
 export class User {
   constructor (username, password, realName, biography, MiD, myPosts, myPeers) {
@@ -84,32 +85,48 @@ export class User {
   }
 }
 
+// export async function checkLogin (username, password) {
+//   const accounts = await getAllKeys()
+//   let found = false
+//   for (const MiD of accounts) {
+//     const temp = await getData(MiD)
+//     if (temp != null) {
+//       const u = new User(temp.username, temp.password, temp.realName, temp.biography, temp.MiD, temp.myPosts, temp.myPeers)
+//       if (username === u.username) {
+//         found = true
+//         if (String(sha224(String(password))) === u.password) {
+//           console.log('Password match!  Logging in...')
+//           setUser(u)
+//           await storeData('lastRememberedUser', u)
+//           setScreen(PAGES.ACCOUNTPAGE)
+//           return
+//         }
+//       }
+//     }
+//   }
+//   if (found) {
+//     console.log('Password mismatch.')
+//     alert('Incorrect password.')
+//     return
+//   }
+//   console.log('User (' + username + ') does not exist!')
+//   alert('Incorrect username.')
+// }
+
 export async function checkLogin (username, password) {
-  const accounts = await getAllKeys()
-  let found = false
-  for (const MiD of accounts) {
-    const temp = await getData(MiD)
-    if (temp != null) {
-      const u = new User(temp.username, temp.password, temp.realName, temp.biography, temp.MiD, temp.myPosts, temp.myPeers)
-      if (username === u.username) {
-        found = true
-        if (String(sha224(String(password))) === u.password) {
-          console.log('Password match!  Logging in...')
-          setUser(u)
-          await storeData('lastRememberedUser', u)
-          setScreen(PAGES.ACCOUNTPAGE)
-          return
-        }
-      }
-    }
-  }
-  if (found) {
-    console.log('Password mismatch.')
-    alert('Incorrect password.')
+  const passedID = await parseRemoteLogin(username, password)
+  console.log("Passed MID: " + passedID)
+
+  if (passedID === "") {
+    alert('Incorrect username and/or password.')
     return
+  } 
+  if (passedID !== "") {
+    const retrievedUser = await pullAccountFromDatabase(passedID)
+    setUser(retrievedUser)
+    await storeData('lastRememberedUser', retrievedUser)
+    setScreen(PAGES.ACCOUNTPAGE)
   }
-  console.log('User (' + username + ') does not exist!')
-  alert('Incorrect username.')
 }
 
 export async function makeAcc (username, password, realName, bio) {
@@ -120,11 +137,17 @@ export async function makeAcc (username, password, realName, bio) {
   if (realName.length < 1) {
     alert('You must enter a display name.')
   }
+  if (await doesUsernameExist(username) === true) {
+    alert('This username already exists, please choose a different one.')
+    return
+  }
   const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new', 'new')
-  await storeData(u.getMiD(), u)
+  //await storeData(u.getMiD(), u)
   pushAccountToDatabase(u)
+  pushUsernameToDatabase(username)
   setUser(u)
-  await storeData('lastRememberedUser', u)
+  await storeData('rememberMe', 'false') //used for toggling autologin
+  await storeData('lastRememberedUser', u) //used for autologin
   setScreen(PAGES.ACCOUNTPAGE)
 }
 
@@ -136,8 +159,8 @@ export async function deleteCurrUser () {
   const u = getUser()
   removeAccountFromDatabase(u)
   removeValue(u.getMiD())
-  setUser(null)
   removeValue('lastRememberedUser')
+  setUser(null)
   setScreen(PAGES.LOGIN)
 }
 
@@ -160,25 +183,32 @@ export async function lru () {
   await AsyncStorage.getItem('lastRememberedUser').then(value => {
     const data = JSON.parse(value)
     if (data) {
-      console.log(data)
+      //console.log(data)
       const nu = new User(data.username, data.password, data.realName, data.biography, data.MiD, data.myPosts, data.myPeers)    
       setUser(nu)
       setScreen(PAGES.ACCOUNTPAGE)
     }
-    // else {
-    //   return null
-    // }
+    else {
+      return null
+    }
   })
-  return "empty"
 }
 
-export async function setRememberMe (bool) { //maybe
+
+export async function toggleRememberMe () {
   await AsyncStorage.getItem('rememberMe').then(value => {
-    data = JSON.parse(value)
-    data = bool
+    let data = JSON.parse(value)
+    //console.log(data)
+    if (data === "false") {
+      data = "true"
+    } else {
+      data = "false"
+    }
     AsyncStorage.setItem('rememberMe', JSON.stringify(data))
+    return data
   })
 }
+
 
 
 export default User

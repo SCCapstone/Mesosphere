@@ -1,7 +1,9 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, collectionGroup, getDoc, getDocs, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment, DocumentSnapshot } from 'firebase/firestore/lite'
+import { getFirestore, doc, collectionGroup, getDoc, getDocs, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc, increment, DocumentSnapshot, query, collection, where } from 'firebase/firestore/lite'
 import { Post } from './Post'
 import { User } from './User'
+import { sha224 } from 'js-sha256'
+import { setScreen, setUser, PAGES } from './Utility'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -16,6 +18,7 @@ const app = initializeApp(firebaseConfig)
 const database = getFirestore(app)
 
 const IDSRef = doc(database, 'main', 'IDS')
+const usernameRef = doc(database, 'main', 'Usernames')
 
 export async function returnMIDSDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
@@ -62,13 +65,21 @@ export async function pushPostIDToDatabase (postID) {
   })
 }
 
+export async function pushUsernameToDatabase (username) {
+  await updateDoc(usernameRef, {
+    usernames: arrayUnion(username)
+  })
+}
+
 export async function pushAccountToDatabase (u) {
   await setDoc(doc(database, 'accounts', u.MiD), {
     MID: u.MiD,
     biography: u.biography,
+    username: u.username,
     displayname: u.realName,
     friends: u.myPeers,
-    posts: u.myPosts
+    posts: u.myPosts,
+    password: u.password
   })
 }
 
@@ -78,7 +89,7 @@ export async function pullAccountFromDatabase (mesosphereID) {
   if (docSnap.exists()) {
     const data = docSnap.data()
     console.log("Document data:", docSnap.data())
-    return new User("", "", data.displayname, data.biography, data.MID, data.posts, data.friends)
+    return new User(data.username, data.password, data.displayname, data.biography, data.MID, data.posts, data.friends)
   }
   else {
     console.log("Error: Requested acc does not exist.")
@@ -88,7 +99,9 @@ export async function pullAccountFromDatabase (mesosphereID) {
 
 export async function removeAccountFromDatabase (u) {
   await deleteDoc(doc(database, 'accounts', u.MiD))
-
+  await updateDoc(usernameRef, {
+    usernames: arrayRemove(u.username)
+  })
   for (let i = 0; i < u.myPosts.length; i++) {
     await deleteDoc(doc(database, 'posts', u.myPosts[i].postID))
   }
@@ -201,10 +214,6 @@ export async function pullPostFromDatabase (postID) {
     const data = docSnap.data()
     console.log("Document data:", docSnap.data());
     console.log(data.timestamp);
-    //const realstamp = new Date(1970, 0, 1);
-    //realstamp.setSeconds(data.timestamp.seconds);
-    //realstamp.setMilliseconds(data.timestamp.nanoseconds)
-    //console.log("timestamp pulled down:" + realstamp);
     return new Post(data.MID, data.postID, null, data.text, data.score, data.interactedUsers, data.timestamp)
   }
   else {
@@ -226,17 +235,6 @@ export async function getScoreFromPostInDatabase(postID){
   } else {
     console.log('Error: Requested post does not exist.')
   }
-}
-
-export async function updatePostInteractionsFromDatabase (postID) { //used for keeping local copies of personal posts up to date with Firebase
-  // const postRef = doc(database, 'posts', postID)
-  // const postSnap = await getDoc(postRef)
-  // if (postSnap.exists()) {
-  //   const data = postSnap.data()
-  //   return data.score
-  // } else {
-  //   console.log('Error: Requested post does not exist.')
-  // }
 }
 
 // user manipulation from local changes
@@ -273,6 +271,33 @@ export async function hasInteractedWith (u, postID) {
       console.log('Error: Requested post does not exist.')
   }
   return postSnap.data().interactedUsers.some(search => search.user === u.MiD)
+}
+
+export async function doesUsernameExist (username) {
+  const uSnap = await getDoc(usernameRef)
+  //console.log(uSnap.data().usernames.includes(username))
+  if (uSnap.data().usernames.includes(username)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// remote login
+
+export async function parseRemoteLogin (username, password) {
+  var dataString = ""
+  const q = query(collection(database, "accounts"), where("username", "==", username), where("password", "==", String(sha224(String(password)))))
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // console.log(doc.data())
+    // setUser(pullAccountFromDatabase(doc.data.MID))
+    // setScreen(PAGES.ACCOUNTPAGE)
+    //console.log(doc.data().MID)
+    dataString += doc.data().MID
+   //return doc.data().MID
+  })
+  return dataString
 }
 
 export { database }

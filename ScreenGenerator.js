@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser, getFocus, storeData, removeValue } from './Utility'
-import { checkLogin, dataOccupied, makeAcc, deleteCurrUser, lru } from './User'
+import { dataOccupied, makeAcc, deleteCurrUser, lru, toggleRememberMe, checkLogin } from './User'
 import { renderPost, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase, pullPostFromDatabase } from './firebaseConfig'
 
@@ -41,9 +41,9 @@ export class ScreenGenerator {
 
   generateScreen() {
     console.log('Generating: ' + this.page)
-    console.log(AsyncStorage.getItem('fakeItem'))
+    // toggleRememberMe()
     if (this.page === PAGES.LOGIN) {
-      if (AsyncStorage.getItem('lastRememberedUser') !== null) { //last remembered user does exist
+      if (AsyncStorage.getItem('lastRememberedUser') !== null /*&& rememberMe === true*/) { //last remembered user does exist
         lru()
       }
       this.output = (
@@ -88,9 +88,12 @@ export class ScreenGenerator {
           </TouchableOpacity>
 
           {/* checkbox goes here */}
-          {/* <CheckBox
+          <Text style={styles.loginText}>Remember me?</Text>
+          <CheckBox
+            disabled = {false}
             value = {true}
-          ></CheckBox> */}
+            onValueChange = {(newValue) => toggleRememberMe()}
+          ></CheckBox>
 
         </View>
       )
@@ -169,11 +172,6 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
-              // AsyncStorage.getItem('lastRememberedUser').then(value => {
-              //   let data = JSON.parse(value)
-              //   data = null
-              //   AsyncStorage.setItem('lastRememberedUser', JSON.stringify(data))
-              // })
               removeValue('lastRememberedUser')
               setUser(null)
               setScreen(PAGES.LOGIN)
