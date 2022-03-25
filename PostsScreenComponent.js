@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, FlatList, RefreshControl } from 'react-native';
-import { getUser} from './Utility';
+import { View, FlatList, RefreshControl, Picker, Text } from 'react-native';
+import { getUser, styles} from './Utility';
 import { Post, renderPost } from './Post'
 import { pullAccountFromDatabase, pullPostFromDatabase } from './firebaseConfig'
 
@@ -13,9 +13,11 @@ export default class PostsPage extends Component {
             refreshing: false,
             data: [],
             error: null,
+            sortingMode: "Newest"
         };
 
         this.isRefreshing = false;
+        this.flatlistRef = null;
     }
 
     componentDidMount() {
@@ -81,14 +83,15 @@ export default class PostsPage extends Component {
     }
 
     sortPostsArray(allPosts) {
-        //Logic for sorting by date goes here.
-        //console.log(allPosts[0].timestamp);
-        //const check = new Date(allPosts[0].timestamp);
-        //console.log(check);
-        allPosts.sort((b, a) =>
-            (new Date(a.timestamp)) - (new Date(b.timestamp))
-        )
-        //console.log("All posts:" + JSON.stringify(allPosts));
+        if(this.state.sortingMode == "Newest") {
+            allPosts.sort((b, a) =>
+                (new Date(a.timestamp)) - (new Date(b.timestamp))
+            )
+        } else if(this.state.sortingMode == "Oldest") {
+            allPosts.sort((a, b) =>
+                (new Date(a.timestamp)) - (new Date(b.timestamp))
+            )
+        }
     }
 
 
@@ -100,7 +103,7 @@ export default class PostsPage extends Component {
                     height: 1,
                     width: '100%',
                     backgroundColor: '#CED0CE',
-                    marginBottom: '5%',
+                    marginBottom: '3%',
                 }}
             />
         );
@@ -108,24 +111,39 @@ export default class PostsPage extends Component {
 
     render() {
         return (
-          <FlatList
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={() => this.refresh()}
-              />
-           }
-            data={this.state.data}
-            renderItem={post => renderPost(post)}
-            ItemSeparatorComponent={this.renderSeparator}
-            keyExtractor={item => JSON.stringify(item)}
-            />
+            <View style={{marginBottom: '10%'}}>
+                <Picker
+                    selectedValue={this.state.sortingMode}
+                    style={styles.PickerStyle}
+                    mode='dropdown'
+                    onValueChange={(itemValue, itemIndex) => {this.setState({sortingMode: itemValue});this.refresh()}}
+                >
+                    <Picker.Item label="Date (Newest)" value="Newest" />
+                    <Picker.Item label="Date (Oldest)" value="Oldest" />
+                </Picker>
+                <FlatList
+                    ref={(ref) => this.flatlistRef = ref}
+                    refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={() => {this.refresh()}}
+                    />
+                    }
+                    data={this.state.data}
+                    renderItem={post => renderPost(post)}
+                    ItemSeparatorComponent={this.renderSeparator}
+                    keyExtractor={item => JSON.stringify(item)}
+                    />
+                </View>
         );
     }
 
     refresh() {
         console.log("Refresh called...");
         if(!this.isRefreshing) {
+            if(this.flatlistRef && this.state.data.length > 0) {
+                this.flatlistRef.scrollToIndex({index: 0});
+            }
             this.isRefreshing = true;
             this.setState({refreshing: true});
             console.log("Refreshing set to true!");

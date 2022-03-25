@@ -147,6 +147,14 @@ export const styles = StyleSheet.create({
     borderWidth: 4,
     //backgroundColor: '#FFA31B',
   },
+  PickerStyle: {
+    alignSelf: 'flex-end',
+    height: 50, 
+    width: 180,
+    borderRadius: 2,
+    borderWidth: 4,
+    color: '#F5F5F5'
+  },
   logo: {
     width: 200,
     height: 200,
