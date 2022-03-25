@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser, getFocus } from './Utility'
 import { checkLogin, dataOccupied, makeAcc, deleteCurrUser } from './User'
-import { renderPost, savePost } from './Post'
+import { renderPost, renderPostForMemory, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase } from './firebaseConfig'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -451,16 +451,14 @@ export class ScreenGenerator {
         >
           <Image source={backBtn} style={styles.backBtn} />
         </TouchableOpacity>
-        <SafeAreaView style={styles.container}>
-          <SafeAreaView style={styles.postViewContainer}>
+          <SafeAreaView style={styles.memoryViewContainer}>
             <FlatList
               data={personalPosts}
-              renderItem={post => renderPost(post)}
+              renderItem={post => renderPostForMemory(post)}
               keyExtractor={post => post.postID}
             />
           </SafeAreaView>
           <Text>{ "Size of post data:  " + dataOccupied(u) + " bytes." }</Text>
-        </SafeAreaView>
         </View> 
       )
     }

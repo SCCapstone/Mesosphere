@@ -20,7 +20,7 @@ export default class PostsPage extends Component {
 
     componentDidMount() {
         //this.makeRemoteRequest();
-        this.getAllPosts();
+        this.refresh();
         //console.log(data);
     }
 

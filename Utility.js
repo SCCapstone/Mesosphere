@@ -138,7 +138,14 @@ export const styles = StyleSheet.create({
   backBtn: {
     height: 20, //made bigger so they could be clickable on android
     width: 20,
-    
+  },
+  XBtnLoc: {
+    position: 'absolute',
+    borderRadius: 25,
+    top: -10,
+    left: -10,
+    borderWidth: 4,
+    //backgroundColor: '#FFA31B',
   },
   logo: {
     width: 200,
@@ -383,6 +390,19 @@ export const styles = StyleSheet.create({
     backgroundColor: '#181D27',
     width: '100%',
     marginBottom: '22%',
+    //padding: '2%',
+    //borderRadius: 20,
+    shadowColor: 'grey',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3
+  },
+  memoryViewContainer: {
+    flex: 1,
+    backgroundColor: '#181D27',
+    width: '60%',
+    marginTop: '2%',
+    padding: '2%',
     //padding: '2%',
     //borderRadius: 20,
     shadowColor: 'grey',
