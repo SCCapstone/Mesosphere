@@ -91,6 +91,18 @@ export default class PostsPage extends Component {
             allPosts.sort((a, b) =>
                 (new Date(a.timestamp)) - (new Date(b.timestamp))
             )
+        } else if(this.state.sortingMode == "Score(H)") {
+            allPosts.sort((b, a) =>
+                (a.starting_score - b.starting_score)
+            )
+        } else if(this.state.sortingMode == "Score(L)") {
+            allPosts.sort((a, b) =>
+                (a.starting_score - b.starting_score)
+            )
+        } else if(this.state.sortingMode == "Weighted") {
+            allPosts.sort((b, a) =>
+                (((new Date(a.timestamp)) - (new Date(b.timestamp))) + ((a.starting_score - b.starting_score)*10000000))
+            )
         }
     }
 
@@ -120,6 +132,9 @@ export default class PostsPage extends Component {
                 >
                     <Picker.Item label="Date (Newest)" value="Newest" />
                     <Picker.Item label="Date (Oldest)" value="Oldest" />
+                    <Picker.Item label="Score (Highest)" value="Score(H)" />
+                    <Picker.Item label="Score (Lowest)" value="Score(L)" />
+                    <Picker.Item label="Weighted" value="Weighted" />
                 </Picker>
                 <FlatList
                     ref={(ref) => this.flatlistRef = ref}
