@@ -161,7 +161,7 @@ export class ScreenGenerator {
               setScreen(PAGES.LOGIN)
             }}
           >
-            <Text style={styles.loginText}>LOGOUT</Text>
+            <Text style={styles.loginText}>Log Out</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.loginBtn}
@@ -255,12 +255,12 @@ export class ScreenGenerator {
     } else if (this.page === PAGES.VIEWPOSTS) {
       this.output = (
         <>
-          <SafeAreaView style={styles.container}>
-          <SafeAreaView style={styles.postViewContainer}>
+          <View style={styles.container}>
+          <View style={styles.postViewContainer}>
               <PostsPage/>
-            </SafeAreaView>
+            </View>
             {this.generateBottomBar(2)}
-          </SafeAreaView>
+          </View>
         </>
       )
     } else if (this.page === PAGES.SETTINGS) {
@@ -311,15 +311,7 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>Change Bio</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => {
-              setUser(null)
-              setScreen(PAGES.LOGIN)
-            }}
-          >
-            <Text style={styles.loginText}>Logout</Text>
-          </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => deleteCurrUser()}
@@ -345,8 +337,7 @@ export class ScreenGenerator {
             <View style={styles.inputView}>
               <TextInput
                 style={styles.TextInput}
-                placeholder='New Display Name'
-                placeholderTextColor='#003f5c'
+                defaultValue={u.getDisplayName()}
                 returnKeyType='next'
                 maxLength={30}
                 onChangeText={(newusername) => newUsername$.actions.set(newusername)} />
@@ -425,8 +416,7 @@ export class ScreenGenerator {
                 multiline
                 numberOfLines={3}
                 style={styles.TextInput}
-                placeholder='New Bio'
-                placeholderTextColor='#003f5c'
+                defaultValue={u.getBiography()}
                 returnKeyType='done'
                 blurOnSubmit
                 maxLength={240}
@@ -439,7 +429,7 @@ export class ScreenGenerator {
                   u.setNewBiography(String(newBiography$.get()))
                   AsyncStorage.getItem(u.MiD).then(data => {
                     data = JSON.parse(data)
-                    data.bio = String(newBiography$.get())
+                    data.biography = String(newBiography$.get())
                     AsyncStorage.setItem(u.MiD, JSON.stringify(data))
                   })
                   setScreen(PAGES.SETTINGS)
@@ -461,10 +451,8 @@ export class ScreenGenerator {
         >
           <Image source={backBtn} style={styles.backBtn} />
         </TouchableOpacity>
-
-
         <SafeAreaView style={styles.container}>
-          <SafeAreaView style={styles.postViewContainer, {width: '100%'}}>
+          <SafeAreaView style={styles.postViewContainer}>
             <FlatList
               data={personalPosts}
               renderItem={post => renderPost(post)}
@@ -473,8 +461,6 @@ export class ScreenGenerator {
           </SafeAreaView>
           <Text>{ "Size of post data:  " + dataOccupied(u) + " bytes." }</Text>
         </SafeAreaView>
-
-
         </View> 
       )
     }

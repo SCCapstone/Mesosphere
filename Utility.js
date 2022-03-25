@@ -361,7 +361,6 @@ export const styles = StyleSheet.create({
   },
   friendContainer: {
     flex: 1,
-    marginTop: '2%',
     backgroundColor: '#fff'
   },
   postContainer: {
