@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser, getFocus, storeData, removeValue } from './Utility'
 import { dataOccupied, makeAcc, deleteCurrUser, lru, toggleRememberMe, checkLogin } from './User'
@@ -18,7 +18,7 @@ import networking from './assets/networking.png'
 import persons from './assets/persons.png'
 import { atom } from 'elementos'
 import { FlatList } from 'react-native-gesture-handler'
-import CheckBox from '@react-native-community/checkbox'
+import LoginCheckboxComponent from './LoginCheckboxComponent'
 
 const username$ = atom('')
 const password$ = atom('')
@@ -89,11 +89,7 @@ export class ScreenGenerator {
 
           {/* checkbox goes here */}
           <Text style={styles.loginText}>Remember me?</Text>
-          <CheckBox
-            disabled = {false}
-            value = {true}
-            onValueChange = {(newValue) => toggleRememberMe()}
-          ></CheckBox>
+          <LoginCheckboxComponent></LoginCheckboxComponent>
 
         </View>
       )
