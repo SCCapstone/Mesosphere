@@ -123,19 +123,21 @@ export default class PostsPage extends Component {
 
     render() {
         return (
-            <View style={{marginBottom: '10%'}}>
-                <Picker
-                    selectedValue={this.state.sortingMode}
-                    style={styles.PickerStyle}
-                    mode='dropdown'
-                    onValueChange={(itemValue, itemIndex) => {this.setState({sortingMode: itemValue});this.refresh()}}
-                >
-                    <Picker.Item label="Date (Newest)" value="Newest" />
-                    <Picker.Item label="Date (Oldest)" value="Oldest" />
-                    <Picker.Item label="Score (Highest)" value="Score(H)" />
-                    <Picker.Item label="Score (Lowest)" value="Score(L)" />
-                    <Picker.Item label="Weighted" value="Weighted" />
-                </Picker>
+            <View style={{marginBottom: '10%', marginTop: 0}}>
+                <View style={{ marginTop: 0, height: '8%', width: '45%', elevation: 2, position: 'absolute', borderRadius: 4, backgroundColor:'#181D27', alignSelf: 'flex-end'}}>
+                    <Picker
+                        selectedValue={this.state.sortingMode}
+                        style={styles.PickerStyle}
+                        mode='dropdown'
+                        onValueChange={(itemValue, itemIndex) => {this.setState({sortingMode: itemValue});this.refresh()}}
+                    >
+                        <Picker.Item label="Date (Newest)" value="Newest" />
+                        <Picker.Item label="Date (Oldest)" value="Oldest" />
+                        <Picker.Item label="Score (Highest)" value="Score(H)" />
+                        <Picker.Item label="Score (Lowest)" value="Score(L)" />
+                        <Picker.Item label="Weighted" value="Weighted" />
+                    </Picker>
+                </View>
                 <FlatList
                     ref={(ref) => this.flatlistRef = ref}
                     refreshControl={

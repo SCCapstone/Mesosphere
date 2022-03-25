@@ -145,7 +145,7 @@ export const styles = StyleSheet.create({
     top: -10,
     left: -10,
     borderWidth: 4,
-    //backgroundColor: '#FFA31B',
+    //
   },
   PickerStyle: {
     alignSelf: 'flex-end',
@@ -153,7 +153,10 @@ export const styles = StyleSheet.create({
     width: 180,
     borderRadius: 2,
     borderWidth: 4,
-    color: '#F5F5F5'
+    color: '#F5F5F5',
+    elevation: 3,
+    position: 'absolute',
+    top: -5
   },
   logo: {
     width: 200,
@@ -254,7 +257,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: '#181D27',
+    marginTop: 0,
   },
   userButtonSelected: {
     position: 'absolute',
