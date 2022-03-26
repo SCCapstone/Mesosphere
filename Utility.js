@@ -191,6 +191,25 @@ export const styles = StyleSheet.create({
     height: 20, //made bigger so they could be clickable on android
     width: 20,
   },
+  XBtnLoc: {
+    position: 'absolute',
+    borderRadius: 25,
+    top: -10,
+    left: -10,
+    borderWidth: 4,
+    //
+  },
+  PickerStyle: {
+    alignSelf: 'flex-end',
+    height: 50, 
+    width: 180,
+    borderRadius: 2,
+    borderWidth: 4,
+    color: '#F5F5F5',
+    elevation: 3,
+    position: 'absolute',
+    top: -5
+  },
   logo: {
     width: 200,
     height: 200,
@@ -216,10 +235,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   TextInput: {
+    width: "98%",
     height: 50,
     flex: 1,
     padding: 10,
-    marginLeft: 20
+    marginLeft: 20,
+    textAlign:'center'
   },
   loginBtn: {
     width: '80%',
@@ -279,7 +300,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: COLORS.BAR
+    marginTop: 0,
   },
   userButtonSelected: {
     position: 'absolute',
@@ -424,15 +445,28 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.BACKGROUND,
     width: '100%',
-    marginBottom: '22%',
+    marginBottom: '23%',
 /*
-    padding: '2%',
-    borderRadius: 20,
-     shadowColor: COLORS.<>,
+    //padding: '2%',
+    //borderRadius: 20,
+    shadowColor: COLORS.<>,
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 3
 */
+  },
+  memoryViewContainer: {
+    flex: 1,
+    backgroundColor: '#181D27',
+    width: '60%',
+    marginTop: '2%',
+    padding: '2%',
+    //padding: '2%',
+    //borderRadius: 20,
+    shadowColor: 'grey',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3
   },
   postContainerText: {
     padding: '0.5%',
@@ -464,12 +498,6 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.BACKGROUND,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  smallerPostIDText:{
-    fontSize: 10,
-    fontWeight: 'bold',
-    alignItems: 'center',
-    textAlign: 'center'
   },
   scoreButtonStyle:{
     flexDirection: 'row',

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES, COLORS } from './Utility'
 import PostComponent from './PostComponent'
+import PostMemoryComponent from './PostMemoryComponent'
 
 export class Post {
   // Post objects will be constructed from postPage() prompt
@@ -73,44 +74,9 @@ export async function savePost (text) {
 export function renderPost (post) {
   const p = post.item;
   return <PostComponent postObj = {p} />
-  if (false) {
-  
-  //This logic needs to be changed to grab the display name (realName) from the passed in post's MiD)
-  /*  About that...
-  * In order to pull from the database, this would need to be made ASYNC, which I don't like, considering how we use it
-  * in the flatlist.  But then again... this is a *fake* component.  It doesn't use any actual component-like features.
-  * It should be refactored to become an actual post component, mirroring Friends and PostsScreen.  After that,
-  * I think it could hypothetically pull and await (using similar logic to the other components.)  It's bandaid fixed for now.
-  */
+}
 
-  return (
-    <View style={styles.postContainer}>
-      <Text style={styles.postContainerUsername}>{p.attachedMiD} </Text>
-      <View style={{borderBottomColor: 'black',
-                    borderBottomWidth: 1,}}/>
-      <Text style={styles.postContainerText}>{p.textContent} </Text>
-      <Text style={styles.postContainerText}>{p.timestamp} </Text>
-      <View style={styles.scoreButtonStyle}>
-        <View style={styles.scoreButton}/>
-          <Button
-              onPress={() => {changeScore(p, 1)}}
-              title="Like"
-              color={COLORS.LIKE_BUTTON}
-              borderRadius='12'
-          />
-        <View style={styles.spacing}/>
-        <View style={styles.scoreButton}/>
-          <Button
-              onPress={() => {changeScore(p, -1)}}
-              title="Dislike"
-              color={COLORS.DISLIKE_BUTTON}
-          />
-        <View style={styles.spacing}/>
-        <Text style={styles.postContainerText}>{p.score}</Text>
-        <View style={styles.spacing}/>        
-      </View>
-    </View>
-  )
-  }
-
+export function renderPostForMemory (post) {
+  const p = post.item;
+  return <PostMemoryComponent postObj = {p} />
 }

@@ -1,7 +1,7 @@
 import { Alert, AsyncStorage } from 'react-native'
 import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
-import { pushAccountToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase} from './firebaseConfig'
+import { pushAccountToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase, removePostFromDatabase} from './firebaseConfig'
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -38,6 +38,18 @@ export class User {
 
   addPost (p) {
     this.myPosts.push(p)
+  }
+
+  removePost (p) {
+    for( var i = 0; i < this.myPosts.length; i++){ 
+      if (this.myPosts[i].postID == p.postID) { 
+        this.myPosts.splice(i, 1); 
+        console.log("Removed post locally.  Removing from firebase...")
+      }
+    }
+    removePostFromDatabase(p);
+    this.storeLocally();
+    
   }
 
   getMyPosts () {

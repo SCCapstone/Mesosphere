@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native'
-import { getUser, styles, COLORS } from './Utility'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { alterPostScore, pullAccountFromDatabase, removeInteractions, addUserInteraction, hasInteractedWith } from './firebaseConfig'
+import { getUser, styles } from './Utility'
 
-export default class PostComponent extends Component {
+import XBtn from './assets/XBtn.png'
+
+export default class PostMemoryComponent extends Component {
     constructor(props) {
         super(props);
 
@@ -12,6 +14,7 @@ export default class PostComponent extends Component {
             displayname: "Loading...",
             score: 0,
             error: null,
+            deleted: false,
         };
 
         this.postObj = props.postObj;
@@ -117,36 +120,30 @@ export default class PostComponent extends Component {
         }
         //If this user has no end-result-interactions, do nothing!
     }
-  // TODO Make the like and dislike buttons style pieces.
-  render () {
-    return (
-      <View style={styles.postContainer}>
-        <Text style={styles.postContainerUsername}>{this.state.displayname} </Text>
-        <View style={{borderBottomColor: 'black',
-                      borderBottomWidth: 1,}}/>
-        <Text style={styles.postContainerText}>{this.postObj.textContent} </Text>
-        <Text style={styles.postContainerText}>{this.postObj.timestamp} </Text>
-        <View style={styles.scoreButtonStyle}>
-          <View style={styles.scoreButton}/>
-            <Button
-                onPress={() => {this.updateScore(1)}}
-                title="Like"
-                color={ COLORS.LIKE_BUTTON }
-                borderRadius='12'
-            />
-          <View style={styles.spacing}/>
-          <View style={styles.scoreButton}/>
-            <Button
-                onPress={() => {this.updateScore(-1)}}
-                title="Dislike"
-                color={ COLORS.DISLIKE_BUTTON }
-            />
-          <View style={styles.spacing}/>
-          <Text style={styles.postContainerText}>{this.state.score}</Text>
-          <View style={styles.spacing}/>        
-        </View>
-      </View>
-    )
-  }
 
+  render () {
+    if(!this.state.deleted) {
+        return (
+        <View style={{padding: '2%'}}>
+            <View style={styles.postContainer}>
+                <TouchableOpacity
+                    style={styles.XBtnLoc}
+                    onPress={() => { getUser().removePost(this.postObj);this.setState({deleted: true}) } }
+                >
+                    <Image source={XBtn} style={styles.backBtn} />
+                </TouchableOpacity>
+                <Text style={styles.postContainerUsername}>{this.state.displayname} </Text>
+                <View style={{borderBottomColor: 'black',
+                      borderBottomWidth: 1,}}/>
+                <Text style={styles.postContainerText}>{this.postObj.textContent} </Text>
+                <Text style={styles.postContainerText}>{this.postObj.timestamp} </Text>     
+            </View>
+        </View>
+        )
+        } else {
+            return (<View>
+
+            </View>);
+        }
+    }
 }

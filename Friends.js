@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Image, TouchableOpacity, Text, FlatList } from 'react-native';
+import { ActivityIndicator, Alert, View, Image, TouchableOpacity, Text, FlatList } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { styles, getUser, setFocus, setScreen, PAGES } from './Utility';
 import logo from './assets/MesoSphere.png'
@@ -27,6 +27,7 @@ export default class Friends extends Component {
     }
 
     async fetchMiDs() {
+        this.arrayholder = [];
         this.setState({loading: true});
         this.allIDs = await returnMIDSDatabaseArray();
         if(getUser() == null) {
@@ -84,13 +85,16 @@ export default class Friends extends Component {
         });
 
         const newData = this.arrayholder.filter(item => {
-            const itemData = `${item.getDisplayName().toUpperCase()}`;
+            var itemData = `${item.getDisplayName().toUpperCase()}`;
+            if(text.substring(0,5) == "meso-") {
+                itemData = `${item.getMiD().toUpperCase()}`;
+            }
             const textData = text.toUpperCase();
             return itemData.indexOf(textData) > -1;
         });
-        //If: There are no friends in the search field & ID exists & ID is not you
+        //If: There are no friends in the search field & ID exists & ID is not you & ID is not already your friend
         if(newData.length == 0 && this.allIDs.length > 0 && text.length == 16 && this.allIDs.includes(text) &&
-            text != getUser().getMiD()) {
+            text != getUser().getMiD() && !(getUser().getAllPeers().includes(text))) {
             class dummyUserClass {
                 constructor(fakeID, fakeName) {
                     this.fakeID = fakeID;
@@ -134,6 +138,11 @@ export default class Friends extends Component {
     };
 
     render() {
+        if(this.state.loading) {
+            return (
+                <ActivityIndicator size="large" color="#0000ff" />
+            );
+        } else {
         return (
             <View style={styles.friendContainer}>
                 <FlatList
@@ -168,6 +177,7 @@ export default class Friends extends Component {
                 />
             </View>
         );
+        }
     }
 
     async itemTapped(item) {
@@ -184,7 +194,7 @@ export default class Friends extends Component {
                     onPress: () => this.searchFilterFunction(""),//console.log("Cancel Pressed"),
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () =>  {getUser().addPeer(newFriendID); this.fetchMiDs();this.searchFilterFunction("");}}
+                  { text: "OK", onPress: () =>  {getUser().addPeer(newFriendID);this.searchFilterFunction("");this.fetchMiDs();}}
                 ]
               );
         } else {
