@@ -126,69 +126,59 @@ export function generatePostID () {
   pushPostIDToDatabase(ID)
   return ID // this value is to be used when creating a new post! also should be added to the current User's array of post IDs
 }
-
-const CARLEIGHS_PALETTE = {
-  BLUE_GREEN: '#A4C3B2', // Background of login, user, post pages
-  LIGHTER_GREEN: '#CCE3DE', // Post boxes
-  LIGHT_GREEN: '#D0DB97', // Username, password, New post text
-  DARK_GREEN: '#3A7D44', // Dislike, submit/save post, login
-  DARKER_GREEN: '#254D32', // Like
-  GRAYED_OUT: '#A9A9A9', // Media
-  DARK_GRAY: '#181D27', // Four bar buttons
-  BOTTOM_TEXT: '#F5F5F5', // Names on bar buttons
-  MESOSPHERE_ORANGE: '#FFA31B', // Unused
-  MESOSPHERE_BLUE: '#254DFF', // Unused
+const CARLEIGH_GREEN = {
+  // LIGHTER_GREEN: '#CCE3DE', // Previously post boxes. Now Unused, sorry.
+  // BOTTOM_TEXT: '#F5F5F5', // Previously only text on bar.
+  BACKGROUND: '#a4c3b2', // Blue-green
+  TEXT_BOX: '#d0db97', // Light-green
+  BUTTON: '#3a7d44', // Dark green
+  BAR: '#181d27', // Dark gray, blue shifted
+  BAR_LOCATION: '#909090', // Dark gray
+  TEXT: '#ffffff', // Black.
+  DISLIKE_BUTTON: '#3a7d44', // Dark green
+  LIKE_BUTTON: '#254d32', // Darker green
 }
-/*
-const ADAM_PALETTE = {
-  BACKGROUND: '#000000', // Near Black or White.
-  BOX_OUTLINE: '#d6d6d6', // Slightly off of background color.
-  BUTTON: '#808080', // Contrast to background.
-  TEXT_ENTRY: '#ededed', // Slightly off of background color.
+const ADAM_GRAY = {
+  // The Comments on the right are a recommendation from reading app-dev blogs.
+  BACKGROUND: '#ffffff', // Black, white, or close to that color.
+  TEXT_BOX: '#ededed', // Shifted away from background.
+  BUTTON: '#808080', // Shifted moreso away from background. Aim for constrast.
+  BAR: '#000000', // Black, white, or close to those colors. Different from BACKGROUND.
+  BAR_LOCATION: '#909090', // Highlight BAR's color to show user they are on that page.
+  TEXT: '#ffffff', // Black or White only.
+  // Text warning, the bottom bar's images and text will always be white.
+  LIKE_BUTTON: '#707070',
+  DISLIKE_BUTTON: '#606060', // Should be variations similar to BUTTON.
 }
-*/
-// TODO(Eventually) This should probably be worked into a similar format to our styles pkg.
-// Right now, it just mirrors our page consts.
-// Also TODO: These names are just yanked out of their contexts and are unchanged... Not very reusable.
+const MESO_CLASSIC = {
+  BACKGROUND: '#cff7ff', // Very light Blue
+  TEXT_BOX: '#a7cfff', // Light Blue
+  BUTTON: '#ffa31b', // Orange
+  BAR: '#ffa31b', // Orange
+  BAR_LOCATION: '#ffcb43', // Light orange
+  TEXT: '#ffffff', // Black
+  LIKE_BUTTON: '#254dff', // Blue
+  DISLIKE_BUTTON: '#072fe1', // Dark blue
+}
+// These are the exported color values.
+// Different palettes can be swapped in and out here.
+// Feel free to add more values for custom coloring.
 export const COLORS = {
-/*
-  //LOADING_SCREEN_BACKGROUND: "#ffffff", // This exists in app.json
-  BACKGROUND_COLOR: CARLEIGHS_PALETTE.LIGHT_GREEN, // Username and password and new post textbox
-  LOGIN_BUTTON: CARLEIGHS_PALETTE.DARK_GREEN,
-  REGISTER_BUTTON: '#FF0000', // TODO(Gazdecki) Make Register button use it's own style/color
-  POST_BUTTON: CARLEIGHS_PALETTE.DARK_GREEN,
-  //UNNAMED_BUTTON: '#FF0000', // TODO(Gazdecki) Unused variable.
-  BOTTOM_BUTTON_BAR: CARLEIGHS_PALETTE.DARK_GRAY, // TODO(Gazdecki) Unused variable.
-  USER_BUTTON: CARLEIGHS_PALETTE.DARK_GRAY,
-  USER_BUTTON_PRESSED_BORDER: '#FF0000', // TODO(Gazdecki) Unused variable.
-  NETWORK_BUTTON: CARLEIGHS_PALETTE.DARK_GRAY,
-  FRIEND_BUTTON: CARLEIGHS_PALETTE.DARK_GRAY,
-  FRIEND_BUTTON_PRESSED_BORDER: '#FF0000', // TODO(Gazdecki) Unused variable.
-  FRIENDS_AVATAR: '#FF0000', // TODO(Gazdecki) Unused variable.
-  POST_BUTTON: CARLEIGHS_PALETTE.DARK_GRAY,
-  BOTTOM_BUTTON_TEXT: CARLEIGHS_PALETTE.BOTTOM_TEXT,
-  FRIEND_CONTAINER: '#FFFFFF', // Background for list.
-  POST_CONTAINER: CARLEIGHS_PALETTE.LIGHTER_GREEN,
-  POST_CONTAINER_SHADOW: '#FF0000', // TODO(Gazdecki) Unused variable.
-  POST_CONTAINER_BORDER: '#000000',
-  POST_VIEW_CONTAINER: CARLEIGHS_PALETTE.DARK_GRAY, // Background for list.
-  POST_VIEW_CONTAINER_SHADOW: '#FF0000', // TODO(Gazdecki) Unused variable.
-  SECOND_POST_VIEW: '#FF0000', // TODO(Gazdecki) Unused variable.
-  UNNAMED_CONTAINER: CARLEIGHS_PALETTE.BLUE_GREEN, // Login, user, and post background.
-*/
-
-  LOADING_CIRCLE: "#0000FF", // Default blue for Android OS.
-  BUTTON: '#808080',
-  TEXT_BOX: '#ededed',
-  BACKGROUND: '#ffffff',
-  MEDIA_BUTTON: CARLEIGHS_PALETTE.GRAYED_OUT,
-  BAR: '#000000',
-  BAR_LOCATION: '#909090',
-  TEXT: '#ffffff',
-  DISLIKE_BUTTON: '#478047',
-  LIKE_BUTTON: '#208020',
+  // TODO(Gazdecki) I would bet money there's a better way to change this...
+  // As long as it's export-able still.
+  LOADING_CIRCLE: "#0000ff", // Default blue for Android OS.
+  MEDIA_BUTTON:   "#a9a9a9", // Grayed out.
+  BACKGROUND:     CARLEIGH_GREEN.BACKGROUND,
+  TEXT_BOX:       CARLEIGH_GREEN.TEXT_BOX,
+  BUTTON:         CARLEIGH_GREEN.BUTTON,
+  BAR:            CARLEIGH_GREEN.BAR,
+  BAR_LOCATION:   CARLEIGH_GREEN.BAR_LOCATION,
+  TEXT:           CARLEIGH_GREEN.TEXT,
+  DISLIKE_BUTTON: CARLEIGH_GREEN.DISLIKE_BUTTON,
+  LIKE_BUTTON:    CARLEIGH_GREEN.LIKE_BUTTON,
 }
 
+// No more defining long-term colors inside the style sheet. Please.
 export const styles = StyleSheet.create({
   backBtnLoc: {
     position: 'absolute',
@@ -273,17 +263,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-/*
-  button: {
-    width: '25%',
-    borderRadius: 25,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 0,
-    backgroundColor: COLORS.UNNAMED_BUTTON
-  },
-*/
   bottomButtomBar: {
     position: 'absolute',
     width: '100%',
@@ -291,7 +270,6 @@ export const styles = StyleSheet.create({
     height: '15%',
     bottom: 0,
     borderWidth: 0,
-    //borderColor: COLORS.BOTTOM_BUTTON_BAR
   },
   userButton: {
     position: 'absolute',
@@ -311,7 +289,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-//    borderColor: COLORS.BAR_LOCATION,
     backgroundColor: COLORS.BAR_LOCATION
   },
   networkButton: {
@@ -356,17 +333,17 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-//    borderColor: COLORS.FRIEND_BUTTON_PRESSED_BORDER,
     backgroundColor: COLORS.BAR_LOCATION
   },
 /*
+  // Unused
   friendsAvatar: {
     width: '10%',
     height: '300%',
     resizeMode: 'contain',
     marginBottom: 10,
     marginRight: 20,
-    backgroundColor: COLORS.FRIENDS_AVATAR
+    backgroundColor: COLORS.<>
   },
 */
   postButton: {
@@ -435,33 +412,28 @@ export const styles = StyleSheet.create({
     marginBottom: '5%',
     padding: '2%',
     borderRadius: 20,
-    // shadowColor: COLORS.POST_CONTAINER_SHADOW,
+    // shadowColor: COLORS.<>,
     // shadowOffset: {width: -2, height: 4},
     // shadowOpacity: 0.1,
     // shadowRadius: 3, these shadows look best on web/iOS, below is the necessary shadow element for Android
     elevation: 20,
     borderWidth: 2,
-    // borderColor: COLORS.POST_CONTAINER_BORDER,
+    // borderColor: COLORS.<>,
   },
   postViewContainer: {
     flex: 1,
     backgroundColor: COLORS.BACKGROUND,
     width: '100%',
     marginBottom: '22%',
-    //padding: '2%',
-    //borderRadius: 20,
-    // shadowColor: COLORS.POST_VIEW_CONTAINER_SHADOW,
 /*
+    padding: '2%',
+    borderRadius: 20,
+     shadowColor: COLORS.<>,
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 3
 */
   },
-/*
-  secondPostView:{
-    backgroundColor: COLORS.SECOND_POST_VIEW
-  },
-*/
   postContainerText: {
     padding: '0.5%',
     fontWeight: '400'
@@ -486,7 +458,8 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: '5%'
   },
-  container: { // This is used in screens: login, user, and post
+  container: { // This is used in screens: login, user, and post.
+    // TODO(Gazdecki) It probably shouldn't be in all those places.
     flex: 1,
     backgroundColor: COLORS.BACKGROUND,
     alignItems: 'center',
@@ -511,4 +484,4 @@ export const styles = StyleSheet.create({
   moreSpacing:{
     width: 15
   }
-})
+})  // End of styles list.
