@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { styles, getUser, COLORS } from './Utility';
 import { View, FlatList, RefreshControl, Picker, Text } from 'react-native';
-import { getUser, styles} from './Utility';
 import { Post, renderPost } from './Post'
 import { pullAccountFromDatabase, pullPostFromDatabase } from './firebaseConfig'
 

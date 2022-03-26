@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
-import { generatePostID, getUser, setScreen, styles, PAGES,  } from './Utility'
+import { generatePostID, getUser, setScreen, styles, PAGES, COLORS } from './Utility'
 import PostComponent from './PostComponent'
 import PostMemoryComponent from './PostMemoryComponent'
 

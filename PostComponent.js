@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native'
+import { getUser, styles, COLORS } from './Utility'
 import { alterPostScore, pullAccountFromDatabase, removeInteractions, addUserInteraction, hasInteractedWith } from './firebaseConfig'
-import { getUser, styles } from './Utility'
 
 export default class PostComponent extends Component {
     constructor(props) {
@@ -117,7 +117,7 @@ export default class PostComponent extends Component {
         }
         //If this user has no end-result-interactions, do nothing!
     }
-
+  // TODO Make the like and dislike buttons style pieces.
   render () {
     return (
       <View style={styles.postContainer}>
@@ -131,7 +131,7 @@ export default class PostComponent extends Component {
             <Button
                 onPress={() => {this.updateScore(1)}}
                 title="Like"
-                color="#254D32"
+                color={ COLORS.LIKE_BUTTON }
                 borderRadius='12'
             />
           <View style={styles.spacing}/>
@@ -139,7 +139,7 @@ export default class PostComponent extends Component {
             <Button
                 onPress={() => {this.updateScore(-1)}}
                 title="Dislike"
-                color="#3A7D44"
+                color={ COLORS.DISLIKE_BUTTON }
             />
           <View style={styles.spacing}/>
           <Text style={styles.postContainerText}>{this.state.score}</Text>
