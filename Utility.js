@@ -128,13 +128,12 @@ export function generatePostID () {
 }
 const CARLEIGH_GREEN = {
   // LIGHTER_GREEN: '#CCE3DE', // Previously post boxes. Now Unused, sorry.
-  // BOTTOM_TEXT: '#F5F5F5', // Previously only text on bar.
   BACKGROUND: '#a4c3b2', // Blue-green
   TEXT_BOX: '#d0db97', // Light-green
   BUTTON: '#3a7d44', // Dark green
   BAR: '#181d27', // Dark gray, blue shifted
   BAR_LOCATION: '#909090', // Dark gray
-  TEXT: '#ffffff', // Black.
+  TEXT: '#F5F5F5', // Light gray
   DISLIKE_BUTTON: '#3a7d44', // Dark green
   LIKE_BUTTON: '#254d32', // Darker green
 }
@@ -145,8 +144,8 @@ const ADAM_GRAY = {
   BUTTON: '#808080', // Shifted moreso away from background. Aim for constrast.
   BAR: '#000000', // Black, white, or close to those colors. Different from BACKGROUND.
   BAR_LOCATION: '#909090', // Highlight BAR's color to show user they are on that page.
-  TEXT: '#ffffff', // Black or White only.
-  // Text warning, the bottom bar's images and text will always be white.
+  TEXT: '#000000', // Black or White.
+  // Warning: Bar's text and images are hard coded to white. FIXME
   LIKE_BUTTON: '#707070',
   DISLIKE_BUTTON: '#606060', // Should be variations similar to BUTTON.
 }
@@ -156,7 +155,7 @@ const MESO_CLASSIC = {
   BUTTON: '#ffa31b', // Orange
   BAR: '#ffa31b', // Orange
   BAR_LOCATION: '#ffcb43', // Light orange
-  TEXT: '#ffffff', // Black
+  TEXT: '#000000', // Black.
   LIKE_BUTTON: '#254dff', // Blue
   DISLIKE_BUTTON: '#072fe1', // Dark blue
 }
@@ -166,8 +165,8 @@ const MESO_CLASSIC = {
 export const COLORS = {
   // TODO(Gazdecki) I would bet money there's a better way to change this...
   // As long as it's export-able still.
-  LOADING_CIRCLE: "#0000ff", // Default blue for Android OS.
-  MEDIA_BUTTON:   "#a9a9a9", // Grayed out.
+  LOADING_CIRCLE: '#0000ff', // Default blue for Android OS.
+  MEDIA_BUTTON:   '#a9a9a9', // Grayed out.
   BACKGROUND:     CARLEIGH_GREEN.BACKGROUND,
   TEXT_BOX:       CARLEIGH_GREEN.TEXT_BOX,
   BUTTON:         CARLEIGH_GREEN.BUTTON,
@@ -197,7 +196,6 @@ export const styles = StyleSheet.create({
     top: -10,
     left: -10,
     borderWidth: 4,
-    //
   },
   PickerStyle: {
     alignSelf: 'flex-end',
@@ -205,7 +203,7 @@ export const styles = StyleSheet.create({
     width: 180,
     borderRadius: 2,
     borderWidth: 4,
-    color: '#F5F5F5',
+    color: COLORS.TEXT,
     elevation: 3,
     position: 'absolute',
     top: -5
@@ -284,6 +282,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  /* Bottom Bar of Buttons */
   bottomButtomBar: {
     position: 'absolute',
     width: '100%',
@@ -301,6 +300,7 @@ export const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 2,
     marginTop: 0,
+    backgroundColor: COLORS.BAR
   },
   userButtonSelected: {
     position: 'absolute',
@@ -405,7 +405,9 @@ export const styles = StyleSheet.create({
   bottomButtonText: {
     position: 'absolute',
     bottom: 0,
-    color: COLORS.TEXT
+    color: '#ffffff', // TODO(Carleigh) This text needs to always be white to match the graphics.
+    // Unless... you wanted to find a way to make the graphics change color.
+    // color: COLORS.TEXT
   },
   bottomButtonIcon: {
     position: 'absolute',
@@ -414,6 +416,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     bottom: '30%'
   },
+  /* End of Bottom Bar of Buttons */
   friendList: {
     top: '20%',
     left: '50%',
@@ -457,13 +460,13 @@ export const styles = StyleSheet.create({
   },
   memoryViewContainer: {
     flex: 1,
-    backgroundColor: '#181D27',
+    backgroundColor: COLORS.BACKGROUND,
     width: '60%',
     marginTop: '2%',
     padding: '2%',
     //padding: '2%',
     //borderRadius: 20,
-    shadowColor: 'grey',
+    shadowColor: COLORS.BACKGROUND,
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 3
