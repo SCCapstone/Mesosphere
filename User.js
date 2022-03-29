@@ -2,7 +2,18 @@ import { Alert, AsyncStorage } from 'react-native'
 import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
 import { pushAccountToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase, removePostFromDatabase} from './firebaseConfig'
-import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
+// "Deep importing" into react-native breaks its cross platform functionality and shouldn't be done.
+// TODO(Eventually) Luckily this import only broke our webpackage, so I'm just going to bandaid fix this quick.
+// BAD: import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
+// UGLY:
+import { Platform } from 'react-native'
+let DebugInstructions = () => { /* Intentionally Empty */ }
+if (Platform.OS !== 'web') { 
+  DebugInsructions = require('react-native/Libraries/NewAppScreen')
+}
+// See: https://github.com/expo/fyi/blob/main/fb-batched-bridge-config-web.md   for more information.
+// Use: cat * | grep -C3 import | grep -C3 react-native/  to find accidental instances of this.
+
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export class User {
