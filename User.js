@@ -146,7 +146,7 @@ export async function makeAcc (username, password, realName, bio) {
   pushAccountToDatabase(u)
   pushUsernameToDatabase(username)
   setUser(u)
-  await storeData('rememberMe', 'false') //used for toggling autologin
+  await storeData('rememberMe', JSON.stringify(false)) //used for toggling autologin
   await storeData('lastRememberedUser', u) //used for autologin
   setScreen(PAGES.ACCOUNTPAGE)
 }
@@ -183,7 +183,6 @@ export async function lru () {
   await AsyncStorage.getItem('lastRememberedUser').then(value => {
     const data = JSON.parse(value)
     if (data) {
-      //console.log(data)
       const nu = new User(data.username, data.password, data.realName, data.biography, data.MiD, data.myPosts, data.myPeers)    
       setUser(nu)
       setScreen(PAGES.ACCOUNTPAGE)
@@ -193,22 +192,5 @@ export async function lru () {
     }
   })
 }
-
-
-export async function toggleRememberMe () {
-  await AsyncStorage.getItem('rememberMe').then(value => {
-    let data = JSON.parse(value)
-    //console.log(data)
-    if (data === "false") {
-      data = "true"
-    } else {
-      data = "false"
-    }
-    AsyncStorage.setItem('rememberMe', JSON.stringify(data))
-    return data
-  })
-}
-
-
 
 export default User

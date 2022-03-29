@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser, getFocus, storeData, removeValue } from './Utility'
-import { dataOccupied, makeAcc, deleteCurrUser, lru, toggleRememberMe, checkLogin } from './User'
+import { dataOccupied, makeAcc, deleteCurrUser, lru, getRememberMe, checkLogin } from './User'
 import { renderPost, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase, pullPostFromDatabase } from './firebaseConfig'
 
@@ -39,11 +39,16 @@ export class ScreenGenerator {
     this.generateScreen()
   }
 
+  async remembranceCheck() {
+    const val = await AsyncStorage.getItem('rememberMe')
+    console.log("User is remembered for autologin: " + val)
+    return val
+  }
+
   generateScreen() {
     console.log('Generating: ' + this.page)
-    // toggleRememberMe()
     if (this.page === PAGES.LOGIN) {
-      if (AsyncStorage.getItem('lastRememberedUser') !== null /*&& rememberMe === true*/) { //last remembered user does exist
+      if (AsyncStorage.getItem('lastRememberedUser') !== null /*&& this.remembranceCheck() != "false"*/) { //last remembered user does exist
         lru()
       }
       this.output = (
@@ -74,7 +79,7 @@ export class ScreenGenerator {
           </View>
           <TouchableOpacity
             style={styles.loginBtn}
-            onPress={() => checkLogin(String(username$.get()), String(password$.get()))}//&& username$.actions.set() && password$.actions.set()}
+            onPress={() => checkLogin(String(username$.get()), String(password$.get()))}
             testID='LoginButton'
           >
             <Text style={styles.loginText}>LOGIN</Text>
@@ -169,6 +174,7 @@ export class ScreenGenerator {
             style={styles.loginBtn}
             onPress={() => {
               removeValue('lastRememberedUser')
+              AsyncStorage.setItem('rememberMe', 'false')
               setUser(null)
               setScreen(PAGES.LOGIN)
             }}
@@ -365,7 +371,7 @@ export class ScreenGenerator {
               </View>
               <TouchableOpacity
                 style={styles.loginBtn}
-                onPress={() => {
+                onPress={ () => {
                   changeUserDisplayNameInDatabase(u.MiD, String(newUsername$.get()))
                   u.setRealName(String(newUsername$.get()))
                   AsyncStorage.getItem(u.MiD).then(data => {
@@ -375,8 +381,8 @@ export class ScreenGenerator {
                   })
 
                   setScreen(PAGES.SETTINGS)
-                } }
-
+                  } 
+                }
               >
                 <Text style={styles.loginText}>Change Display Name</Text>
               </TouchableOpacity>
