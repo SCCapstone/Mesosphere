@@ -119,13 +119,16 @@ export default class PostComponent extends Component {
     }
   // TODO Make the like and dislike buttons style pieces.
   render () {
+    // TODO(Maybe) Technically, "timestamp" is an object and React can't render it inside a list nicely.
+    // Sometimes this works with warning, sometimes it crashes... Slapping a ".toString()" on fixes this crash.
+    // But... it looks really ugly...
     return (
       <View style={styles.postContainer}>
         <Text style={styles.postContainerUsername}>{this.state.displayname} </Text>
         <View style={{borderBottomColor: 'black',
                       borderBottomWidth: 1,}}/>
         <Text style={styles.postContainerText}>{this.postObj.textContent} </Text>
-        <Text style={styles.postContainerText}>{this.postObj.timestamp} </Text>
+        <Text style={styles.postContainerText}>{this.postObj.timestamp.toString()} </Text>
         <View style={styles.scoreButtonStyle}>
           <View style={styles.scoreButton}/>
             <Button
