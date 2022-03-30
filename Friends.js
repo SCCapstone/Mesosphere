@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ActivityIndicator, Alert, View, Image, TouchableOpacity, Text, FlatList } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { styles, getUser, setFocus, setScreen, PAGES } from './Utility';
-import logo from './assets/MesoSphere.png'
+import user from './assets/persons.png'
 import { returnMIDSDatabaseArray, pullAccountFromDatabase } from './firebaseConfig'
 
 
@@ -47,6 +47,25 @@ export default class Friends extends Component {
                 if(peer.getAllPeers().includes(getUser().getMiD())) {
                     //Add them to the list!! :) my friend
                     this.arrayholder.push(peer);
+                } else {
+                    //If the peer does NOT have me
+                    //Generate dummy user to show pending status
+                    class dummyUserClass {
+                        constructor(fakeID, fakeName) {
+                            this.fakeID = fakeID;
+                            this.fakeName = fakeName;
+                        }
+        
+                        getDisplayName() {
+                            return this.fakeName;
+                        }
+        
+                        getMiD() {
+                            return this.fakeID;
+                        }
+                    }
+                    const dummyUser = new dummyUserClass(peer.getMiD(), peer.getDisplayName() + " (Pending)");
+                    this.arrayholder.push(dummyUser);
                 }
             }
         }
@@ -133,13 +152,6 @@ export default class Friends extends Component {
                 onChangeText={text => this.searchFilterFunction(text)}
                 value={this.state.value}
             />
-            
-            <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => { setScreen(PAGES.NOTIFICATIONS)} }
-            >
-            <Text style={styles.loginText}>Notifications</Text>
-            </TouchableOpacity>
 
             </View>
         );
@@ -165,7 +177,7 @@ export default class Friends extends Component {
                                     alignItems: 'center'
                                 }}>
                                 <Image
-                                    source={logo}
+                                    source={user}
                                     style={styles.friendsAvatar}
                                 />
                                 <Text
@@ -205,6 +217,30 @@ export default class Friends extends Component {
                   { text: "OK", onPress: () =>  {getUser().addPeer(newFriendID);this.searchFilterFunction("");this.fetchMiDs();}}
                 ]
               );
+        } else if(item.getDisplayName().includes("(Pending)")) {
+            class dummyUserClass {
+                constructor(fakeID, fakeName, fakeBio) {
+                    this.fakeID = fakeID;
+                    this.fakeName = fakeName;
+                    this.fakeBio = fakeBio;
+                }
+
+                getDisplayName() {
+                    return this.fakeName;
+                }
+
+                getMiD() {
+                    return this.fakeID;
+                }
+
+                getBiography() {
+                    return this.fakeBio;
+                }
+            }
+            const dummyUser = new dummyUserClass(item.getMiD(), item.getDisplayName(), 
+                "We're waiting on " + item.getDisplayName().substring(0, item.getDisplayName().length-9) + " to add you back.  Be patient!");
+            setFocus(dummyUser)
+            setScreen(PAGES.FRIEND);
         } else {
             console.log("Real item pushed! Should move to User screen.");
             //Construct a User object from item using Firebase

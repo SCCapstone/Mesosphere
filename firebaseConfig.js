@@ -279,9 +279,13 @@ export async function hasInteractedWith (u, postID) {
 // notifications
 
 export async function sendNotification (u, recipientID) {
-  await updateDoc(doc(database, 'accounts', recipientID), {
-    notifications: arrayUnion(u.MiD)
-  })
+  //If this user doesn't have me as a friend yet
+  const peer = await pullAccountFromDatabase(recipientID);
+  if(!(peer.getAllPeers().includes(u.MiD))) {
+    await updateDoc(doc(database, 'accounts', recipientID), {
+      notifications: arrayUnion(u.MiD)
+    })
+  }
 }
 
 export async function removeNotification (u, notificationMID) {
@@ -304,6 +308,7 @@ export async function pullNotifications (u) {
     return data.notifications
   } else {
     console.log("No notifications for this user.")
+    return null;
   }
 }
 

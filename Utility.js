@@ -186,6 +186,7 @@ export const styles = StyleSheet.create({
     top: 25,
     left: 5,
     borderWidth: 4,
+    elevation: 2,
   },
   backBtn: {
     height: 20, //made bigger so they could be clickable on android
@@ -197,6 +198,21 @@ export const styles = StyleSheet.create({
     top: -10,
     left: -10,
     borderWidth: 4,
+  },
+  NotifCountLoc: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    textAlign: 'center',
+    top: 265,
+    right: 55,
+    borderWidth: 2,
+    elevation: 2,
+    width: 20,
+    height: 20,
+    borderRadius: 20/2,
+    backgroundColor: COLORS.TEXT_BOX
   },
   PickerStyle: {
     alignSelf: 'flex-end',
@@ -357,7 +373,7 @@ export const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: COLORS.BAR_LOCATION
   },
-/*
+
   // Unused
   friendsAvatar: {
     width: '10%',
@@ -365,9 +381,9 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginBottom: 10,
     marginRight: 20,
-    backgroundColor: COLORS.<>
+    backgroundColor: COLORS.BACKGROUND
   },
-*/
+
   postButton: {
     position: 'absolute',
     left: '75%',
@@ -502,6 +518,10 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.BACKGROUND,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  lowContainer: {
+    flex: 1,
+    backgroundColor: COLORS.BACKGROUND
   },
   scoreButtonStyle:{
     flexDirection: 'row',

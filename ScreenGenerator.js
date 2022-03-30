@@ -19,6 +19,7 @@ import persons from './assets/persons.png'
 import { atom } from 'elementos'
 import { FlatList } from 'react-native-gesture-handler'
 import Notifications from './Notifications'
+import AccountPageComponent from './AccountPageComponent'
 
 const username$ = atom('')
 const password$ = atom('')
@@ -151,28 +152,8 @@ export class ScreenGenerator {
     } else if (this.page === PAGES.ACCOUNTPAGE) {
       const u = getUser()
       this.output = (
-        <View style={styles.container}>
-          <Text style={styles.bigText}>Welcome back, {u.realName}</Text>
-          <Text style={styles.text}>{u.getMiD()}</Text>
-          {/* {adminCheck()} */}
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => {
-              setUser(null)
-              setScreen(PAGES.LOGIN)
-            }}
-          >
-            <Text style={styles.loginText}>Log Out</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => {
-              setScreen(PAGES.SETTINGS)
-            }}
-          >
-            <Text style={styles.loginText}>Settings</Text>
-          </TouchableOpacity>
-
+        <View style={styles.lowContainer}>
+          <AccountPageComponent/>
           {this.generateBottomBar(1)}
         </View>
 
@@ -465,12 +446,15 @@ export class ScreenGenerator {
     } else if (this.page === PAGES.NOTIFICATIONS) {
       console.log('This is the Notifications page.')
       this.output = (
-        <View style={{ flex: 1, width: '100%', backgroundColor: '#fff', marginBottom: '25%' }}>
-          <TouchableOpacity style={styles.backBtnLoc} onPress={() => { setScreen(PAGES.FRIENDSLIST) } }>
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.backBtnLoc}
+            onPress={() => { setScreen(PAGES.ACCOUNTPAGE) } }
+          >
             <Image source={backBtn} style={styles.backBtn} />
-          </TouchableOpacity>
-          <Notifications />
-        </View>
+            </TouchableOpacity>
+            <Notifications />
+          </View>
       )
     }
 

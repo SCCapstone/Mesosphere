@@ -20,24 +20,26 @@ export default class Notifications extends Component {
 
     async fetchNotifications() {
         const nlist = await pullNotifications(getUser());
+        console.log(nlist);
+        console.log(nlist.size)
         this.setState({loading: true});
         if(getUser() == null) {
             console.log("Null getUser! (This is an error state)");
-            this.setState({error: "Error: Current user is undefined or null. Please make sure you are logged in or have an internet connection."});
+            this.setState({error: 1});
         }
-        if (nlist.size === 0) {
+        if (nlist == null) {
             this.setState({
                 loading: false,
                 notifs: [],
-                error: "Error: There are no notifications!"
+                error: 2
             })
         } else {
             this.setState({
                 notifs: nlist,
                 loading: false,
-                error: null
+                error: 0
             });
-            console.log("Notifs loaded: " + this.state.notifs);
+            console.log("Notifs loaded: " + this.state.notifs + ", error: " + this.state.error);
         }
     }
 
@@ -55,6 +57,20 @@ export default class Notifications extends Component {
     };
 
     render () {
+        if(this.state.error == 1) {
+            return (
+                <View style={styles.friendContainer}>
+                    <Text>Error: Current user is undefined or null. Please make sure you are logged in or have an internet connection.</Text>
+                </View>
+            )
+        } 
+        if(this.state.error == 2) {
+            return (
+                <View style={styles.friendContainer}>
+                    <Text>There are no new notifications!</Text>
+                </View>
+            )
+        }
         if(this.state.loading) {
             return (
                 <ActivityIndicator size="large" color="#0000ff" />
@@ -62,9 +78,6 @@ export default class Notifications extends Component {
         } else {
             return (
                 <View style={styles.friendContainer}>
-                    <TouchableOpacity style={styles.backBtnLoc} onPress={() => { setScreen(PAGES.FRIENDSLIST) } }>
-                        <Image source={backBtn} style={styles.backBtn} />
-                    </TouchableOpacity>
                     <FlatList
                         //ListHeaderComponent = {}
                         data = {this.state.notifs}
@@ -75,6 +88,7 @@ export default class Notifications extends Component {
                                 </View>
                             </TouchableOpacity>
                         )}
+                        keyExtractor={item => item}
                         ItemSeparatorComponent = {this.renderSeparator}
                         //ListFooterComponent = {}
                     />
@@ -92,16 +106,23 @@ export default class Notifications extends Component {
                 {
                     text: "Yes",
                     onPress: () => {
-                        addPeerToDatabase(getUser(), item);
+                        getUser().addPeer(item);
+                        //Remove it from firestore
                         removeNotification(getUser(), item);
+                        //Remove it locally
+                        this.setState( {notifs: this.state.notifs.filter(function(found) {
+                                return found !== item}) });
                         // setScreen(PAGES.NOTIFICATIONS)
                     }
                 },
                 {
                     text: "No, delete the notification.",
                     onPress: () => {
+                        //Remove it from firestore
                         removeNotification(getUser(), item);
-                        // setScreen(PAGES.NOTIFICATIONS) 
+                        //Remove it locally
+                        this.setState( {notifs: this.state.notifs.filter(function(found) {
+                                return found !== item}) });
                     },
                     style: "cancel"
                 },
