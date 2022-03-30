@@ -6,7 +6,7 @@ import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export class User {
-  constructor (username, password, realName, biography, MiD, myPosts, myPeers) {
+  constructor (username, password, realName, biography, MiD, myPosts, myPeers, notifications) {
     this.username = username
     this.password = password
     this.realName = realName
@@ -14,6 +14,7 @@ export class User {
     if (MiD === 'new') { this.MiD = generateUniqueMID() } else { this.MiD = MiD }
     if (myPosts === 'new') { this.myPosts = [] } else { this.myPosts = myPosts }
     if (myPeers === 'new') { this.myPeers = [] } else { this.myPeers = myPeers }
+    if (notifications === 'new') { this.notifications = [] } else { this.notifications = notifications }
   }
 
   getUsername () {
@@ -58,6 +59,10 @@ export class User {
 
   getAllPeers () {
     return this.myPeers
+  }
+
+  getNotifications () {
+    return this.notifications;
   }
 
   storeLocally () {
@@ -131,7 +136,7 @@ export async function makeAcc (username, password, realName, bio) {
   if (realName.length < 1) {
     alert('You must enter a display name.')
   }
-  const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new', 'new')
+  const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new', 'new', 'new')
   await storeData(u.getMiD(), u)
   pushAccountToDatabase(u)
   setUser(u)

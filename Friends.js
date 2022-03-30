@@ -133,6 +133,14 @@ export default class Friends extends Component {
                 onChangeText={text => this.searchFilterFunction(text)}
                 value={this.state.value}
             />
+            
+            <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => { setScreen(PAGES.NOTIFICATIONS)} }
+            >
+            <Text style={styles.loginText}>Notifications</Text>
+            </TouchableOpacity>
+
             </View>
         );
     };

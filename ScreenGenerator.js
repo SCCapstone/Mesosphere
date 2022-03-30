@@ -18,6 +18,7 @@ import networking from './assets/networking.png'
 import persons from './assets/persons.png'
 import { atom } from 'elementos'
 import { FlatList } from 'react-native-gesture-handler'
+import Notifications from './Notifications'
 
 const username$ = atom('')
 const password$ = atom('')
@@ -460,6 +461,18 @@ export class ScreenGenerator {
           </SafeAreaView>
           <Text>{ "Size of post data:  " + dataOccupied(u) + " bytes." }</Text>
         </View> 
+      )
+    } else if (this.page === PAGES.NOTIFICATIONS) {
+      console.log('This is the Notifications page.')
+      const u = getUser()
+      const userNotis = u.getNotifications()
+      this.output = (
+        <View style={{ flex: 1, width: '100%', backgroundColor: '#fff', marginBottom: '25%' }}>
+          <TouchableOpacity style={styles.backBtnLoc} onPress={() => { setScreen(PAGES.FRIENDSLIST) } }>
+            <Image source={backBtn} style={styles.backBtn} />
+          </TouchableOpacity>
+          <Notifications />
+        </View>
       )
     }
 
