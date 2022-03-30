@@ -12,7 +12,6 @@ export default class Notifications extends Component {
             notifs: [],
             error: null
         };
-        this.placeholder = []
     }
 
     componentDidMount() {
@@ -27,11 +26,10 @@ export default class Notifications extends Component {
             this.setState({error: "Error: Current user is undefined or null. Please make sure you are logged in or have an internet connection."});
         }
         if (nlist.size === 0) {
-            console.log("There are no notifications!")
             this.setState({
                 loading: false,
                 notifs: [],
-                error: null
+                error: "Error: There are no notifications!"
             })
         } else {
             this.setState({
@@ -55,10 +53,6 @@ export default class Notifications extends Component {
             />
         );
     };
-
-    forceUpdateHandler() {
-        this.forceUpdate();
-    }
 
     render () {
         if(this.state.loading) {

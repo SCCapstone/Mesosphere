@@ -464,8 +464,6 @@ export class ScreenGenerator {
       )
     } else if (this.page === PAGES.NOTIFICATIONS) {
       console.log('This is the Notifications page.')
-      const u = getUser()
-      const userNotis = u.getNotifications()
       this.output = (
         <View style={{ flex: 1, width: '100%', backgroundColor: '#fff', marginBottom: '25%' }}>
           <TouchableOpacity style={styles.backBtnLoc} onPress={() => { setScreen(PAGES.FRIENDSLIST) } }>
