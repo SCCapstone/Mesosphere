@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Alert, View, Image, TouchableOpacity, Text, FlatList } from 'react-native';
-import { styles, getUser, setScreen, PAGES } from './Utility';
+import { styles, getUser, setUser, setScreen, PAGES } from './Utility';
 import backBtn from './assets/BackBtn.png'
 import { pullNotifications, getDisplayNameFromMID, addPeerToDatabase, removeNotification } from './firebaseConfig';
 
