@@ -68,7 +68,8 @@ export async function pushAccountToDatabase (u) {
     biography: u.biography,
     displayname: u.realName,
     friends: u.myPeers,
-    posts: u.myPosts
+    posts: u.myPosts,
+    notifications: u.notifications
   })
 }
 
@@ -273,6 +274,53 @@ export async function hasInteractedWith (u, postID) {
       console.log('Error: Requested post does not exist.')
   }
   return postSnap.data().interactedUsers.some(search => search.user === u.MiD)
+}
+
+// notifications
+
+export async function sendNotification (u, recipientID) {
+  //If this user doesn't have me as a friend yet
+  const peer = await pullAccountFromDatabase(recipientID);
+  if(!(peer.getAllPeers().includes(u.MiD))) {
+    await updateDoc(doc(database, 'accounts', recipientID), {
+      notifications: arrayUnion(u.MiD)
+    })
+  }
+}
+
+export async function removeNotification (u, notificationMID) {
+  await updateDoc(doc(database, 'accounts', u.MiD), {
+    notifications: arrayRemove(notificationMID)
+  })
+} 
+/**
+ * User removes a notification on their account. 
+ * This should happen upon accepting the friend request, or manual deletion of the notification with no action taken.
+ */
+
+export async function pullNotifications (u) {
+  const accountRef = doc(database, 'accounts', u.MiD)
+  const accountSnap = await getDoc(accountRef)
+  const notis = []
+  const data = accountSnap.data()
+  //console.log(data.notifications)
+  if (data.notifications.size != 0) {
+    return data.notifications
+  } else {
+    console.log("No notifications for this user.")
+    return null;
+  }
+}
+
+export async function getDisplayNameFromMID (MID) {
+  const accountRef = doc(database, 'accounts', MID)
+  const accountSnap = await getDoc(accountRef)
+  const data = accountSnap.data()
+  if (data) {
+    return data.displayname
+  } else {
+    console.log("Error!")
+  }
 }
 
 export { database }
