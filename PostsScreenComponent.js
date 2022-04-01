@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, View, FlatList } from 'react-native';
-import { styles, getUser} from './Utility';
+import { styles, getUser, COLORS } from './Utility';
+import { View, FlatList, RefreshControl, Picker, Text } from 'react-native';
 import { Post, renderPost } from './Post'
 import { pullAccountFromDatabase, pullPostFromDatabase } from './firebaseConfig'
 
@@ -10,14 +10,19 @@ export default class PostsPage extends Component {
 
         this.state = {
             loading: false,
+            refreshing: false,
             data: [],
             error: null,
+            sortingMode: "Newest"
         };
+
+        this.isRefreshing = false;
+        this.flatlistRef = null;
     }
 
     componentDidMount() {
         //this.makeRemoteRequest();
-        this.getAllPosts();
+        this.refresh();
         //console.log(data);
     }
 
@@ -78,14 +83,27 @@ export default class PostsPage extends Component {
     }
 
     sortPostsArray(allPosts) {
-        //Logic for sorting by date goes here.
-        //console.log(allPosts[0].timestamp);
-        //const check = new Date(allPosts[0].timestamp);
-        //console.log(check);
-        allPosts.sort((b, a) =>
-            (new Date(a.timestamp)) - (new Date(b.timestamp))
-        )
-        //console.log("All posts:" + JSON.stringify(allPosts));
+        if(this.state.sortingMode == "Newest") {
+            allPosts.sort((b, a) =>
+                (new Date(a.timestamp)) - (new Date(b.timestamp))
+            )
+        } else if(this.state.sortingMode == "Oldest") {
+            allPosts.sort((a, b) =>
+                (new Date(a.timestamp)) - (new Date(b.timestamp))
+            )
+        } else if(this.state.sortingMode == "Score(H)") {
+            allPosts.sort((b, a) =>
+                (a.starting_score - b.starting_score)
+            )
+        } else if(this.state.sortingMode == "Score(L)") {
+            allPosts.sort((a, b) =>
+                (a.starting_score - b.starting_score)
+            )
+        } else if(this.state.sortingMode == "Weighted") {
+            allPosts.sort((b, a) =>
+                (((new Date(a.timestamp)) - (new Date(b.timestamp))) + ((a.starting_score - b.starting_score)*10000000))
+            )
+        }
     }
 
 
@@ -97,26 +115,64 @@ export default class PostsPage extends Component {
                     height: 1,
                     width: '100%',
                     backgroundColor: '#CED0CE',
-                    marginBottom: '5%',
+                    marginBottom: '3%',
                 }}
             />
         );
     };
 
     render() {
-        if(this.state.loading) {
-            return (
-                <ActivityIndicator size="large" color="#0000ff" />
-            );
-        } else {
-            return (
-              <FlatList
-                data={this.state.data}
-                renderItem={post => renderPost(post)}
-                ItemSeparatorComponent={this.renderSeparator}
-                keyExtractor={item => JSON.stringify(item)}
-              />
-            );
+        return (
+            <View style={{marginTop: 0}}>
+                <View style={{ marginTop: 0, height: 40, width: '45%', elevation: 2, position: 'absolute', borderRadius: 4, backgroundColor:'#181D27', alignSelf: 'flex-end'}}>
+                    <Picker
+                        selectedValue={this.state.sortingMode}
+                        style={styles.PickerStyle}
+                        mode='dropdown'
+                        onValueChange={(itemValue, itemIndex) => {this.setState({sortingMode: itemValue});this.refresh()}}
+                    >
+                        <Picker.Item label="Date (Newest)" value="Newest" />
+                        <Picker.Item label="Date (Oldest)" value="Oldest" />
+                        <Picker.Item label="Score (Highest)" value="Score(H)" />
+                        <Picker.Item label="Score (Lowest)" value="Score(L)" />
+                        <Picker.Item label="Weighted" value="Weighted" />
+                    </Picker>
+                </View>
+                <FlatList
+                    ref={(ref) => this.flatlistRef = ref}
+                    refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={() => {this.refresh()}}
+                    />
+                    }
+                    data={this.state.data}
+                    renderItem={post => renderPost(post)}
+                    ItemSeparatorComponent={this.renderSeparator}
+                    keyExtractor={item => JSON.stringify(item)}
+                    />
+                </View>
+        );
+    }
+
+    refresh() {
+        console.log("Refresh called...");
+        if(!this.isRefreshing) {
+            if(this.flatlistRef && this.state.data.length > 0) {
+                this.flatlistRef.scrollToIndex({index: 0});
+            }
+            this.isRefreshing = true;
+            this.setState({refreshing: true});
+            console.log("Refreshing set to true!");
+            //Do something
+            this.getAllPosts();
+            wait(800).then(() => {this.setState({refreshing: false});
+                                    this.isRefreshing = false;
+                                    console.log("Refreshing set to false!");});
         }
     }
+}
+
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
 }

@@ -19,7 +19,9 @@ export const PAGES = {
   CHANGEACCOUNT_PASS: 11,
   CHANGEACCOUNT_BIO: 12,
   VIEW_LOCAL_DATA: 13, 
+  NOTIFICATIONS: 14
 }
+
 
 const currUser$ = atom(null)
 const currScreen$ = atom(null)
@@ -125,7 +127,58 @@ export function generatePostID () {
   pushPostIDToDatabase(ID)
   return ID // this value is to be used when creating a new post! also should be added to the current User's array of post IDs
 }
+const CARLEIGH_GREEN = {
+  // LIGHTER_GREEN: '#CCE3DE', // Previously post boxes. Now Unused, sorry.
+  BACKGROUND: '#a4c3b2', // Blue-green
+  TEXT_BOX: '#d0db97', // Light-green
+  BUTTON: '#3a7d44', // Dark green
+  BAR: '#181d27', // Dark gray, blue shifted
+  BAR_LOCATION: '#909090', // Dark gray
+  TEXT: '#F5F5F5', // Light gray
+  DISLIKE_BUTTON: '#3a7d44', // Dark green
+  LIKE_BUTTON: '#254d32', // Darker green
+}
+const ADAM_GRAY = {
+  // The Comments on the right are a recommendation from reading app-dev blogs.
+  BACKGROUND: '#ffffff', // Black, white, or close to that color.
+  TEXT_BOX: '#ededed', // Shifted away from background.
+  BUTTON: '#808080', // Shifted moreso away from background. Aim for constrast.
+  BAR: '#000000', // Black, white, or close to those colors. Different from BACKGROUND.
+  BAR_LOCATION: '#909090', // Highlight BAR's color to show user they are on that page.
+  TEXT: '#000000', // Black or White.
+  // Warning: Bar's text and images are hard coded to white. FIXME
+  LIKE_BUTTON: '#707070',
+  DISLIKE_BUTTON: '#606060', // Should be variations similar to BUTTON.
+}
+const MESO_CLASSIC = {
+  BACKGROUND: '#cff7ff', // Very light Blue
+  TEXT_BOX: '#a7cfff', // Light Blue
+  BUTTON: '#ffa31b', // Orange
+  BAR: '#ffa31b', // Orange
+  BAR_LOCATION: '#ffcb43', // Light orange
+  TEXT: '#000000', // Black.
+  LIKE_BUTTON: '#254dff', // Blue
+  DISLIKE_BUTTON: '#072fe1', // Dark blue
+}
+// These are the exported color values.
+// Different palettes can be swapped in and out here.
+// Feel free to add more values for custom coloring.
+export const COLORS = {
+  // TODO(Gazdecki) I would bet money there's a better way to change this...
+  // As long as it's export-able still.
+  LOADING_CIRCLE: '#0000ff', // Default blue for Android OS.
+  MEDIA_BUTTON:   '#a9a9a9', // Grayed out.
+  BACKGROUND:     CARLEIGH_GREEN.BACKGROUND,
+  TEXT_BOX:       CARLEIGH_GREEN.TEXT_BOX,
+  BUTTON:         CARLEIGH_GREEN.BUTTON,
+  BAR:            CARLEIGH_GREEN.BAR,
+  BAR_LOCATION:   CARLEIGH_GREEN.BAR_LOCATION,
+  TEXT:           CARLEIGH_GREEN.TEXT,
+  DISLIKE_BUTTON: CARLEIGH_GREEN.DISLIKE_BUTTON,
+  LIKE_BUTTON:    CARLEIGH_GREEN.LIKE_BUTTON,
+}
 
+// No more defining long-term colors inside the style sheet. Please.
 export const styles = StyleSheet.create({
   backBtnLoc: {
     position: 'absolute',
@@ -133,12 +186,44 @@ export const styles = StyleSheet.create({
     top: 25,
     left: 5,
     borderWidth: 4,
-    //backgroundColor: '#FFA31B',
+    elevation: 2,
   },
   backBtn: {
     height: 20, //made bigger so they could be clickable on android
     width: 20,
-    
+  },
+  XBtnLoc: {
+    position: 'absolute',
+    borderRadius: 25,
+    top: -10,
+    left: -10,
+    borderWidth: 4,
+  },
+  NotifCountLoc: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    textAlign: 'center',
+    top: 265,
+    right: 55,
+    borderWidth: 2,
+    elevation: 2,
+    width: 20,
+    height: 20,
+    borderRadius: 20/2,
+    backgroundColor: COLORS.TEXT_BOX
+  },
+  PickerStyle: {
+    alignSelf: 'flex-end',
+    height: 50, 
+    width: 180,
+    borderRadius: 2,
+    borderWidth: 4,
+    color: COLORS.TEXT,
+    elevation: 3,
+    position: 'absolute',
+    top: -5
   },
   logo: {
     width: 200,
@@ -147,7 +232,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10
   },
   inputView: {
-    backgroundColor: '#D0DB97',
+    backgroundColor: COLORS.TEXT_BOX,
     borderRadius: 30,
     width: '70%',
     height: 45,
@@ -156,7 +241,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   inputViewBio: {
-    backgroundColor: '#D0DB97',
+    backgroundColor: COLORS.TEXT_BOX,
     borderRadius: 30,
     width: '70%',
     height: 80,
@@ -165,10 +250,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   TextInput: {
+    width: "98%",
     height: 50,
     flex: 1,
     padding: 10,
-    marginLeft: 20
+    marginLeft: 20,
+    textAlign:'center'
   },
   loginBtn: {
     width: '80%',
@@ -177,7 +264,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '8%',
-    backgroundColor: '#3A7D44'
+    backgroundColor: COLORS.BUTTON
   },
   registerBtn:{
     width: '80%',
@@ -186,7 +273,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '8%',
-    backgroundColor: '#254D32'
+    backgroundColor: COLORS.REGISTER_BUTTON
   },
   loginText: {
     alignItems: 'center',
@@ -194,7 +281,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center'
   },
   postBtn: {
-    backgroundColor: '#3A7D44',
+    backgroundColor: COLORS.BUTTON,
     height: 50,
     width: '80%',
     marginTop: 10,
@@ -202,8 +289,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  mediaBtn: {
-    backgroundColor: '#A9A9A9',
+  mediaBtn: { // Special Case for greyed out and disabled button.
+    // backgroundColor: COLORS.BUTTON,
+    backgroundColor: COLORS.MEDIA_BUTTON,
     width: '80%',
     borderRadius: 25,
     height: 50,
@@ -211,15 +299,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  button: {
-    width: '25%',
-    borderRadius: 25,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 0,
-    backgroundColor: '#FFA31B'
-  },
+  /* Bottom Bar of Buttons */
   bottomButtomBar: {
     position: 'absolute',
     width: '100%',
@@ -227,7 +307,6 @@ export const styles = StyleSheet.create({
     height: '15%',
     bottom: 0,
     borderWidth: 0,
-    borderColor: '#181D27'
   },
   userButton: {
     position: 'absolute',
@@ -237,7 +316,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    marginTop: 0,
+    backgroundColor: COLORS.BAR
   },
   userButtonSelected: {
     position: 'absolute',
@@ -247,8 +327,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    borderColor: '#FFA31B',
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.BAR_LOCATION
   },
   networkButton: {
     position: 'absolute',
@@ -259,7 +338,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.BAR
   },
   networkButtonSelected: {
     position: 'absolute',
@@ -270,7 +349,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.BAR_LOCATION
   },
   friendButton: {
     position: 'absolute',
@@ -281,7 +360,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.BAR
   },
   friendButtonSelected: {
     position: 'absolute',
@@ -292,17 +371,19 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    borderColor: '#FFA31B',
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.BAR_LOCATION
   },
+
+  // Unused
   friendsAvatar: {
     width: '10%',
     height: '300%',
     resizeMode: 'contain',
     marginBottom: 10,
     marginRight: 20,
-    backgroundColor: '#000'
+    backgroundColor: COLORS.BACKGROUND
   },
+
   postButton: {
     position: 'absolute',
     left: '75%',
@@ -312,7 +393,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.BAR
   },
   postButtonSelected: {
     position: 'absolute',
@@ -323,7 +404,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#181D27'
+    backgroundColor: COLORS.BAR_LOCATION
   },
   friendsLogo: {
     top: '17%',
@@ -341,7 +422,9 @@ export const styles = StyleSheet.create({
   bottomButtonText: {
     position: 'absolute',
     bottom: 0,
-    color: '#F5F5F5'
+    color: '#ffffff', // TODO(Carleigh) This text needs to always be white to match the graphics.
+    // Unless... you wanted to find a way to make the graphics change color.
+    // color: COLORS.TEXT
   },
   bottomButtonIcon: {
     position: 'absolute',
@@ -350,6 +433,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     bottom: '30%'
   },
+  /* End of Bottom Bar of Buttons */
   friendList: {
     top: '20%',
     left: '50%',
@@ -360,37 +444,49 @@ export const styles = StyleSheet.create({
   friendContainer: {
     flex: 1,
     marginTop: '2%',
-    backgroundColor: '#fff'
+    backgroundColor: COLORS.BACKGROUND
   },
   postContainer: {
     flex: 1,
-    backgroundColor: '#CCE3DE',
+    backgroundColor: COLORS.TEXT_BOX,
     width: '100%',
     marginBottom: '5%',
     padding: '2%',
     borderRadius: 20,
-    shadowColor: 'grey',
+    // shadowColor: COLORS.<>,
     // shadowOffset: {width: -2, height: 4},
     // shadowOpacity: 0.1,
     // shadowRadius: 3, these shadows look best on web/iOS, below is the necessary shadow element for Android
     elevation: 20,
     borderWidth: 2,
-    borderColor: '#000',
+    // borderColor: COLORS.<>,
   },
   postViewContainer: {
     flex: 1,
-    backgroundColor: '#181D27',
+    backgroundColor: COLORS.BACKGROUND,
     width: '100%',
-    marginBottom: '22%',
+    marginBottom: '23%',
+/*
     //padding: '2%',
     //borderRadius: 20,
-    shadowColor: 'grey',
+    shadowColor: COLORS.<>,
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 3
+*/
   },
-  secondPostView:{
-    backgroundColor: 'black'
+  memoryViewContainer: {
+    flex: 1,
+    backgroundColor: COLORS.BACKGROUND,
+    width: '60%',
+    marginTop: '2%',
+    padding: '2%',
+    //padding: '2%',
+    //borderRadius: 20,
+    shadowColor: COLORS.BACKGROUND,
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3
   },
   postContainerText: {
     padding: '0.5%',
@@ -416,17 +512,16 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: '5%'
   },
-  container: {
+  container: { // This is used in screens: login, user, and post.
+    // TODO(Gazdecki) It probably shouldn't be in all those places.
     flex: 1,
-    backgroundColor: '#A4C3B2',
+    backgroundColor: COLORS.BACKGROUND,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  smallerPostIDText:{
-    fontSize: 10,
-    fontWeight: 'bold',
-    alignItems: 'center',
-    textAlign: 'center'
+  lowContainer: {
+    flex: 1,
+    backgroundColor: COLORS.BACKGROUND
   },
   scoreButtonStyle:{
     flexDirection: 'row',
@@ -441,4 +536,4 @@ export const styles = StyleSheet.create({
   moreSpacing:{
     width: 15
   }
-})
+})  // End of styles list.
