@@ -3,7 +3,7 @@ import { getFirestore, doc, collectionGroup, getDoc, getDocs, setDoc, updateDoc,
 import { Post } from './Post'
 import { User } from './User'
 import { sha224 } from 'js-sha256'
-import { setScreen, setUser, PAGES } from './Utility'
+// import { setScreen, setUser, PAGES } from './Utility'
 
 const firebaseConfig = { // SUPER INSECURE, EXPOSED API KEYS FOR NON-DEV USE IS REALLY BAD
   apiKey: 'AIzaSyBVaQdvRQcffg60M_zZS9zuLBTgFbCFGWo',
@@ -32,25 +32,22 @@ export async function returnMIDSDatabaseArray () {
   const userRef = collectionGroup(database, 'accounts')
   const docSnap = await getDocs(userRef)
   const activeIDs = []
-  if(docSnap.size != 0) {
-    //console.log(docSnap.docs)
-    for(const document of docSnap.docs) {
-      //console.log("Attempting to print MID:")
-      //console.log(document.data().MID)
+  if (docSnap.size != 0) {
+    for (const document of docSnap.docs) {
       activeIDs.push(document.data().MID)
     }
   } else {
-    console.log("No active IDs!")
+    console.log('No active IDs!')
   }
-  return activeIDs;
+  return activeIDs
 }
 
 export async function returnPostIDDatabaseLength () {
   const IDSSnap = await getDoc(IDSRef)
   if (IDSSnap.exists()) {
     // console.log(IDSSnap.data().postIDs)
+    return IDSSnap.data().postIDs.length
   }
-  return IDSSnap.data().postIDs.length
 }
 
 export async function pushMIDToDatabase (MID) {
@@ -79,7 +76,7 @@ export async function pushAccountToDatabase (u) {
     displayname: u.realName,
     friends: u.myPeers,
     posts: u.myPosts,
-    password: u.password
+    password: u.password,
     notifications: u.notifications
   })
 }
@@ -89,12 +86,11 @@ export async function pullAccountFromDatabase (mesosphereID) {
   const docSnap = await getDoc(userRef)
   if (docSnap.exists()) {
     const data = docSnap.data()
-    console.log("Document data:", docSnap.data())
+    console.log('Document data:', docSnap.data())
     return new User(data.username, data.password, data.displayname, data.biography, data.MID, data.posts, data.friends)
-  }
-  else {
-    console.log("Error: Requested acc does not exist.")
-    return null;
+  } else {
+    console.log('Error: Requested acc does not exist.')
+    return null
   }
 }
 
@@ -149,18 +145,17 @@ export async function alterPostScore (u, postID, change) { // increment/decremen
     score: increment(change)
   })
   // Post component handles interaction
-  //await addUserInteraction (u, postID, change)
 }
 
 export async function addUserInteraction (u, postID, change) {
-  var actionTaken = ""
-  if(change > 0) {
-      actionTaken = 'like'
+  let actionTaken = ''
+  if (change > 0) {
+    actionTaken = 'like'
   } else {
-      actionTaken = 'dislike'
+    actionTaken = 'dislike'
   }
 
-  await updateDoc(doc(database, 'posts', postID), { //updates interactedUsers in the post with the MID and action taken
+  await updateDoc(doc(database, 'posts', postID), { // updates interactedUsers in the post with the MID and action taken
     interactedUsers: arrayUnion(
       {
         user: u.MiD,
@@ -168,10 +163,10 @@ export async function addUserInteraction (u, postID, change) {
       }
     )
   })
-} //NOTE: arrayUnion ensures that an interaction either like/dislike can only appear once each time per user, however, the score can keep increasing if validation isn't ensured
+} // NOTE: arrayUnion ensures that an interaction either like/dislike can only appear once each time per user, however, the score can keep increasing if validation isn't ensured
 
 export async function removeInteractions (u, postID) {
-  while(await hasInteractedWith(u, postID)) {
+  while (await hasInteractedWith(u, postID)) {
     const actionTaken = await returnInteractionFromDatabase(u, postID)
     await updateDoc(doc(database, 'posts', postID), {
       interactedUsers: arrayRemove(
@@ -188,7 +183,7 @@ export async function returnInteractionFromDatabase (u, postID) {
   const postRef = doc(database, 'posts', postID)
   const postSnap = await getDoc(postRef)
   if (!postSnap.exists()) {
-      console.log('Error: Requested post does not exist.')
+    console.log('Error: Requested post does not exist.')
   } else if (hasInteractedWith(u, postID) === false) {
     return null
   } else {
@@ -213,24 +208,23 @@ export async function pullPostFromDatabase (postID) {
   const docSnap = await getDoc(postRef)
   if (docSnap.exists()) {
     const data = docSnap.data()
-    console.log("Document data:", docSnap.data());
-    console.log(data.timestamp);
+    console.log('Document data:', docSnap.data())
+    console.log(data.timestamp)
     return new Post(data.MID, data.postID, null, data.text, data.score, data.interactedUsers, data.timestamp)
-  }
-  else {
-    console.log("Error: Requested post does not exist.")
-    return null;
+  } else {
+    console.log('Error: Requested post does not exist.')
+    return null
   }
 }
 
-export async function getScoreFromPostInDatabase(postID){
+export async function getScoreFromPostInDatabase (postID) {
   const postRef = doc(database, 'posts', postID)
   const docSnap = await getDoc(postRef)
   if (docSnap.exists()) {
     const data = docSnap.data()
-    try{
-    return data.score
-    } catch(error){
+    try {
+      return data.score
+    } catch (error) {
       console.error(error)
     }
   } else {
@@ -269,14 +263,14 @@ export async function hasInteractedWith (u, postID) {
   const postRef = doc(database, 'posts', postID)
   const postSnap = await getDoc(postRef)
   if (!postSnap.exists()) {
-      console.log('Error: Requested post does not exist.')
+    console.log('Error: Requested post does not exist.')
   }
   return postSnap.data().interactedUsers.some(search => search.user === u.MiD)
 }
 
 export async function doesUsernameExist (username) {
   const uSnap = await getDoc(usernameRef)
-  //console.log(uSnap.data().usernames.includes(username))
+  // console.log(uSnap.data().usernames.includes(username))
   if (uSnap.data().usernames.includes(username)) {
     return true
   } else {
@@ -287,28 +281,26 @@ export async function doesUsernameExist (username) {
 // remote login
 
 export async function parseRemoteLogin (username, password) {
-  var dataString = ""
-  const q = query(collection(database, "accounts"), where("username", "==", username), where("password", "==", String(sha224(String(password)))))
-  const querySnapshot = await getDocs(q);
+  let dataString = ''
+  const q = query(collection(database, 'accounts'), where('username', '==', username), where('password', '==', String(sha224(String(password)))))
+  const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {
     // console.log(doc.data())
     // setUser(pullAccountFromDatabase(doc.data.MID))
     // setScreen(PAGES.ACCOUNTPAGE)
-    //console.log(doc.data().MID)
+    // console.log(doc.data().MID)
     dataString += doc.data().MID
-   //return doc.data().MID
+    // return doc.data().MID
   })
   return dataString
 }
 
-export { database }
-
 // notifications
 
 export async function sendNotification (u, recipientID) {
-  //If this user doesn't have me as a friend yet
-  const peer = await pullAccountFromDatabase(recipientID);
-  if(!(peer.getAllPeers().includes(u.MiD))) {
+  // If this user doesn't have me as a friend yet
+  const peer = await pullAccountFromDatabase(recipientID)
+  if (!(peer.getAllPeers().includes(u.MiD))) {
     await updateDoc(doc(database, 'accounts', recipientID), {
       notifications: arrayUnion(u.MiD)
     })
@@ -319,9 +311,9 @@ export async function removeNotification (u, notificationMID) {
   await updateDoc(doc(database, 'accounts', u.MiD), {
     notifications: arrayRemove(notificationMID)
   })
-} 
+}
 /**
- * User removes a notification on their account. 
+ * User removes a notification on their account.
  * This should happen upon accepting the friend request, or manual deletion of the notification with no action taken.
  */
 
@@ -330,12 +322,12 @@ export async function pullNotifications (u) {
   const accountSnap = await getDoc(accountRef)
   const notis = []
   const data = accountSnap.data()
-  //console.log(data.notifications)
+  // console.log(data.notifications)
   if (data.notifications.size != 0) {
     return data.notifications
   } else {
-    console.log("No notifications for this user.")
-    return null;
+    console.log('No notifications for this user.')
+    return null
   }
 }
 
@@ -346,7 +338,7 @@ export async function getDisplayNameFromMID (MID) {
   if (data) {
     return data.displayname
   } else {
-    console.log("Error!")
+    console.log('Error!')
   }
 }
 

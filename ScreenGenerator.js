@@ -1,10 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser, getFocus, storeData, removeValue } from './Utility'
 import { dataOccupied, makeAcc, deleteCurrUser, lru, getRememberMe, checkLogin } from './User'
 import { renderPost, savePost } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase, pullPostFromDatabase } from './firebaseConfig'
-
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { sha224 } from 'js-sha256'
@@ -23,7 +22,6 @@ import LoginCheckboxComponent from './LoginCheckboxComponent'
 import Notifications from './Notifications'
 import AccountPageComponent from './AccountPageComponent'
 
-
 const username$ = atom('')
 const password$ = atom('')
 const newUsername$ = atom('')
@@ -32,27 +30,27 @@ const newDispname$ = atom('')
 const newBiography$ = atom('')
 
 export class ScreenGenerator {
-  constructor() {
+  constructor () {
     this.page = -1
     this.output = (<View style={styles.container}><Text>No screen selected.</Text></View>)
     setScreen(PAGES.LOGIN)
   }
 
-  selectScreen(input) {
+  selectScreen (input) {
     this.page = input
     this.generateScreen()
   }
 
-  async remembranceCheck() {
+  async remembranceCheck () {
     const val = await AsyncStorage.getItem('rememberMe')
-    console.log("User is remembered for autologin: " + val)
+    console.log('User is remembered for autologin: ' + val)
     return val
   }
 
-  generateScreen() {
+  generateScreen () {
     console.log('Generating: ' + this.page)
     if (this.page === PAGES.LOGIN) {
-      if (AsyncStorage.getItem('lastRememberedUser') !== null /*&& this.remembranceCheck() != "false"*/) { //last remembered user does exist
+      if (AsyncStorage.getItem('lastRememberedUser') !== null /* && this.remembranceCheck() != "false" */) { // last remembered user does exist
         lru()
       }
       this.output = (
@@ -98,7 +96,7 @@ export class ScreenGenerator {
 
           {/* checkbox goes here */}
           <Text style={styles.loginText}>Remember me?</Text>
-          <LoginCheckboxComponent></LoginCheckboxComponent>
+          <LoginCheckboxComponent />
 
         </View>
       )
@@ -171,7 +169,7 @@ export class ScreenGenerator {
 
       this.output = (
         <View style={styles.lowContainer}>
-          <AccountPageComponent/>
+          <AccountPageComponent />
           {this.generateBottomBar(1)}
         </View>
 
@@ -188,7 +186,7 @@ export class ScreenGenerator {
         </>
       )
     } else if (this.page === PAGES.FRIEND) {
-      const u = getFocus();
+      const u = getFocus()
       this.output = (
         <View style={styles.container}>
           <Text style={styles.bigText}>{u.getDisplayName()}</Text>
@@ -197,9 +195,9 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
-              //Remove friend
+              // Remove friend
               getUser().removePeer(u.getMiD())
-              setScreen(PAGES.FRIENDSLIST);
+              setScreen(PAGES.FRIENDSLIST)
             }}
           >
             <Text style={styles.loginText}>REMOVE FRIEND</Text>
@@ -207,7 +205,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
-              setScreen(PAGES.FRIENDSLIST);
+              setScreen(PAGES.FRIENDSLIST)
             }}
           >
             <Text style={styles.loginText}>BACK</Text>
@@ -256,8 +254,8 @@ export class ScreenGenerator {
       this.output = (
         <>
           <View style={styles.container}>
-          <View style={styles.postViewContainer}>
-              <PostsPage/>
+            <View style={styles.postViewContainer}>
+              <PostsPage />
             </View>
             {this.generateBottomBar(2)}
           </View>
@@ -269,58 +267,58 @@ export class ScreenGenerator {
 
       this.output = (
         <View style={styles.container}>
-          <SafeAreaView style={{marginBottom: '20%', width: '90%', justifyContent: 'center', alignItems: 'center'}}>
-          <TouchableOpacity
-          style={styles.backBtnLoc}
-          onPress={() => { setScreen(PAGES.ACCOUNTPAGE) } }
-        >
-          <Image source={backBtn} style={styles.backBtn} />
-        </TouchableOpacity>
-          <Text style={styles.bigText}>{u.realName}</Text>
-          <Text style={styles.text}>{u.getMiD()}</Text>
-          {/* {adminCheck()} */}
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => {
-              setScreen(PAGES.VIEW_LOCAL_DATA)
-            }}
-          >
-            <Text style={styles.loginText}>View Local Data</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => {
-              setScreen(PAGES.CHANGEACCOUNT_DISP)
-            }}
-          >
-            <Text style={styles.loginText}>Change Display Name</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => {
-              setScreen(PAGES.CHANGEACCOUNT_PASS)
-            }}
-          >
-            <Text style={styles.loginText}>Change Password</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => {
-              setScreen(PAGES.CHANGEACCOUNT_BIO)
-            }}
-          >
-            <Text style={styles.loginText}>Change Bio</Text>
-          </TouchableOpacity>
+          <SafeAreaView style={{ marginBottom: '20%', width: '90%', justifyContent: 'center', alignItems: 'center' }}>
+            <TouchableOpacity
+              style={styles.backBtnLoc}
+              onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
+            >
+              <Image source={backBtn} style={styles.backBtn} />
+            </TouchableOpacity>
+            <Text style={styles.bigText}>{u.realName}</Text>
+            <Text style={styles.text}>{u.getMiD()}</Text>
+            {/* {adminCheck()} */}
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => {
+                setScreen(PAGES.VIEW_LOCAL_DATA)
+              }}
+            >
+              <Text style={styles.loginText}>View Local Data</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => {
+                setScreen(PAGES.CHANGEACCOUNT_DISP)
+              }}
+            >
+              <Text style={styles.loginText}>Change Display Name</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => {
+                setScreen(PAGES.CHANGEACCOUNT_PASS)
+              }}
+            >
+              <Text style={styles.loginText}>Change Password</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => {
+                setScreen(PAGES.CHANGEACCOUNT_BIO)
+              }}
+            >
+              <Text style={styles.loginText}>Change Bio</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => deleteCurrUser()}
-          >
-            <Text style={styles.loginText}>Delete This Account</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => deleteCurrUser()}
+            >
+              <Text style={styles.loginText}>Delete This Account</Text>
+            </TouchableOpacity>
           </SafeAreaView>
           {this.generateBottomBar(1)}
-          </View>
+        </View>
       )
     } else if (this.page === PAGES.CHANGEACCOUNT_DISP) {
       console.log('changing some aspect of the account (user)')
@@ -328,38 +326,38 @@ export class ScreenGenerator {
       this.output = (
         <View style={styles.container}>
           <TouchableOpacity
-          style={styles.backBtnLoc}
-          onPress={() => { setScreen(PAGES.SETTINGS) } }
-        >
-          <Image source={backBtn} style={styles.backBtn} />
+            style={styles.backBtnLoc}
+            onPress={() => { setScreen(PAGES.SETTINGS) }}
+          >
+            <Image source={backBtn} style={styles.backBtn} />
 
-        </TouchableOpacity>
-            <View style={styles.inputView}>
-              <TextInput
-                style={styles.TextInput}
-                defaultValue={u.getDisplayName()}
-                returnKeyType='next'
-                maxLength={30}
-                onChangeText={(newusername) => newUsername$.actions.set(newusername)} />
-              </View>
-              <TouchableOpacity
-                style={styles.loginBtn}
-                onPress={ () => {
-                  changeUserDisplayNameInDatabase(u.MiD, String(newUsername$.get()))
-                  u.setRealName(String(newUsername$.get()))
-                  AsyncStorage.getItem(u.MiD).then(data => {
-                    data = JSON.parse(data)
-                    data.realName = String(newUsername$.get())
-                    AsyncStorage.setItem(u.MiD, JSON.stringify(data))
-                  })
-
-                  setScreen(PAGES.SETTINGS)
-                  } 
-                }
-              >
-                <Text style={styles.loginText}>Change Display Name</Text>
-              </TouchableOpacity>
+          </TouchableOpacity>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              defaultValue={u.getDisplayName()}
+              returnKeyType='next'
+              maxLength={30}
+              onChangeText={(newusername) => newUsername$.actions.set(newusername)}
+            />
           </View>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              changeUserDisplayNameInDatabase(u.MiD, String(newUsername$.get()))
+              u.setRealName(String(newUsername$.get()))
+              AsyncStorage.getItem(u.MiD).then(data => {
+                data = JSON.parse(data)
+                data.realName = String(newUsername$.get())
+                AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+              })
+
+              setScreen(PAGES.SETTINGS)
+            }}
+          >
+            <Text style={styles.loginText}>Change Display Name</Text>
+          </TouchableOpacity>
+        </View>
       )
     } else if (this.page === PAGES.CHANGEACCOUNT_PASS) {
       console.log('changing some aspect of the account (pass)')
@@ -367,100 +365,92 @@ export class ScreenGenerator {
       this.output = (
         <View style={styles.container}>
           <TouchableOpacity
-          style={styles.backBtnLoc}
-          onPress={() => { setScreen(PAGES.SETTINGS) } }
-        >
-          <Image source={backBtn} style={styles.backBtn} />
+            style={styles.backBtnLoc}
+            onPress={() => { setScreen(PAGES.SETTINGS) }}
+          >
+            <Image source={backBtn} style={styles.backBtn} />
 
-        </TouchableOpacity>
-            <View style={styles.inputView}>
-              <TextInput
-                style={styles.TextInput}
-                placeholder='New Password'
-                placeholderTextColor='#003f5c'
-                secureTextEntry
-                returnKeyType='next'
-                maxLength={50}
-                onChangeText={(newpassword) => newPassword$.actions.set(newpassword)} />
-              </View>
-              <TouchableOpacity
-                style={styles.loginBtn}
-                onPress={() => {
-                  u.setNewPassword(String(sha224(String(newPassword$.get()))))
-                  AsyncStorage.getItem(u.MiD).then(data => {
-                    data = JSON.parse(data)
-                    data.password = String(sha224(String(newPassword$.get())))
-                    AsyncStorage.setItem(u.MiD, JSON.stringify(data))
-                  })
-                  setScreen(PAGES.SETTINGS)
-                } }
-              >
-                <Text style={styles.loginText}>Change Password</Text>
-              </TouchableOpacity>
+          </TouchableOpacity>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder='New Password'
+              placeholderTextColor='#003f5c'
+              secureTextEntry
+              returnKeyType='next'
+              maxLength={50}
+              onChangeText={(newpassword) => newPassword$.actions.set(newpassword)}
+            />
           </View>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              u.setNewPassword(String(sha224(String(newPassword$.get()))))
+              AsyncStorage.getItem(u.MiD).then(data => {
+                data = JSON.parse(data)
+                data.password = String(sha224(String(newPassword$.get())))
+                AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+              })
+              setScreen(PAGES.SETTINGS)
+            }}
+          >
+            <Text style={styles.loginText}>Change Password</Text>
+          </TouchableOpacity>
+        </View>
       )
     } else if (this.page === PAGES.CHANGEACCOUNT_BIO) {
       console.log('changing some aspect of the account (bio)')
       const u = getUser()
       this.output = (
-       <View style={styles.container}>
-         <TouchableOpacity
-          style={styles.backBtnLoc}
-          onPress={() => { setScreen(PAGES.SETTINGS) } }
-        >
-          <Image source={backBtn} style={styles.backBtn} />
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.backBtnLoc}
+            onPress={() => { setScreen(PAGES.SETTINGS) }}
+          >
+            <Image source={backBtn} style={styles.backBtn} />
 
-        </TouchableOpacity>
-            <View style={styles.inputViewBio}>
-              <TextInput
-                multiline
-                numberOfLines={3}
-                style={styles.TextInput}
-                defaultValue={u.getBiography()}
-                returnKeyType='done'
-                blurOnSubmit
-                maxLength={240}
-                onChangeText={(biography) => newBiography$.actions.set(biography)} />
-              </View>
-              <TouchableOpacity
-                style={styles.loginBtn}
-                onPress={() => {
-                  changeUserBiographyInDatabase(u.MiD, String(newBiography$.get()))
-                  u.setNewBiography(String(newBiography$.get()))
-                  AsyncStorage.getItem(u.MiD).then(data => {
-                    data = JSON.parse(data)
-                    data.biography = String(newBiography$.get())
-                    AsyncStorage.setItem(u.MiD, JSON.stringify(data))
-                  })
-                  setScreen(PAGES.SETTINGS)
-                } }
-              >
-                <Text style={styles.loginText}>Change Bio</Text>
-              </TouchableOpacity>
+          </TouchableOpacity>
+          <View style={styles.inputViewBio}>
+            <TextInput
+              multiline
+              numberOfLines={3}
+              style={styles.TextInput}
+              defaultValue={u.getBiography()}
+              returnKeyType='done'
+              blurOnSubmit
+              maxLength={240}
+              onChangeText={(biography) => newBiography$.actions.set(biography)}
+            />
           </View>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              changeUserBiographyInDatabase(u.MiD, String(newBiography$.get()))
+              u.setNewBiography(String(newBiography$.get()))
+              AsyncStorage.getItem(u.MiD).then(data => {
+                data = JSON.parse(data)
+                data.biography = String(newBiography$.get())
+                AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+              })
+              setScreen(PAGES.SETTINGS)
+            }}
+          >
+            <Text style={styles.loginText}>Change Bio</Text>
+          </TouchableOpacity>
+        </View>
       )
     } else if (this.page === PAGES.VIEW_LOCAL_DATA) {
       console.log('This is the Local Data Page')
       const u = getUser()
-
-      // AsyncStorage.getItem(u.MiD).then(data => {
-      //   data = JSON.parse(data)
-      //   let myRemotePostData = []
-      //   for (let i = 0; i < u.getMyPosts().length; i++) {
-      //     data.myPosts[i] = pullPostFromDatabase(u.myPosts[i].postID)
-      //   }
-      //   AsyncStorage.setItem(u.MiD, JSON.stringify(data))
-      // })
-
       const personalPosts = u.getMyPosts()
       this.output = (
         <View style={styles.container}>
           <TouchableOpacity
-          style={styles.backBtnLoc}
-          onPress={() => { setScreen(PAGES.SETTINGS)} }
-        >
-          <Image source={backBtn} style={styles.backBtn} />
-        </TouchableOpacity>
+            style={styles.backBtnLoc}
+            onPress={() => { setScreen(PAGES.SETTINGS) }}
+          >
+            <Image source={backBtn} style={styles.backBtn} />
+          </TouchableOpacity>
           <SafeAreaView style={styles.memoryViewContainer}>
             <FlatList
               data={personalPosts}
@@ -468,8 +458,8 @@ export class ScreenGenerator {
               keyExtractor={post => post.postID}
             />
           </SafeAreaView>
-          <Text>{ "Size of post data:  " + dataOccupied(u) + " bytes." }</Text>
-        </View> 
+          <Text>{'Size of post data:  ' + dataOccupied(u) + ' bytes.'}</Text>
+        </View>
       )
     } else if (this.page === PAGES.NOTIFICATIONS) {
       console.log('This is the Notifications page.')
@@ -477,25 +467,24 @@ export class ScreenGenerator {
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.backBtnLoc}
-            onPress={() => { setScreen(PAGES.ACCOUNTPAGE) } }
+            onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
           >
             <Image source={backBtn} style={styles.backBtn} />
-            </TouchableOpacity>
-            <Notifications />
-          </View>
+          </TouchableOpacity>
+          <Notifications />
+        </View>
       )
     }
-
   }
 
-  generateBottomBar(currentSlice) {
+  generateBottomBar (currentSlice) {
     if (currentSlice === 1) {
       return (
         <View style={styles.bottomButtomBar}>
           <TouchableOpacity
             style={styles.userButtonSelected}
             onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
-          ></TouchableOpacity>
+          />
           <TouchableOpacity style={styles.userButtonSelected}>
             <Image source={persons} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
@@ -616,14 +605,14 @@ export class ScreenGenerator {
     }
   }
 
-  render() {
+  render () {
     return this.output
   }
 }
 
 let instance
 
-export function getInstance() {
+export function getInstance () {
   if (instance == null) {
     instance = new ScreenGenerator()
     console.log('New SG generated.')

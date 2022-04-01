@@ -1,7 +1,7 @@
-//import { Alert, AsyncStorage } from 'react-native'
+// import { Alert, AsyncStorage } from 'react-native'
 import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
-import { pushAccountToDatabase, pushUsernameToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase, doesUsernameExist, parseRemoteLogin, pullAccountFromDatabase, sendNotification, removeNotification, removePostFromDatabase} from './firebaseConfig'
+import { pushAccountToDatabase, pushUsernameToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase, doesUsernameExist, parseRemoteLogin, pullAccountFromDatabase, sendNotification, removeNotification, removePostFromDatabase } from './firebaseConfig'
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { async } from '@firebase/util'
@@ -43,15 +43,14 @@ export class User {
   }
 
   removePost (p) {
-    for( var i = 0; i < this.myPosts.length; i++){ 
-      if (this.myPosts[i].postID == p.postID) { 
-        this.myPosts.splice(i, 1); 
-        console.log("Removed post locally.  Removing from firebase...")
+    for (let i = 0; i < this.myPosts.length; i++) {
+      if (this.myPosts[i].postID == p.postID) {
+        this.myPosts.splice(i, 1)
+        console.log('Removed post locally.  Removing from firebase...')
       }
     }
-    removePostFromDatabase(p);
-    this.storeLocally();
-    
+    removePostFromDatabase(p)
+    this.storeLocally()
   }
 
   getMyPosts () {
@@ -63,7 +62,7 @@ export class User {
   }
 
   getNotifications () {
-    return this.notifications;
+    return this.notifications
   }
 
   storeLocally () {
@@ -71,24 +70,24 @@ export class User {
   }
 
   addPeer (MID) {
-    console.log("Adding peer: "+ MID)
+    console.log('Adding peer: ' + MID)
     if (MID.length === 16 && MID.substring(0, 5) === 'meso-') { // validates format, not existence
-      console.log("Format validated!")
-      this.myPeers.push(MID);
-      addPeerToDatabase(this, MID);
-      sendNotification(this,MID);
+      console.log('Format validated!')
+      this.myPeers.push(MID)
+      addPeerToDatabase(this, MID)
+      sendNotification(this, MID)
     }
-    this.storeLocally ();
+    this.storeLocally()
   }
 
   removePeer (MID) {
-    const index = this.myPeers.indexOf(MID);
-    if(index > -1) {
-      this.myPeers.splice(index, 1);
-      removePeerFromDatabase(this, MID);
-      removeNotification(this, MID);
+    const index = this.myPeers.indexOf(MID)
+    if (index > -1) {
+      this.myPeers.splice(index, 1)
+      removePeerFromDatabase(this, MID)
+      removeNotification(this, MID)
     }
-    this.storeLocally ();
+    this.storeLocally()
   }
 
   setRealName (newName) {
@@ -106,13 +105,13 @@ export class User {
 
 export async function checkLogin (username, password) {
   const passedID = await parseRemoteLogin(username, password)
-  console.log("Passed MID: " + passedID)
+  console.log('Passed MID: ' + passedID)
 
-  if (passedID === "") {
+  if (passedID === '') {
     alert('Incorrect username and/or password.')
     return
-  } 
-  if (passedID !== "") {
+  }
+  if (passedID !== '') {
     const retrievedUser = await pullAccountFromDatabase(passedID)
     setUser(retrievedUser)
     await storeData('lastRememberedUser', retrievedUser)
@@ -133,12 +132,12 @@ export async function makeAcc (username, password, realName, bio) {
     return
   }
   const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new', 'new', 'new')
-  //await storeData(u.getMiD(), u)
+  // await storeData(u.getMiD(), u)
   pushAccountToDatabase(u)
   pushUsernameToDatabase(username)
   setUser(u)
-  await storeData('rememberMe', JSON.stringify(false)) //used for toggling autologin
-  await storeData('lastRememberedUser', u) //used for autologin
+  await storeData('rememberMe', JSON.stringify(false)) // used for toggling autologin
+  await storeData('lastRememberedUser', u) // used for autologin
   setScreen(PAGES.ACCOUNTPAGE)
 }
 
@@ -155,14 +154,14 @@ export async function deleteCurrUser () {
   setScreen(PAGES.LOGIN)
 }
 
-export function dataOccupied(user) { //returns number of bytes
+export function dataOccupied (user) { // returns number of bytes
   let bytes = 0
-  let posts = user.getMyPosts()
+  const posts = user.getMyPosts()
   for (let i = 0; i < user.myPosts.length; i++) {
     bytes += ~-encodeURI(
       posts[i].attachedMiD +
-      posts[i].postID + 
-      posts[i].score + 
+      posts[i].postID +
+      posts[i].score +
       posts[i].textContent +
       posts[i].timestamp
     ).split(/%..|./).length
@@ -174,11 +173,10 @@ export async function lru () {
   await AsyncStorage.getItem('lastRememberedUser').then(value => {
     const data = JSON.parse(value)
     if (data) {
-      const nu = new User(data.username, data.password, data.realName, data.biography, data.MiD, data.myPosts, data.myPeers)    
+      const nu = new User(data.username, data.password, data.realName, data.biography, data.MiD, data.myPosts, data.myPeers)
       setUser(nu)
       setScreen(PAGES.ACCOUNTPAGE)
-    }
-    else {
+    } else {
       return null
     }
   })

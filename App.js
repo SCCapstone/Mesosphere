@@ -8,15 +8,14 @@ export default function App () {
   const [output, setOutput] = useState()
   const Gen = getInstance()
 
-
   observe(returnScreen(), (screen) => {
-    //console.log('Change observed.')
+    // console.log('Change observed.')
     if (oldscreen !== screen) {
       Gen.selectScreen(screen)
       update()
       oldscreen = screen
     } else {
-      //console.log('Not moving because old screen is ' + oldscreen + ' and new screen is ' + screen)
+      // console.log('Not moving because old screen is ' + oldscreen + ' and new screen is ' + screen)
     }
   })
 

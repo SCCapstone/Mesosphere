@@ -13,7 +13,7 @@ export class Post {
     this.postID = postID
     this.mediaContent = mediaContent
     this.textContent = textContent
-    this.starting_score = starting_score;
+    this.starting_score = starting_score
     this.interactedUsers = interactedUsers
     this.timestamp = timestamp
   }
@@ -27,12 +27,12 @@ export class Post {
   }
 
   incrementScore () {
-    this.starting_score++;
+    this.starting_score++
     alterPostScore(this.postID, 0.5)
   }
 
   decrementScore () {
-    this.starting_score--;
+    this.starting_score--
     alterPostScore(this.postID, -0.5)
   }
 
@@ -41,30 +41,29 @@ export class Post {
   }
 }
 
-  export async function changeScore(post, change) {
-    post.starting_score += change;
-    console.log("Upvote button pressed, score is now: " + post.state.score + ".")
-    alterPostScore(post.postID, 0.5)
-    //This should also add the current user to my interacted users.
-  }
-
+export async function changeScore (post, change) {
+  post.starting_score += change
+  console.log('Upvote button pressed, score is now: ' + post.state.score + '.')
+  alterPostScore(post.postID, 0.5)
+  // This should also add the current user to my interacted users.
+}
 
 export async function savePost (text) {
   console.log('SAVE POST')
   if (text.length > 50) {
     Alert.alert('Post too long',
-                'Posts can be, at most, 50 characers.',
-                { text: 'OK.' })
-                return;
+      'Posts can be, at most, 50 characers.',
+      { text: 'OK.' })
+    return
   }
-  console.log("Saving post!");
+  console.log('Saving post!')
   const u = getUser()
-  console.log("Current user:" + u);
-  if(u == null) {
-    console.log("Current user is null! This is an error state.")
-    return;
+  console.log('Current user:' + u)
+  if (u == null) {
+    console.log('Current user is null! This is an error state.')
+    return
   }
-  const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString().substring(0,21))
+  const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString().substring(0, 21))
   u.addPost(p)
   u.storeLocally()
   await pushPostToDatabase(p)
@@ -72,11 +71,11 @@ export async function savePost (text) {
 }
 
 export function renderPost (post) {
-  const p = post.item;
-  return <PostComponent postObj = {p} />
+  const p = post.item
+  return <PostComponent postObj={p} />
 }
 
 export function renderPostForMemory (post) {
-  const p = post.item;
-  return <PostMemoryComponent postObj = {p} />
+  const p = post.item
+  return <PostMemoryComponent postObj={p} />
 }

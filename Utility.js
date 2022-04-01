@@ -18,10 +18,9 @@ export const PAGES = {
   CHANGEACCOUNT_DISP: 10,
   CHANGEACCOUNT_PASS: 11,
   CHANGEACCOUNT_BIO: 12,
-  VIEW_LOCAL_DATA: 13, 
+  VIEW_LOCAL_DATA: 13,
   NOTIFICATIONS: 14
 }
-
 
 const currUser$ = atom(null)
 const currScreen$ = atom(null)
@@ -36,9 +35,7 @@ export function setScreen (s) {
 }
 
 export function getUser () {
-  if(currUser$ == null)
-    console.log("Null current user! (Error state)")
-  //console.log("\Utility: Current User:" + JSON.stringify(currUser$.get()));
+  if (currUser$ == null) { console.log('Null current user! (Error state)') }
   return currUser$.get()
 }
 
@@ -55,7 +52,7 @@ export function getFocus () {
 }
 
 export function setFocus (f) {
-  return currFocus$.actions.set(f);
+  return currFocus$.actions.set(f)
 }
 
 export const storeData = async (key, value) => {
@@ -136,7 +133,7 @@ const CARLEIGH_GREEN = {
   BAR_LOCATION: '#909090', // Dark gray
   TEXT: '#F5F5F5', // Light gray
   DISLIKE_BUTTON: '#3a7d44', // Dark green
-  LIKE_BUTTON: '#254d32', // Darker green
+  LIKE_BUTTON: '#254d32' // Darker green
 }
 const ADAM_GRAY = {
   // The Comments on the right are a recommendation from reading app-dev blogs.
@@ -148,7 +145,7 @@ const ADAM_GRAY = {
   TEXT: '#000000', // Black or White.
   // Warning: Bar's text and images are hard coded to white. FIXME
   LIKE_BUTTON: '#707070',
-  DISLIKE_BUTTON: '#606060', // Should be variations similar to BUTTON.
+  DISLIKE_BUTTON: '#606060' // Should be variations similar to BUTTON.
 }
 const MESO_CLASSIC = {
   BACKGROUND: '#cff7ff', // Very light Blue
@@ -158,7 +155,7 @@ const MESO_CLASSIC = {
   BAR_LOCATION: '#ffcb43', // Light orange
   TEXT: '#000000', // Black.
   LIKE_BUTTON: '#254dff', // Blue
-  DISLIKE_BUTTON: '#072fe1', // Dark blue
+  DISLIKE_BUTTON: '#072fe1' // Dark blue
 }
 // These are the exported color values.
 // Different palettes can be swapped in and out here.
@@ -167,15 +164,15 @@ export const COLORS = {
   // TODO(Gazdecki) I would bet money there's a better way to change this...
   // As long as it's export-able still.
   LOADING_CIRCLE: '#0000ff', // Default blue for Android OS.
-  MEDIA_BUTTON:   '#a9a9a9', // Grayed out.
-  BACKGROUND:     CARLEIGH_GREEN.BACKGROUND,
-  TEXT_BOX:       CARLEIGH_GREEN.TEXT_BOX,
-  BUTTON:         CARLEIGH_GREEN.BUTTON,
-  BAR:            CARLEIGH_GREEN.BAR,
-  BAR_LOCATION:   CARLEIGH_GREEN.BAR_LOCATION,
-  TEXT:           CARLEIGH_GREEN.TEXT,
+  MEDIA_BUTTON: '#a9a9a9', // Grayed out.
+  BACKGROUND: CARLEIGH_GREEN.BACKGROUND,
+  TEXT_BOX: CARLEIGH_GREEN.TEXT_BOX,
+  BUTTON: CARLEIGH_GREEN.BUTTON,
+  BAR: CARLEIGH_GREEN.BAR,
+  BAR_LOCATION: CARLEIGH_GREEN.BAR_LOCATION,
+  TEXT: CARLEIGH_GREEN.TEXT,
   DISLIKE_BUTTON: CARLEIGH_GREEN.DISLIKE_BUTTON,
-  LIKE_BUTTON:    CARLEIGH_GREEN.LIKE_BUTTON,
+  LIKE_BUTTON: CARLEIGH_GREEN.LIKE_BUTTON
 }
 
 // No more defining long-term colors inside the style sheet. Please.
@@ -186,18 +183,18 @@ export const styles = StyleSheet.create({
     top: 25,
     left: 5,
     borderWidth: 4,
-    elevation: 2,
+    elevation: 2
   },
   backBtn: {
-    height: 20, //made bigger so they could be clickable on android
-    width: 20,
+    height: 20, // made bigger so they could be clickable on android
+    width: 20
   },
   XBtnLoc: {
     position: 'absolute',
     borderRadius: 25,
     top: -10,
     left: -10,
-    borderWidth: 4,
+    borderWidth: 4
   },
   NotifCountLoc: {
     position: 'absolute',
@@ -211,12 +208,12 @@ export const styles = StyleSheet.create({
     elevation: 2,
     width: 20,
     height: 20,
-    borderRadius: 20/2,
+    borderRadius: 20 / 2,
     backgroundColor: COLORS.TEXT_BOX
   },
   PickerStyle: {
     alignSelf: 'flex-end',
-    height: 50, 
+    height: 50,
     width: 180,
     borderRadius: 2,
     borderWidth: 4,
@@ -250,12 +247,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   TextInput: {
-    width: "98%",
+    width: '98%',
     height: 50,
     flex: 1,
     padding: 10,
     marginLeft: 20,
-    textAlign:'center'
+    textAlign: 'center'
   },
   loginBtn: {
     width: '80%',
@@ -266,7 +263,7 @@ export const styles = StyleSheet.create({
     marginTop: '8%',
     backgroundColor: COLORS.BUTTON
   },
-  registerBtn:{
+  registerBtn: {
     width: '80%',
     borderRadius: 25,
     height: 50,
@@ -306,7 +303,7 @@ export const styles = StyleSheet.create({
     borderRadius: 0,
     height: '15%',
     bottom: 0,
-    borderWidth: 0,
+    borderWidth: 0
   },
   userButton: {
     position: 'absolute',
@@ -422,7 +419,7 @@ export const styles = StyleSheet.create({
   bottomButtonText: {
     position: 'absolute',
     bottom: 0,
-    color: '#ffffff', // TODO(Carleigh) This text needs to always be white to match the graphics.
+    color: '#ffffff' // TODO(Carleigh) This text needs to always be white to match the graphics.
     // Unless... you wanted to find a way to make the graphics change color.
     // color: COLORS.TEXT
   },
@@ -458,15 +455,15 @@ export const styles = StyleSheet.create({
     // shadowOpacity: 0.1,
     // shadowRadius: 3, these shadows look best on web/iOS, below is the necessary shadow element for Android
     elevation: 20,
-    borderWidth: 2,
+    borderWidth: 2
     // borderColor: COLORS.<>,
   },
   postViewContainer: {
     flex: 1,
     backgroundColor: COLORS.BACKGROUND,
     width: '100%',
-    marginBottom: '23%',
-/*
+    marginBottom: '23%'
+    /*
     //padding: '2%',
     //borderRadius: 20,
     shadowColor: COLORS.<>,
@@ -481,8 +478,8 @@ export const styles = StyleSheet.create({
     width: '60%',
     marginTop: '2%',
     padding: '2%',
-    //padding: '2%',
-    //borderRadius: 20,
+    // padding: '2%',
+    // borderRadius: 20,
     shadowColor: COLORS.BACKGROUND,
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
@@ -517,23 +514,23 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.BACKGROUND,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   lowContainer: {
     flex: 1,
     backgroundColor: COLORS.BACKGROUND
   },
-  scoreButtonStyle:{
-    flexDirection: 'row',
+  scoreButtonStyle: {
+    flexDirection: 'row'
   },
-  scoreButton:{
+  scoreButton: {
     justifyContent: 'space-between'
   },
-  spacing:{
+  spacing: {
     width: 15,
     height: 15
   },
-  moreSpacing:{
+  moreSpacing: {
     width: 15
   }
-})  // End of styles list.
+}) // End of styles list.
