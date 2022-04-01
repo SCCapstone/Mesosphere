@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
-import { PAGES, styles, setScreen, getUser, setUser, getFocus } from './Utility'
-import { checkLogin, dataOccupied, makeAcc, deleteCurrUser } from './User'
-import { renderPost, renderPostForMemory, savePost } from './Post'
-import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase } from './firebaseConfig'
+import { PAGES, styles, setScreen, getUser, setUser, getFocus, storeData, removeValue } from './Utility'
+import { dataOccupied, makeAcc, deleteCurrUser, lru, getRememberMe, checkLogin } from './User'
+import { renderPost, savePost } from './Post'
+import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase, pullPostFromDatabase } from './firebaseConfig'
+
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { sha224 } from 'js-sha256'
@@ -18,8 +19,10 @@ import networking from './assets/networking.png'
 import persons from './assets/persons.png'
 import { atom } from 'elementos'
 import { FlatList } from 'react-native-gesture-handler'
+import LoginCheckboxComponent from './LoginCheckboxComponent'
 import Notifications from './Notifications'
 import AccountPageComponent from './AccountPageComponent'
+
 
 const username$ = atom('')
 const password$ = atom('')
@@ -40,9 +43,18 @@ export class ScreenGenerator {
     this.generateScreen()
   }
 
+  async remembranceCheck() {
+    const val = await AsyncStorage.getItem('rememberMe')
+    console.log("User is remembered for autologin: " + val)
+    return val
+  }
+
   generateScreen() {
     console.log('Generating: ' + this.page)
     if (this.page === PAGES.LOGIN) {
+      if (AsyncStorage.getItem('lastRememberedUser') !== null /*&& this.remembranceCheck() != "false"*/) { //last remembered user does exist
+        lru()
+      }
       this.output = (
         <View style={styles.container}>
           <Image source={logo} style={styles.logo} />
@@ -71,7 +83,7 @@ export class ScreenGenerator {
           </View>
           <TouchableOpacity
             style={styles.loginBtn}
-            onPress={() => checkLogin(String(username$.get()), String(password$.get()))}//&& username$.actions.set() && password$.actions.set()}
+            onPress={() => checkLogin(String(username$.get()), String(password$.get()))}
             testID='LoginButton'
           >
             <Text style={styles.loginText}>LOGIN</Text>
@@ -83,6 +95,11 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>REGISTER</Text>
           </TouchableOpacity>
+
+          {/* checkbox goes here */}
+          <Text style={styles.loginText}>Remember me?</Text>
+          <LoginCheckboxComponent></LoginCheckboxComponent>
+
         </View>
       )
     } else if (this.page === PAGES.MAKEACC) {
@@ -151,6 +168,7 @@ export class ScreenGenerator {
       )
     } else if (this.page === PAGES.ACCOUNTPAGE) {
       const u = getUser()
+
       this.output = (
         <View style={styles.lowContainer}>
           <AccountPageComponent/>
@@ -326,7 +344,7 @@ export class ScreenGenerator {
               </View>
               <TouchableOpacity
                 style={styles.loginBtn}
-                onPress={() => {
+                onPress={ () => {
                   changeUserDisplayNameInDatabase(u.MiD, String(newUsername$.get()))
                   u.setRealName(String(newUsername$.get()))
                   AsyncStorage.getItem(u.MiD).then(data => {
@@ -336,8 +354,8 @@ export class ScreenGenerator {
                   })
 
                   setScreen(PAGES.SETTINGS)
-                } }
-
+                  } 
+                }
               >
                 <Text style={styles.loginText}>Change Display Name</Text>
               </TouchableOpacity>
@@ -424,12 +442,22 @@ export class ScreenGenerator {
     } else if (this.page === PAGES.VIEW_LOCAL_DATA) {
       console.log('This is the Local Data Page')
       const u = getUser()
+
+      // AsyncStorage.getItem(u.MiD).then(data => {
+      //   data = JSON.parse(data)
+      //   let myRemotePostData = []
+      //   for (let i = 0; i < u.getMyPosts().length; i++) {
+      //     data.myPosts[i] = pullPostFromDatabase(u.myPosts[i].postID)
+      //   }
+      //   AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+      // })
+
       const personalPosts = u.getMyPosts()
       this.output = (
         <View style={styles.container}>
           <TouchableOpacity
           style={styles.backBtnLoc}
-          onPress={() => { setScreen(PAGES.SETTINGS) } }
+          onPress={() => { setScreen(PAGES.SETTINGS)} }
         >
           <Image source={backBtn} style={styles.backBtn} />
         </TouchableOpacity>
