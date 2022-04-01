@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser, getFocus, storeData, removeValue } from './Utility'
-import { dataOccupied, makeAcc, deleteCurrUser, lru, getRememberMe, checkLogin } from './User'
+import { dataOccupied, makeAcc, deleteCurrUser, lru, getRememberMe, checkLogin, usernameValidation } from './User'
 import { renderPost, savePost } from './Post'
-import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase, pullPostFromDatabase } from './firebaseConfig'
+import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase, changeUserPasswordInDatabase, pullPostFromDatabase } from './firebaseConfig'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { sha224 } from 'js-sha256'
@@ -332,14 +332,12 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
+              // if (usernameValidation(String(newUsername$.get()))) {
+              //   alert('This username already exists, please choose a different one.')
+              //   return
+              // }
               changeUserDisplayNameInDatabase(u.MiD, String(newUsername$.get()))
               u.setRealName(String(newUsername$.get()))
-              AsyncStorage.getItem(u.MiD).then(data => {
-                data = JSON.parse(data)
-                data.realName = String(newUsername$.get())
-                AsyncStorage.setItem(u.MiD, JSON.stringify(data))
-              })
-
               setScreen(PAGES.SETTINGS)
             }}
           >
@@ -374,11 +372,7 @@ export class ScreenGenerator {
             style={styles.loginBtn}
             onPress={() => {
               u.setNewPassword(String(sha224(String(newPassword$.get()))))
-              AsyncStorage.getItem(u.MiD).then(data => {
-                data = JSON.parse(data)
-                data.password = String(sha224(String(newPassword$.get())))
-                AsyncStorage.setItem(u.MiD, JSON.stringify(data))
-              })
+              changeUserPasswordInDatabase(u.MiD, String(sha224(String(newPassword$.get()))))
               setScreen(PAGES.SETTINGS)
             }}
           >
@@ -415,11 +409,11 @@ export class ScreenGenerator {
             onPress={() => {
               changeUserBiographyInDatabase(u.MiD, String(newBiography$.get()))
               u.setNewBiography(String(newBiography$.get()))
-              AsyncStorage.getItem(u.MiD).then(data => {
-                data = JSON.parse(data)
-                data.biography = String(newBiography$.get())
-                AsyncStorage.setItem(u.MiD, JSON.stringify(data))
-              })
+              // AsyncStorage.getItem(u.MiD).then(data => {
+              //   data = JSON.parse(data)
+              //   data.biography = String(newBiography$.get())
+              //   AsyncStorage.setItem(u.MiD, JSON.stringify(data))
+              // })
               setScreen(PAGES.SETTINGS)
             }}
           >

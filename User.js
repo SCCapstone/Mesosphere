@@ -132,7 +132,6 @@ export async function makeAcc (username, password, realName, bio) {
     return
   }
   const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new', 'new', 'new')
-  // await storeData(u.getMiD(), u)
   pushAccountToDatabase(u)
   pushUsernameToDatabase(username)
   setUser(u)
@@ -180,6 +179,14 @@ export async function lru () {
       return null
     }
   })
+}
+
+export async function usernameValidation (username) {
+  if (await doesUsernameExist(username) === true) {
+    return true
+  } else {
+    return false
+  }
 }
 
 export default User

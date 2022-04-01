@@ -245,6 +245,12 @@ export async function changeUserDisplayNameInDatabase (mesosphereID, newDisplayN
   })
 }
 
+export async function changeUserPasswordInDatabase (mesosphereID, newPassword) {
+  await updateDoc(doc(database, 'accounts', mesosphereID), {
+    password: newPassword
+  })
+}
+
 // testing and validation methods
 
 export async function doesAccountExist (mesosphereID) {
