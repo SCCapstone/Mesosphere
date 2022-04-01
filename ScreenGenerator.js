@@ -41,16 +41,10 @@ export class ScreenGenerator {
     this.generateScreen()
   }
 
-  async remembranceCheck () {
-    const val = await AsyncStorage.getItem('rememberMe')
-    console.log('User is remembered for autologin: ' + val)
-    return val
-  }
-
   generateScreen () {
     console.log('Generating: ' + this.page)
     if (this.page === PAGES.LOGIN) {
-      if (AsyncStorage.getItem('lastRememberedUser') !== null /* && this.remembranceCheck() != "false" */) { // last remembered user does exist
+      if (AsyncStorage.getItem('lastRememberedUser') !== null) { // last remembered user does exist
         lru()
       }
       this.output = (
@@ -93,11 +87,6 @@ export class ScreenGenerator {
           >
             <Text style={styles.loginText}>REGISTER</Text>
           </TouchableOpacity>
-
-          {/* checkbox goes here */}
-          <Text style={styles.loginText}>Remember me?</Text>
-          <LoginCheckboxComponent />
-
         </View>
       )
     } else if (this.page === PAGES.MAKEACC) {
@@ -276,7 +265,6 @@ export class ScreenGenerator {
             </TouchableOpacity>
             <Text style={styles.bigText}>{u.realName}</Text>
             <Text style={styles.text}>{u.getMiD()}</Text>
-            {/* {adminCheck()} */}
             <TouchableOpacity
               style={styles.loginBtn}
               onPress={() => {

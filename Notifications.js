@@ -79,7 +79,6 @@ export default class Notifications extends Component {
             return (
                 <View style={styles.friendContainer}>
                     <FlatList
-                        //ListHeaderComponent = {}
                         data = {this.state.notifs}
                         renderItem = {({item}) => (
                             <TouchableOpacity onPress = {() => this.expanded(item)}>
@@ -90,7 +89,6 @@ export default class Notifications extends Component {
                         )}
                         keyExtractor={item => item}
                         ItemSeparatorComponent = {this.renderSeparator}
-                        //ListFooterComponent = {}
                     />
                 </View>
             )
@@ -112,7 +110,6 @@ export default class Notifications extends Component {
                         //Remove it locally
                         this.setState( {notifs: this.state.notifs.filter(function(found) {
                                 return found !== item}) });
-                        // setScreen(PAGES.NOTIFICATIONS)
                     }
                 },
                 {
@@ -121,7 +118,7 @@ export default class Notifications extends Component {
                         //Remove it from firestore
                         removeNotification(getUser(), item);
                         //Remove it locally
-                        this.setState( {notifs: this.state.notifs.filter(function(found) {
+                        this.setState({notifs: this.state.notifs.filter(function(found) {
                                 return found !== item}) });
                     },
                     style: "cancel"

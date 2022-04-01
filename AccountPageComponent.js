@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ActivityIndicator, Alert, View, Image, TouchableOpacity, Text, FlatList } from 'react-native'
-import { styles, getUser, setUser, setScreen, PAGES } from './Utility'
+import { styles, getUser, setUser, setScreen, PAGES, removeValue } from './Utility'
 import backBtn from './assets/BackBtn.png'
 import { pullNotifications, getDisplayNameFromMID, addPeerToDatabase, removeNotification } from './firebaseConfig'
 
@@ -46,6 +46,7 @@ export default class AccountPageComponent extends Component {
         >
           <Text style={styles.loginText}>Notifications</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={() => {
@@ -54,9 +55,11 @@ export default class AccountPageComponent extends Component {
         >
           <Text style={styles.loginText}>Settings</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={() => {
+            removeValue('lastRememberedUser')
             setUser(null)
             setScreen(PAGES.LOGIN)
           }}
