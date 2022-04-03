@@ -12,19 +12,20 @@ We will be programming in accordance with [JavaScript Standard Style](https://st
 In order to build this project you first have to install:
 
 * [Node.js](https://nodejs.org/en/)  
-* [Expo CLI](https://docs.expo.dev/)  
+* [React Native CLI](https://www.npmjs.com/package/react-native-cli)
+* An android emulator.
 
-Once you are in the project's root directory run `npm install --global expo-cli`.
+Once you are in the project's root directory run `npm install --global react-native-cli`.
 
 ## Setup
 
-After cloning the repo and installing the above software, users should run `npm install` in the project's root directory, which will install all project dependencies listed in package.json.
+After cloning the repo and installing the above software, users should run `npm install --force` in the project's root directory, which will install all project dependencies listed in package.json.
 
 ## Running
 
-To run the project, run `expo start` in the terminal.  This will bring the user to the Expo manager page.  From there, "Run in web browser" can be selected to the view the app in browser, or, run `expo start -w` to initially run with the project in the web browser. Users may install the [Expo Go](https://expo.dev/client) app to run it on their local mobile device (this requires an Expo account and to be logged in on both the host and mobile device).
+To run the project, run `react-native run android` in the terminal.  This will build and launch the app on an _already running_ emulated machine.
 
-# Deployment
+# Deployment (Outdated)
 
 To build an APK for the Android platform, run `expo build:android -t apk`, or to build an Android App Bundle, `expo build:android -t app-bundle`. 
 If building an Android App Bundle, ensure that Google Play App Signing is enabled for your project, more information can be found [here](https://developer.android.com/guide/app-bundle).
