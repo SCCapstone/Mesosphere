@@ -6,6 +6,10 @@ For more information, see [here.](https://github.com/SCCapstone/Mesosphere/wiki/
 
 We will be programming in accordance with [JavaScript Standard Style](https://standardjs.com/index.html).
 
+## Final Demo Video
+PLACEHOLDER
+
+## Features and Screenshots!
 
 ## External Requirements
 
