@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Text, TextInput, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import { PAGES, styles, setScreen, getUser, setUser, getFocus, storeData, removeValue } from './Utility'
 import { dataOccupied, makeAcc, deleteCurrUser, lru, getRememberMe, checkLogin, usernameValidation } from './User'
-import { renderPost, savePost } from './Post'
+import { renderPost, savePost, renderPostForMemory } from './Post'
 import { changeUserBiographyInDatabase, changeUserDisplayNameInDatabase, changeUserPasswordInDatabase, pullPostFromDatabase } from './firebaseConfig'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'

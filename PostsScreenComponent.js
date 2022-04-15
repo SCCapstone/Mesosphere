@@ -55,8 +55,9 @@ export default class PostsPage extends Component {
         //TODO: This logic should be refactored so that local posts are also pulled from FB instead.
         //Local data is ONLY for P2P functionality.  It should not be used in this context while we are using firebase.
         const myPostsArr = currUser.getMyPosts();
+        console.log(myPostsArr);
         for(const post of myPostsArr) {
-            const FBpost = await pullPostFromDatabase(post.postID);
+            const FBpost = await pullPostFromDatabase(post);
             allPosts.push(FBpost);
         }
         //console.log("All posts:" + JSON.stringify(allPosts));

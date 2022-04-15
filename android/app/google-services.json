@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "585675242764",
+    "firebase_url": "https://apex-mesosphere-default-rtdb.firebaseio.com",
+    "project_id": "apex-mesosphere",
+    "storage_bucket": "apex-mesosphere.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585675242764:android:ccd177e07078795d92dd29",
+        "android_client_info": {
+          "package_name": "com.colelewis.mesosrc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585675242764-54vccl2ohb7hlfnbbsfuspr3ispeg152.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9B2C_0KOJnH8R8o3orpCkOnDGxyNgh2g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585675242764-54vccl2ohb7hlfnbbsfuspr3ispeg152.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
