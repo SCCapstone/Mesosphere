@@ -262,7 +262,7 @@ export class ScreenGenerator {
                 setScreen(PAGES.VIEW_LOCAL_DATA)
               }}
             >
-              <Text style={styles.loginText}>View Local Data</Text>
+              <Text style={styles.loginText}>View My Posts</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.loginBtn}
