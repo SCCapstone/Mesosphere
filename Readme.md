@@ -48,7 +48,7 @@ Behavioral testing is done with the [Detox](https://github.com/wix/Detox) testin
 
 Unit tests are run with `npm run test`.
 
-### Running Behavioral Tests
+## Running Behavioral Tests
 
 These instructions are for a Windows machine, and uses Powershell.  A Google Doc with pictures can be found at https://docs.google.com/document/d/1zRyo-trcaG2ypgH6JTNMvaAxX5eEQsnjscOABk4gTFM/edit?usp=sharing
 
