@@ -1,11 +1,15 @@
 # Mesosphere
 
-Mesosphere is a social media network that uses IDs to connect people and build networks via personal connections. Every individual is their own node and voluntarily builds networks of nodes in passing by others and expanding their networks. You only participate in networks and are exposed to nodes you choose. Data you post is stored and accessed via your phone, offloading the role of a central server across the entire network per each node on demand. Mesosphere will be aimed at iOS & Android, and released on Android via APK initially.
+Mesosphere is a social media network that uses IDs to connect people and build networks via personal connections. Every individual is their own node and voluntarily builds networks of nodes in passing by others and expanding their networks. You only participate in networks and are exposed to nodes you choose. Data you post is stored on a firebase central server, with the hope of eventually migrating this data locally to be shared in a more direct peer-to-peer fashion. Mesosphere will be aimed at iOS & Android, and released on Android via APK initially.
 
 For more information, see [here.](https://github.com/SCCapstone/Mesosphere/wiki/Project-Description)
 
 We will be programming in accordance with [JavaScript Standard Style](https://standardjs.com/index.html).
 
+## Final Demo Video
+PLACEHOLDER
+
+## Features and Screenshots!
 
 ## External Requirements
 
