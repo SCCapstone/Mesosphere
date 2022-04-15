@@ -119,55 +119,56 @@ export default class PostComponent extends Component {
     // If this user has no end-result-interactions, do nothing!
   }
 
-  isMine() {
-    if(this.postObj.attachedMiD == getUser().MiD) {
-      return(<Button
-        onPress={() => {  getUser().removePost(this.postObj); this.setState({ deleted: true }) }}
-        title='Delete'
-        color={COLORS.DELETE_BUTTON}
-      />)
+  isMine () {
+    if (this.postObj.attachedMiD == getUser().MiD) {
+      return (
+        <Button
+          onPress={() => { getUser().removePost(this.postObj); this.setState({ deleted: true }) }}
+          title='Delete'
+          color={COLORS.DELETE_BUTTON}
+        />
+      )
     } else {
-      return (<View/>)
+      return (<View />)
     }
   }
 
   // TODO Make the like and dislike buttons style pieces.
   render () {
-    if(this.state.deleted)
-      return <View/>
-    else 
+    if (this.state.deleted) { return <View /> } else {
       return (
-      <View style={styles.postContainer}>
-        <Text style={styles.postContainerUsername}>{this.state.displayname} </Text>
-        <View style={{
-          borderBottomColor: 'black',
-          borderBottomWidth: 1
-        }}
-        />
-        <Text style={styles.postContainerText}>{this.postObj.textContent} </Text>
-        <Text style={styles.postContainerText}>{this.postObj.timestamp} </Text>
-        <View style={styles.scoreButtonStyle}>
-          <View style={styles.scoreButton} />
-          <Button
-            onPress={() => { this.updateScore(1) }}
-            title='Like'
-            color={COLORS.LIKE_BUTTON}
-            borderRadius='12'
+        <View style={styles.postContainer}>
+          <Text style={styles.postContainerUsername}>{this.state.displayname} </Text>
+          <View style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: 1
+          }}
           />
-          <View style={styles.spacing} />
-          <View style={styles.scoreButton} />
-          <Button
-            onPress={() => { this.updateScore(-1) }}
-            title='Dislike'
-            color={COLORS.DISLIKE_BUTTON}
-          />
-          <View style={styles.spacing} />
-          <Text style={styles.postContainerText}>{this.state.score}</Text>
-          <View style={styles.bigSpacing} />
-          {this.isMine()}
-          <View style={styles.spacing} />
+          <Text style={styles.postContainerText}>{this.postObj.textContent} </Text>
+          <Text style={styles.postContainerText}>{this.postObj.timestamp} </Text>
+          <View style={styles.scoreButtonStyle}>
+            <View style={styles.scoreButton} />
+            <Button
+              onPress={() => { this.updateScore(1) }}
+              title='Like'
+              color={COLORS.LIKE_BUTTON}
+              borderRadius='12'
+            />
+            <View style={styles.spacing} />
+            <View style={styles.scoreButton} />
+            <Button
+              onPress={() => { this.updateScore(-1) }}
+              title='Dislike'
+              color={COLORS.DISLIKE_BUTTON}
+            />
+            <View style={styles.spacing} />
+            <Text style={styles.postContainerText}>{this.state.score}</Text>
+            <View style={styles.bigSpacing} />
+            {this.isMine()}
+            <View style={styles.spacing} />
+          </View>
         </View>
-      </View>
-    )
+      )
+    }
   }
 }
