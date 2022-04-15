@@ -2,7 +2,7 @@
 
 Mesosphere is a social media network that uses IDs to connect people and build networks via personal connections. Every individual is their own node and voluntarily builds networks of nodes in passing by others and expanding their networks. You only participate in networks and are exposed to nodes you choose. Data you post is stored and accessed via your phone, offloading the role of a central server across the entire network per each node on demand. Mesosphere will be aimed at iOS & Android, and released on Android via APK initially.
 
-For more information, see https://github.com/SCCapstone/Mesosphere/wiki/Project-Description
+For more information, see [here.](https://github.com/SCCapstone/Mesosphere/wiki/Project-Description)
 
 We will be programming in accordance with [JavaScript Standard Style](https://standardjs.com/index.html).
 
@@ -13,7 +13,7 @@ In order to build this project you first have to install:
 
 * [Node.js](https://nodejs.org/en/)  
 * [React Native CLI](https://www.npmjs.com/package/react-native-cli)
-* An android emulator.
+* An android emulator. We recommend using the official [Android Studio Emulator.](https://developer.android.com/studio)
 
 Once you are in the project's root directory run `npm install --global react-native-cli`.
 
@@ -33,7 +33,7 @@ If building an Android App Bundle, ensure that Google Play App Signing is enable
 # Testing
 
 The unit tests are in `/test/unit`.
-The behavoiral tests are in `/e2e/`.
+The behavioral tests are in `/e2e/`.
 
 ## Testing Technology
 
@@ -46,7 +46,7 @@ Unit tests are run with `npm run test`.
 
 ### Running Behavioral Tests
 
-These instructions are for a windows machine, and use powershell.  A google document with pictures can be found at https://docs.google.com/document/d/1zRyo-trcaG2ypgH6JTNMvaAxX5eEQsnjscOABk4gTFM/edit?usp=sharing
+These instructions are for a Windows machine, and uses Powershell.  A Google Doc with pictures can be found at https://docs.google.com/document/d/1zRyo-trcaG2ypgH6JTNMvaAxX5eEQsnjscOABk4gTFM/edit?usp=sharing
 
 ### Installing Android Studio Emulator & Tools.
 For detox behavioral tests, an Android emulator must be utilized.  
