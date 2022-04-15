@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { alterPostScore, pushPostToDatabase } from './firebaseConfig'
+import { alterPostScore, pullPostFromDatabase, pushPostToDatabase } from './firebaseConfig'
 import { generatePostID, getUser, setScreen, styles, PAGES, COLORS } from './Utility'
 import PostComponent from './PostComponent'
 import PostMemoryComponent from './PostMemoryComponent'
@@ -64,7 +64,7 @@ export async function savePost (text) {
     return
   }
   const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString().substring(0, 21))
-  u.addPost(p)
+  u.addPost(p.postID);
   u.storeLocally()
   await pushPostToDatabase(p)
   setScreen(PAGES.VIEWPOSTS)
@@ -76,6 +76,5 @@ export function renderPost (post) {
 }
 
 export function renderPostForMemory (post) {
-  const p = post.item
-  return <PostMemoryComponent postObj={p} />
+  return <PostMemoryComponent postID={post} />
 }

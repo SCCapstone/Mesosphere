@@ -44,7 +44,7 @@ export class User {
 
   removePost (p) {
     for (let i = 0; i < this.myPosts.length; i++) {
-      if (this.myPosts[i].postID == p.postID) {
+      if (this.myPosts[i] == p.postID) {
         this.myPosts.splice(i, 1)
         console.log('Removed post locally.  Removing from firebase...')
       }

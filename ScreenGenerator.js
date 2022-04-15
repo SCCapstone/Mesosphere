@@ -436,8 +436,8 @@ export class ScreenGenerator {
           <SafeAreaView style={styles.memoryViewContainer}>
             <FlatList
               data={personalPosts}
-              renderItem={post => renderPostForMemory(post)}
-              keyExtractor={post => post.postID}
+              renderItem={post => renderPostForMemory(post.item)}
+              keyExtractor={post => post.item}
             />
           </SafeAreaView>
           <Text>{'Size of post data:  ' + dataOccupied(u) + ' bytes.'}</Text>
