@@ -126,6 +126,7 @@ export async function makeAcc (username, password, realName, bio) {
   }
   if (realName.length > 25 || realName.length < 3) {
     alert('You must enter a display name between 3 and 25 characters.')
+    return
   }
   if (await doesUsernameExist(username) === true) {
     alert('This username already exists, please choose a different one.')
