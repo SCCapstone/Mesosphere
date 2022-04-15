@@ -259,14 +259,6 @@ export class ScreenGenerator {
             <TouchableOpacity
               style={styles.loginBtn}
               onPress={() => {
-                setScreen(PAGES.VIEW_LOCAL_DATA)
-              }}
-            >
-              <Text style={styles.loginText}>View My Posts</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={() => {
                 setScreen(PAGES.CHANGEACCOUNT_DISP)
               }}
             >

@@ -172,7 +172,8 @@ export const COLORS = {
   BAR_LOCATION: CARLEIGH_GREEN.BAR_LOCATION,
   TEXT: CARLEIGH_GREEN.TEXT,
   DISLIKE_BUTTON: CARLEIGH_GREEN.DISLIKE_BUTTON,
-  LIKE_BUTTON: CARLEIGH_GREEN.LIKE_BUTTON
+  LIKE_BUTTON: CARLEIGH_GREEN.LIKE_BUTTON,
+  DELETE_BUTTON: '#A52A2A'
 }
 
 // No more defining long-term colors inside the style sheet. Please.
@@ -528,6 +529,10 @@ export const styles = StyleSheet.create({
   },
   spacing: {
     width: 15,
+    height: 15
+  },
+  bigSpacing: {
+    width: '43%',
     height: 15
   },
   moreSpacing: {

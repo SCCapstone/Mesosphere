@@ -11,7 +11,8 @@ export default class PostComponent extends Component {
       loading: false,
       displayname: 'Loading...',
       score: 0,
-      error: null
+      error: null,
+      deleted: false
     }
 
     this.postObj = props.postObj
@@ -118,9 +119,24 @@ export default class PostComponent extends Component {
     // If this user has no end-result-interactions, do nothing!
   }
 
+  isMine() {
+    if(this.postObj.attachedMiD == getUser().MiD) {
+      return(<Button
+        onPress={() => {  getUser().removePost(this.postObj); this.setState({ deleted: true }) }}
+        title='Delete'
+        color={COLORS.DELETE_BUTTON}
+      />)
+    } else {
+      return (<View/>)
+    }
+  }
+
   // TODO Make the like and dislike buttons style pieces.
   render () {
-    return (
+    if(this.state.deleted)
+      return <View/>
+    else 
+      return (
       <View style={styles.postContainer}>
         <Text style={styles.postContainerUsername}>{this.state.displayname} </Text>
         <View style={{
@@ -147,6 +163,8 @@ export default class PostComponent extends Component {
           />
           <View style={styles.spacing} />
           <Text style={styles.postContainerText}>{this.state.score}</Text>
+          <View style={styles.bigSpacing} />
+          {this.isMine()}
           <View style={styles.spacing} />
         </View>
       </View>
