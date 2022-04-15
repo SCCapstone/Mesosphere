@@ -221,15 +221,6 @@ export class ScreenGenerator {
             />
           </View>
           <TouchableOpacity
-            style={styles.mediaBtn}
-            onPress={() => alert('Still in development!')}
-          >
-            <Text
-              style={styles.buttonText}
-            >Add Media
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             style={styles.postBtn} onPress={
               () => { savePost(String(postText$.get())) }
             }
