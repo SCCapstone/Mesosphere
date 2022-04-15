@@ -204,13 +204,13 @@ export async function removePostFromDatabase (p) {
 }
 
 export async function pullPostFromDatabase (postID) {
-  console.log('i am a post puller for post ' + postID);
+  console.log('i am a post puller for post ' + postID)
   const postRef = doc(database, 'posts', postID)
-  console.log('and i will not elp you');
+  console.log('and i will not elp you')
   const docSnap = await getDoc(postRef)
-  console.log(docSnap);
+  console.log(docSnap)
   if (docSnap.exists()) {
-    console.log("Doc Snap exists!");
+    console.log('Doc Snap exists!')
     const data = docSnap.data()
     console.log('Document data:', docSnap.data())
     console.log(data.timestamp)

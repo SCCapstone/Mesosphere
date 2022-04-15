@@ -120,12 +120,12 @@ export async function checkLogin (username, password) {
 }
 
 export async function makeAcc (username, password, realName, bio) {
-  if (username.length < 3 || password.length < 3) {
-    alert('Your username or password must be at least 3 characters')
+  if (username.length < 3 || password.length < 3 || username.length > 25 || password.length > 25) {
+    alert('Your username or password must be between 3 and 25 characters.')
     return
   }
-  if (realName.length < 1) {
-    alert('You must enter a display name.')
+  if (realName.length > 25 || realName.length < 3) {
+    alert('You must enter a display name between 3 and 25 characters.')
   }
   if (await doesUsernameExist(username) === true) {
     alert('This username already exists, please choose a different one.')

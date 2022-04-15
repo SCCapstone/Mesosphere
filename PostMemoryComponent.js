@@ -17,8 +17,8 @@ export default class PostMemoryComponent extends Component {
       deleted: false
     }
 
-    this.postObj = null;
-    this.postID = props.postID;
+    this.postObj = null
+    this.postID = props.postID
   }
 
   componentDidMount () {
@@ -26,8 +26,8 @@ export default class PostMemoryComponent extends Component {
   }
 
   async loadData () {
-    this.setState({ loading: true});
-    this.postObj = await pullPostFromDatabase(this.postID);
+    this.setState({ loading: true })
+    this.postObj = await pullPostFromDatabase(this.postID)
     this.setState({
       displayname: this.postObj.attachedMiD,
       score: this.postObj.starting_score
@@ -41,7 +41,7 @@ export default class PostMemoryComponent extends Component {
     this.setState({
       displayname: poster.realName
     })
-    this.setState({ loading: false});
+    this.setState({ loading: false })
   }
 
   render () {

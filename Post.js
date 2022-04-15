@@ -7,8 +7,6 @@ import PostMemoryComponent from './PostMemoryComponent'
 export class Post {
   // Post objects will be constructed from postPage() prompt
   constructor (attachedMiD, postID, mediaContent, textContent, starting_score, interactedUsers, timestamp) {
-    // TODO(Gazdecki) Supposedly we need this, but it doesn't work and I don't need it for some reason?
-    // this.incrementScore = this.incrementScore.bind(this)
     this.attachedMiD = attachedMiD
     this.postID = postID
     this.mediaContent = mediaContent
@@ -50,9 +48,9 @@ export async function changeScore (post, change) {
 
 export async function savePost (text) {
   console.log('SAVE POST')
-  if (text.length > 50) {
-    Alert.alert('Post too long',
-      'Posts can be, at most, 50 characers.',
+  if (text.length > 250) {
+    Alert.alert('Your post is too long',
+      'Posts can be, at most, 250 characers.',
       { text: 'OK.' })
     return
   }
@@ -64,7 +62,7 @@ export async function savePost (text) {
     return
   }
   const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString().substring(0, 21))
-  u.addPost(p.postID);
+  u.addPost(p.postID)
   u.storeLocally()
   await pushPostToDatabase(p)
   setScreen(PAGES.VIEWPOSTS)
