@@ -193,6 +193,8 @@ dependencies {
     androidTestImplementation('com.wix:detox:+') { transitive = true }
 
     androidTestImplementation 'junit:junit:4.12'
+
+    implementation 'com.google.android.material:material:1.2.1'
     
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";

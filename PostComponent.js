@@ -137,7 +137,7 @@ export default class PostComponent extends Component {
   render () {
     if (this.state.deleted) { return <View /> } else {
       return (
-        <View style={styles.postContainer}>
+        <View style={styles.postContainer} testID={this.state.textContent}>
           <Text style={styles.postContainerUsername}>{this.state.displayname} </Text>
           <View style={{
             borderBottomColor: 'black',

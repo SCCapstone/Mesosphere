@@ -1,7 +1,7 @@
 // import { Alert, AsyncStorage } from 'react-native'
 import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
-import { pushAccountToDatabase, pushUsernameToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase, doesUsernameExist, parseRemoteLogin, pullAccountFromDatabase, sendNotification, removeNotification, removePostFromDatabase } from './firebaseConfig'
+import { pushAccountToDatabase, pushUsernameToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase, doesUsernameExist, parseRemoteLogin, parseRemoteLoginEncrypted, pullAccountFromDatabase, sendNotification, removeNotification, removePostFromDatabase } from './firebaseConfig'
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { async } from '@firebase/util'
@@ -171,17 +171,28 @@ export function dataOccupied (user) { // returns number of bytes
 }
 
 export async function lru () {
+  var data = null;
   await AsyncStorage.getItem('lastRememberedUser').then(value => {
-    const data = JSON.parse(value)
-    if (data) {
-      const nu = new User(data.username, data.password, data.realName, data.biography, data.MiD, data.myPosts, data.myPeers)
-      setUser(nu)
-      setScreen(PAGES.ACCOUNTPAGE)
+    data = JSON.parse(value)
+  })
+    if (data != null) {
+      const passedID = await parseRemoteLoginEncrypted(data.username, data.password)
+      console.log('Passed MID: ' + passedID)
+
+      if (passedID === '') {
+        alert('Incorrect username and/or password.');
+        return
+      }
+      if (passedID !== '') {
+        const retrievedUser = await pullAccountFromDatabase(passedID)
+        setUser(retrievedUser)
+        await storeData('lastRememberedUser', retrievedUser)
+        setScreen(PAGES.ACCOUNTPAGE)
+      }
     } else {
       return null
     }
-  })
-}
+  }
 
 export async function usernameValidation (username) {
   if (await doesUsernameExist(username) === true) {

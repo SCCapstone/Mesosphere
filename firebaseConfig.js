@@ -305,6 +305,23 @@ export async function parseRemoteLogin (username, password) {
   return dataString
 }
 
+
+export async function parseRemoteLoginEncrypted (username, password) {
+  let dataString = ''
+  const q = query(collection(database, 'accounts'), where('username', '==', username), where('password', '==', password))
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc) => {
+    // console.log(doc.data())
+    // setUser(pullAccountFromDatabase(doc.data.MID))
+    // setScreen(PAGES.ACCOUNTPAGE)
+    // console.log(doc.data().MID)
+    dataString += doc.data().MID
+    // return doc.data().MID
+  })
+  return dataString
+}
+
+
 // notifications
 
 export async function sendNotification (u, recipientID) {

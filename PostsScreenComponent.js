@@ -123,37 +123,61 @@ export default class PostsPage extends Component {
     };
 
     render() {
-        return (
-            <View style={{marginTop: 0}}>
-                <View style={{ marginTop: 0, height: 40, width: '45%', elevation: 2, position: 'absolute', borderRadius: 4, backgroundColor:'#181D27', alignSelf: 'flex-end'}}>
-                    <Picker
-                        selectedValue={this.state.sortingMode}
-                        style={styles.PickerStyle}
-                        mode='dropdown'
-                        onValueChange={(itemValue, itemIndex) => {this.setState({sortingMode: itemValue});this.refresh()}}
-                    >
-                        <Picker.Item label="Date (Newest)" value="Newest" />
-                        <Picker.Item label="Date (Oldest)" value="Oldest" />
-                        <Picker.Item label="Score (Highest)" value="Score(H)" />
-                        <Picker.Item label="Score (Lowest)" value="Score(L)" />
-                        <Picker.Item label="Weighted" value="Weighted" />
-                    </Picker>
+        if(true) {
+            return (
+                <View style={{marginTop: 0}} testID='PostScreenComponent'>
+                    <View style={{ marginTop: 0, height: 40, width: '45%', elevation: 2, position: 'absolute', borderRadius: 4, backgroundColor:'#181D27', alignSelf: 'flex-end'}}>
+                        <Picker
+                            selectedValue={this.state.sortingMode}
+                            style={styles.PickerStyle}
+                            mode='dropdown'
+                            onValueChange={(itemValue, itemIndex) => {this.setState({sortingMode: itemValue});this.refresh()}}
+                        >
+                            <Picker.Item label="Date (Newest)" value="Newest" />
+                            <Picker.Item label="Date (Oldest)" value="Oldest" />
+                            <Picker.Item label="Score (Highest)" value="Score(H)" />
+                            <Picker.Item label="Score (Lowest)" value="Score(L)" />
+                            <Picker.Item label="Weighted" value="Weighted" />
+                        </Picker>
+                    </View>
+                    <FlatList
+                        ref={(ref) => this.flatlistRef = ref}
+                        refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={() => {this.refresh()}}
+                        />
+                        }
+                        data={this.state.data}
+                        renderItem={post => renderPost(post)}
+                        ItemSeparatorComponent={this.renderSeparator}
+                        keyExtractor={item => JSON.stringify(item)}
+                        testID='PostFlatlist'
+                        />
+                    </View>
+            );
+        } else {
+            return (
+                <View style={{marginTop: 0}} testID='PostScreenComponent'>
+                    <FlatList
+                        ref={(ref) => this.flatlistRef = ref}
+                        refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={() => {this.refresh()}}
+                        />
+                        }
+                        data={this.state.data}
+                        renderItem={post => renderPost(post)}
+                        ItemSeparatorComponent={this.renderSeparator}
+                        keyExtractor={item => JSON.stringify(item)}
+                        testID='PostFlatlist'
+                        />
                 </View>
-                <FlatList
-                    ref={(ref) => this.flatlistRef = ref}
-                    refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.refreshing}
-                        onRefresh={() => {this.refresh()}}
-                    />
-                    }
-                    data={this.state.data}
-                    renderItem={post => renderPost(post)}
-                    ItemSeparatorComponent={this.renderSeparator}
-                    keyExtractor={item => JSON.stringify(item)}
-                    />
-                </View>
-        );
+
+            );
+        }
+        
     }
 
     refresh() {
