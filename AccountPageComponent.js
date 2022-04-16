@@ -8,7 +8,7 @@ export default class AccountPageComponent extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      loading: false,
+      loading: true,
       notifs: '...',
       userRealName: null,
       userMiD: null,
@@ -17,32 +17,50 @@ export default class AccountPageComponent extends Component {
   }
 
   componentDidMount () {
-    this.fetchNotificationSize()
+    this.fetchInfo()
   }
 
-  async fetchNotificationSize () {
+  async fetchInfo () {
+    console.log("Fetching user info...");
     const u = getUser()
+    console.log("Account\User:" + u.MiD)
     const nlist = await pullNotifications(getUser())
-    this.setState({
-      notifs: nlist.length,
-      userRealName: u.getDisplayName(),
-      userMiD: u.getMiD(),
-      loading: false,
-      error: 0
-    })
+    console.log("Past await!  Evaluating nlist...");
+    if(nlist == null) {
+      console.log("Failed to fetch notifications.  Setting to 0...");
+      this.setState({
+        notifs: 0,
+        userRealName: u.realName,
+        userMiD: u.MiD,
+        loading: false,
+        error: 1
+      })
+    } else {
+      this.setState({
+        notifs: nlist.length,
+        userRealName: u.realName,
+        userMiD: u.MiD,
+        loading: false,
+        error: 0
+      })
+    }
   }
 
   render () {
+    if(this.state.loading) {
+      return <ActivityIndicator size="large" color="#0000ff" />
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.bigText}>Welcome back, {this.state.userRealName}</Text>
-        <Text style={styles.text}>{this.state.userMiD}</Text>
+        <Text style={styles.text} testID='AccountMiD'>{this.state.userMiD}</Text>
         <Text style={styles.NotifCountLoc}>{this.state.notifs}</Text>
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={() => {
             setScreen(PAGES.NOTIFICATIONS)
           }}
+          testID='NotificationsButton'
         >
           <Text style={styles.loginText}>Notifications</Text>
         </TouchableOpacity>
@@ -52,6 +70,7 @@ export default class AccountPageComponent extends Component {
           onPress={() => {
             setScreen(PAGES.SETTINGS)
           }}
+          testID='SettingsButton'
         >
           <Text style={styles.loginText}>Settings</Text>
         </TouchableOpacity>
@@ -63,6 +82,7 @@ export default class AccountPageComponent extends Component {
             setUser(null)
             setScreen(PAGES.LOGIN)
           }}
+          testID='LogoutButton'
         >
           <Text style={styles.loginText}>Log Out</Text>
         </TouchableOpacity>

@@ -333,10 +333,17 @@ export async function pullNotifications (u) {
   const notis = []
   const data = accountSnap.data()
   // console.log(data.notifications)
-  if (data.notifications.size != 0) {
-    return data.notifications
-  } else {
-    console.log('No notifications for this user.')
+  try {
+    if(data.notifications && data.notifications.size != 0) {
+      console.log(data.notifications)
+      return data.notifications
+    } else {
+      console.log('No notifications for this user.')
+      return null
+    }
+  } catch (e) {
+    console.log("Try/Catch triggered!  Error:")
+    console.log(e)
     return null
   }
 }

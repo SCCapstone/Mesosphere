@@ -44,6 +44,8 @@ export class ScreenGenerator {
   generateScreen () {
     console.log('Generating: ' + this.page)
     if (this.page === PAGES.LOGIN) {
+      username$.actions.set(newUsername$.get())
+      password$.actions.set(newPassword$.get())
       if (AsyncStorage.getItem('lastRememberedUser') !== null) { // last remembered user does exist
         lru()
       }
@@ -103,6 +105,7 @@ export class ScreenGenerator {
               returnKeyType='next'
               maxLength={30}
               onChangeText={(newusername) => newUsername$.actions.set(newusername)}
+              testID='RegisterUserPrompt'
             />
           </View>
           <View style={styles.inputView}>
@@ -114,6 +117,7 @@ export class ScreenGenerator {
               returnKeyType='next'
               maxLength={50}
               onChangeText={(newpassword) => newPassword$.actions.set(newpassword)}
+              testID='RegisterPassPrompt'
             />
           </View>
           <View style={styles.inputView}>
@@ -124,6 +128,7 @@ export class ScreenGenerator {
               returnKeyType='next'
               maxLength={30}
               onChangeText={(newdispname) => newDispname$.actions.set(newdispname)}
+              testID='RegisterNamePrompt'
             />
           </View>
           <View style={styles.inputViewBio}>
@@ -137,23 +142,32 @@ export class ScreenGenerator {
               blurOnSubmit
               maxLength={240}
               onChangeText={(biography) => newBiography$.actions.set(biography)}
+              testID='RegisterBioPrompt'
             />
           </View>
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => makeAcc(String(newUsername$.get()), String(newPassword$.get()), String(newDispname$.get()), String(newBiography$.get()))}
+            testID='MakeAccButton'
           >
             <Text style={styles.loginText}>CREATE ACCOUNT</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => setScreen(PAGES.LOGIN)}
+            testID='CancelButton'
           >
             <Text style={styles.loginText}>CANCEL</Text>
           </TouchableOpacity>
         </View>
       )
     } else if (this.page === PAGES.ACCOUNTPAGE) {
+      username$.actions.set('');
+      password$.actions.set('');
+      newUsername$.actions.set('');
+      newPassword$.actions.set('');
+      newDispname$.actions.set('');
+      newBiography$.actions.set('');
       const u = getUser()
 
       this.output = (
@@ -218,12 +232,14 @@ export class ScreenGenerator {
               blurOnSubmit
               maxLength={240}
               onChangeText={(post) => postText$.actions.set(post)}
+              testID='MakePostTextField'
             />
           </View>
           <TouchableOpacity
             style={styles.postBtn} onPress={
               () => { savePost(String(postText$.get())) }
             }
+            testID='MakePostSubmitButton'
           >
             <Text style={styles.buttonText}> Submit </Text>
           </TouchableOpacity>
@@ -251,6 +267,7 @@ export class ScreenGenerator {
             <TouchableOpacity
               style={styles.backBtnLoc}
               onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
+              testID='SettingsBackButton'
             >
               <Image source={backBtn} style={styles.backBtn} />
             </TouchableOpacity>
@@ -261,6 +278,7 @@ export class ScreenGenerator {
               onPress={() => {
                 setScreen(PAGES.VIEW_LOCAL_DATA)
               }}
+              testID='SettingsViewPostsButton'
             >
               <Text style={styles.loginText}>View My Posts</Text>
             </TouchableOpacity>
@@ -269,6 +287,7 @@ export class ScreenGenerator {
               onPress={() => {
                 setScreen(PAGES.CHANGEACCOUNT_DISP)
               }}
+              testID='SettingsChangeDisplayButton'
             >
               <Text style={styles.loginText}>Change Display Name</Text>
             </TouchableOpacity>
@@ -277,6 +296,7 @@ export class ScreenGenerator {
               onPress={() => {
                 setScreen(PAGES.CHANGEACCOUNT_PASS)
               }}
+              testID='SettingsChangePassButton'
             >
               <Text style={styles.loginText}>Change Password</Text>
             </TouchableOpacity>
@@ -285,6 +305,7 @@ export class ScreenGenerator {
               onPress={() => {
                 setScreen(PAGES.CHANGEACCOUNT_BIO)
               }}
+              testID='SettingsChangeBioButton'
             >
               <Text style={styles.loginText}>Change Bio</Text>
             </TouchableOpacity>
@@ -292,6 +313,7 @@ export class ScreenGenerator {
             <TouchableOpacity
               style={styles.loginBtn}
               onPress={() => deleteCurrUser()}
+              testID='SettingsDeleteAccButton'
             >
               <Text style={styles.loginText}>Delete This Account</Text>
             </TouchableOpacity>
@@ -357,6 +379,7 @@ export class ScreenGenerator {
               returnKeyType='next'
               maxLength={50}
               onChangeText={(newpassword) => newPassword$.actions.set(newpassword)}
+              testID='ChangePassTextField'
             />
           </View>
           <TouchableOpacity
@@ -366,6 +389,7 @@ export class ScreenGenerator {
               changeUserPasswordInDatabase(u.MiD, String(sha224(String(newPassword$.get()))))
               setScreen(PAGES.SETTINGS)
             }}
+            testID="ChangePassSubmitButton"
           >
             <Text style={styles.loginText}>Change Password</Text>
           </TouchableOpacity>
@@ -441,6 +465,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.backBtnLoc}
             onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
+            testID='NotificationsBackButton'
           >
             <Image source={backBtn} style={styles.backBtn} />
           </TouchableOpacity>
@@ -457,6 +482,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.userButtonSelected}
             onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
+            testID="bottomAccountButton"
           />
           <TouchableOpacity style={styles.userButtonSelected}>
             <Image source={persons} style={styles.bottomButtonIcon} />
@@ -465,6 +491,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.networkButton}
             onPress={() => { setScreen(PAGES.VIEWPOSTS) }}
+            testID="bottomNetworkButton"
           >
             <Image source={networking} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
@@ -472,6 +499,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.friendButton}
             onPress={() => { setScreen(PAGES.FRIENDSLIST) }}
+            testID="bottomFriendsButton"
           >
             <Image source={friends} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Friends</Text>
@@ -479,6 +507,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.postButton}
             onPress={() => { setScreen(PAGES.MAKEPOST) }}
+            testID="bottomPostButton"
           >
             <Image source={plussign} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
@@ -491,17 +520,19 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.userButton}
             onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
+            testID="bottomAccountButton"
           >
             <Image source={persons} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.networkButtonSelected}>
+          <TouchableOpacity style={styles.networkButtonSelected} testID="bottomNetworkButton">
             <Image source={networking} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.friendButton}
             onPress={() => { setScreen(PAGES.FRIENDSLIST) }}
+            testID="bottomFriendsButton"
           >
             <Image source={friends} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Friends</Text>
@@ -509,6 +540,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.postButton}
             onPress={() => { setScreen(PAGES.MAKEPOST) }}
+            testID="bottomPostButton"
           >
             <Image source={plussign} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
@@ -521,6 +553,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.userButton}
             onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
+            testID="bottomAccountButton"
           >
             <Image source={persons} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
@@ -528,17 +561,19 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.networkButton}
             onPress={() => { setScreen(PAGES.VIEWPOSTS) }}
+            testID="bottomNetworkButton"
           >
             <Image source={networking} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.friendButtonSelected}>
+          <TouchableOpacity style={styles.friendButtonSelected} testID="bottomFriendsButton">
             <Image source={friends} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Friends</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.postButton}
             onPress={() => { setScreen(PAGES.MAKEPOST) }}
+            testID="bottomPostButton"
           >
             <Image source={plussign} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
@@ -551,6 +586,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.userButton}
             onPress={() => { setScreen(PAGES.ACCOUNTPAGE) }}
+            testID="bottomAccountButton"
           >
             <Image source={persons} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>User</Text>
@@ -558,6 +594,7 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.networkButton}
             onPress={() => { setScreen(PAGES.VIEWPOSTS) }}
+            testID="bottomNetworkButton"
           >
             <Image source={networking} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Network</Text>
@@ -565,11 +602,12 @@ export class ScreenGenerator {
           <TouchableOpacity
             style={styles.friendButton}
             onPress={() => { setScreen(PAGES.FRIENDSLIST) }}
+            testID="bottomFriendsButton"
           >
             <Image source={friends} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Friends</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.postButtonSelected}>
+          <TouchableOpacity style={styles.postButtonSelected} testID="bottomPostButton">
             <Image source={plussign} style={styles.bottomButtonIcon} />
             <Text style={styles.bottomButtonText}>Post</Text>
           </TouchableOpacity>

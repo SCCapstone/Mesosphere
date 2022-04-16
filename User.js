@@ -104,6 +104,7 @@ export class User {
 }
 
 export async function checkLogin (username, password) {
+  console.log("Checking for " + username + ", " + password);
   const passedID = await parseRemoteLogin(username, password)
   console.log('Passed MID: ' + passedID)
 

@@ -1,0 +1,320 @@
+VERBOSE | autoconfig: -skin 1080x1920
+VERBOSE | autoconfig: -skindir (null)
+VERBOSE | autoconfig: -kernel C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\kernel-ranchu
+VERBOSE | Target arch = 'x86_64'
+VERBOSE | Auto-detect: Kernel image requires new device naming scheme.
+VERBOSE | Auto-detect: Kernel does not support YAFFS2 partitions.
+VERBOSE | autoconfig: -ramdisk C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\ramdisk.img
+VERBOSE | Using initial system image: C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\system.img
+VERBOSE | Using initial vendor image: C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\vendor.img
+VERBOSE | autoconfig: -data D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\userdata-qemu.img
+VERBOSE | autoconfig: -initdata D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\userdata.img
+VERBOSE | autoconfig: -cache D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\cache.img
+VERBOSE | autoconfig: -sdcard D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\sdcard.img
+VERBOSE | Physical RAM size: 1536MB
+VERBOSE | VM heap size 256MB is below hardware specified minimum of 384MB,setting it to that value
+VERBOSE | System image is read only
+VERBOSE | querying file version info API...
+VERBOSE | found kernelbase.dll
+VERBOSE | GetFileVersionInfoSizeW found. On Windows 10?
+VERBOSE | GetFileVersionInfoW found. On Windows 10?
+VERBOSE | VerQueryValueW found. Can query file versions
+VERBOSE | queryFileVersionInfo: path not found: amdvlk64.dll
+VERBOSE | querying file version info API...
+VERBOSE | queryFileVersionInfo: path not found: amdvlk32.dll
+VERBOSE | querying file version info API...
+VERBOSE | Found 4 DNS servers:
+VERBOSE | 	100.64.0.1
+VERBOSE | 	fec0:0:0:ffff::1
+VERBOSE | 	fec0:0:0:ffff::2
+VERBOSE | 	fec0:0:0:ffff::3
+VERBOSE | found magic skin width=1080 height=1920 bpp=16
+
+VERBOSE | Requested console port 15302: Inferring adb port 15303.
+VERBOSE | CPU Acceleration: working
+VERBOSE | CPU Acceleration status: HAXM version 7.6.5 (4) is installed and usable.
+VERBOSE | handleCpuAcceleration: feature check for hvf
+VERBOSE | registered 'boot-properties' qemud service
+VERBOSE | Adding boot property: 'qemu.cmdline' = 'androidboot.logcat=*:V androidboot.consolepipe=qemu_pipe,pipe:logcat'
+VERBOSE | Adding boot property: 'qemu.logcat' = 'start'
+VERBOSE | GPU emulation enabled using 'host' mode
+VERBOSE | Initializing hardware OpenGLES emulation support
+VERBOSE | create display 0
+VERBOSE | setDisplayPose 0 x 0 y 0 w 1080 h 1920 dpi 0
+INFO    | configAndStartRenderer: setting vsync to 60 hz
+VERBOSE | Verified boot params were not found.
+VERBOSE | Found 4 DNS servers:
+VERBOSE | 	100.64.0.1
+VERBOSE | 	fec0:0:0:ffff::1
+VERBOSE | 	fec0:0:0:ffff::2
+VERBOSE | 	fec0:0:0:ffff::3
+INFO    | Content of hardware configuration file:
+INFO    | 	hw.cpu.arch = x86_64
+INFO    | 	hw.cpu.ncore = 4
+INFO    | 	hw.ramSize = 1536
+INFO    | 	hw.screen = multi-touch
+INFO    | 	hw.mainKeys = false
+INFO    | 	hw.trackBall = false
+INFO    | 	hw.keyboard = true
+INFO    | 	hw.keyboard.lid = false
+INFO    | 	hw.keyboard.charmap = qwerty2
+INFO    | 	hw.dPad = false
+INFO    | 	hw.rotaryInput = false
+INFO    | 	hw.gsmModem = true
+INFO    | 	hw.gps = true
+INFO    | 	hw.battery = true
+INFO    | 	hw.accelerometer = true
+INFO    | 	hw.gyroscope = true
+INFO    | 	hw.audioInput = true
+INFO    | 	hw.audioOutput = true
+INFO    | 	hw.sdCard = true
+INFO    | 	hw.sdCard.path = D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\sdcard.img
+INFO    | 	disk.cachePartition = true
+INFO    | 	disk.cachePartition.path = D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\cache.img
+INFO    | 	disk.cachePartition.size = 66m
+INFO    | 	test.quitAfterBootTimeOut = -1
+INFO    | 	test.delayAdbTillBootComplete = 0
+INFO    | 	test.monitorAdb = 0
+INFO    | 	hw.lcd.width = 1080
+INFO    | 	hw.lcd.height = 1920
+INFO    | 	hw.lcd.depth = 16
+INFO    | 	hw.lcd.density = 420
+INFO    | 	hw.lcd.backlight = true
+INFO    | 	hw.lcd.vsync = 60
+INFO    | 	hw.gltransport = pipe
+INFO    | 	hw.gltransport.asg.writeBufferSize = 1048576
+INFO    | 	hw.gltransport.asg.writeStepSize = 4096
+INFO    | 	hw.gltransport.asg.dataRingSize = 32768
+INFO    | 	hw.gltransport.drawFlushInterval = 800
+INFO    | 	hw.displayRegion.0.1.xOffset = -1
+INFO    | 	hw.displayRegion.0.1.yOffset = -1
+INFO    | 	hw.displayRegion.0.1.width = 0
+INFO    | 	hw.displayRegion.0.1.height = 0
+INFO    | 	hw.displayRegion.0.2.xOffset = -1
+INFO    | 	hw.displayRegion.0.2.yOffset = -1
+INFO    | 	hw.displayRegion.0.2.width = 0
+INFO    | 	hw.displayRegion.0.2.height = 0
+INFO    | 	hw.displayRegion.0.3.xOffset = -1
+INFO    | 	hw.displayRegion.0.3.yOffset = -1
+INFO    | 	hw.displayRegion.0.3.width = 0
+INFO    | 	hw.displayRegion.0.3.height = 0
+INFO    | 	hw.display1.width = 0
+INFO    | 	hw.display1.height = 0
+INFO    | 	hw.display1.density = 0
+INFO    | 	hw.display1.xOffset = -1
+INFO    | 	hw.display1.yOffset = -1
+INFO    | 	hw.display1.flag = 0
+INFO    | 	hw.display2.width = 0
+INFO    | 	hw.display2.height = 0
+INFO    | 	hw.display2.density = 0
+INFO    | 	hw.display2.xOffset = -1
+INFO    | 	hw.display2.yOffset = -1
+INFO    | 	hw.display2.flag = 0
+INFO    | 	hw.display3.width = 0
+INFO    | 	hw.display3.height = 0
+INFO    | 	hw.display3.density = 0
+INFO    | 	hw.display3.xOffset = -1
+INFO    | 	hw.display3.yOffset = -1
+INFO    | 	hw.display3.flag = 0
+INFO    | 	hw.gpu.enabled = true
+INFO    INFO    | 	hw.gpu.mode = host
+| added library vulkan-1.dll
+INFO    | 	hw.initialOrientation = Portrait
+INFO    | 	hw.camera.back = virtualscene
+INFO    | 	hw.camera.front = emulated
+INFO    | 	vm.heapSize = 384
+INFO    | 	hw.sensors.light = true
+INFO    | 	hw.sensors.pressure = true
+INFO    | 	hw.sensors.humidity = true
+INFO    | 	hw.sensors.proximity = true
+INFO    | 	hw.sensors.magnetic_field = true
+INFO    | 	hw.sensors.magnetic_field_uncalibrated = true
+INFO    | 	hw.sensors.gyroscope_uncalibrated = true
+INFO    | 	hw.sensors.orientation = true
+INFO    | 	hw.sensors.temperature = true
+INFO    | 	hw.sensors.rgbclight = false
+INFO    | 	hw.sensor.hinge = true
+INFO    | 	hw.sensor.hinge.count = 0
+INFO    | 	hw.sensor.hinge.type = 0
+INFO    | 	hw.sensor.hinge.sub_type = 0
+INFO    | 	hw.sensor.hinge.fold_to_displayRegion.0.1_at_posture = 1
+INFO    | 	hw.sensor.roll = false
+INFO    | 	hw.sensor.roll.count = 0
+INFO    | 	hw.sensor.roll.resize_to_displayRegion.0.1_at_posture = 6
+INFO    | 	hw.sensor.roll.resize_to_displayRegion.0.2_at_posture = 6
+INFO    | 	hw.sensor.roll.resize_to_displayRegion.0.3_at_posture = 6
+INFO    | 	hw.sensors.heart_rate = false
+INFO    | 	hw.useext4 = true
+INFO    | 	hw.arc = false
+INFO    | 	hw.arc.autologin = false
+INFO    | 	hw.device.name = pixel_2
+INFO    | 	kernel.path = C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\kernel-ranchu
+INFO    | 	kernel.newDeviceNaming = yes
+INFO    | 	kernel.supportsYaffs2 = no
+INFO    | 	disk.ramdisk.path = C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\ramdisk.img
+INFO    | 	disk.systemPartition.initPath = C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\system.img
+INFO    | 	disk.systemPartition.size = 2562m
+INFO    | 	disk.vendorPartition.initPath = C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\vendor.img
+INFO    | 	disk.vendorPartition.size = 800m
+INFO    | 	disk.dataPartition.path = D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\userdata-qemu.img
+INFO    | 	disk.dataPartition.size = 1600m
+INFO    | 	disk.encryptionKeyPartition.path = D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\encryptionkey.img
+INFO    | 	PlayStore.enabled = false
+INFO    | 	avd.name = Pixel_2_API_28
+INFO    | 	avd.id = Pixel_2_API_28
+INFO    | 	fastboot.forceColdBoot = false
+INFO    | 	android.sdk.root = C:\Users\Kevin\AppData\Local\Android\Sdk
+INFO    | 	android.avd.home = D:\AndroidStudio\SDK_HOME\.android\avd
+INFO    | .
+INFO    | QEMU options list:
+INFO    | 	 argv[00] = "C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe"
+INFO    | 	 argv[01] = "-dns-server"
+INFO    | 	 argv[02] = "100.64.0.1,fec0:0:0:ffff::1,fec0:0:0:ffff::2,fec0:0:0:ffff::3"
+INFO    | 	 argv[03] = "-no-audio"
+INFO    | 	 argv[04] = "-mem-path"
+INFO    | 	 argv[05] = "D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\snapshots\default_boot\ram.img"
+INFO    | 	 argv[06] = "-serial"
+INFO    | 	 argv[07] = "null"
+INFO    | 	 argv[08] = "-android-ports"
+INFO    | 	 argv[09] = "15302,15303"
+INFO    | 	 argv[10] = "-device"
+INFO    | 	 argv[11] = "goldfish_pstore,addr=0xff018000,size=0x10000,file=D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\data\misc\pstore\pstore.bin"
+INFO    | 	 argv[12] = "-cpu"
+INFO    | 	 argv[13] = "android64"
+INFO    | 	 argv[14] = "-enable-hax"
+INFO    | 	 argv[15] = "-smp"
+INFO    | 	 argv[16] = "cores=4"
+INFO    | 	 argv[17] = "-m"
+INFO    | 	 argv[18] = "1536"
+INFO    | 	 argv[19] = "-lcd-density"
+INFO    | 	 argv[20] = "420"
+INFO    | 	 argv[21] = "-nodefaults"
+INFO    | 	 argv[22] = "-kernel"
+INFO    | 	 argv[23] = "C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\kernel-ranchu"
+INFO    | 	 argv[24] = "-initrd"
+INFO    | 	 argv[25] = "C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\ramdisk.img"
+INFO    | 	 argv[26] = "-drive"
+INFO    | 	 argv[27] = "if=none,index=0,id=system,if=none,file=C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\system.img,read-only"
+INFO    | 	 argv[28] = "-device"
+INFO    | 	 argv[29] = "virtio-blk-pci,drive=system,modern-pio-notify"
+INFO    | 	 argv[30] = "-drive"
+INFO    | 	 argv[31] = "if=none,index=1,id=cache,if=none,file=D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\cache.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO    | 	 argv[32] = "-device"
+INFO    | 	 argv[33] = "virtio-blk-pci,drive=cache,modern-pio-notify"
+INFO    | 	 argv[34] = "-drive"
+INFO    | 	 argv[35] = "if=none,index=2,id=userdata,if=none,file=D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\userdata-qemu.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO    | 	 argv[36] = "-device"
+INFO    | 	 argv[37] = "virtio-blk-pci,drive=userdata,modern-pio-notify"
+INFO    | 	 argv[38] = "-drive"
+INFO    | 	 argv[39] = "if=none,index=3,id=encrypt,if=none,file=D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\encryptionkey.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO    | 	 argv[40] = "-device"
+INFO    | 	 argv[41] = "virtio-blk-pci,drive=encrypt,modern-pio-notify"
+INFO    | 	 argv[42] = "-drive"
+INFO    | 	 argv[43] = "if=none,index=4,id=vendor,if=none,file=C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\vendor.img,read-only"
+INFO    | 	 argv[44] = "-device"
+INFO    | 	 argv[45] = "virtio-blk-pci,drive=vendor,modern-pio-notify"
+INFO    | 	 argv[46] = "-drive"
+INFO    | 	 argv[47] = "if=none,index=5,id=sdcard,if=none,file=D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\sdcard.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO    | 	 argv[48] = "-device"
+INFO    | 	 argv[49] = "virtio-blk-pci,drive=sdcard,modern-pio-notify"
+INFO    | 	 argv[50] = "-netdev"
+INFO    | 	 argv[51] = "user,id=mynet"
+INFO    | 	 argv[52] = "-device"
+INFO    | 	 argv[53] = "virtio-net-pci,netdev=mynet"
+INFO    | 	 argv[54] = "-device"
+INFO    | 	 argv[55] = "virtio-rng-pci"
+INFO    | 	 argv[56] = "-show-cursor"
+INFO    | 	 argv[57] = "-L"
+INFO    | 	 argv[58] = "C:\Users\Kevin\AppData\Local\Android\Sdk\emulator/lib/pc-bios"
+INFO    | 	 argv[59] = "-soundhw"
+INFO    | 	 argv[60] = "hda"
+INFO    | 	 argv[61] = "-vga"
+INFO    | 	 argv[62] = "none"
+INFO    | 	 argv[63] = "-append"
+INFO    | 	 argv[64] = "no_timer_check clocksource=pit no-kvmclock console=0 cma=288M@0-4G ndns=4 mac80211_hwsim.radios=2 mac80211_hwsim.channels=2 skip_initramfs rootwait ro init=/init root=/dev/vda1 loop.max_part=7 ramoops.mem_address=0xff018000 ramoops.mem_size=0x10000 memmap=0x1000ERROR   | Failed to open /qemu.conf, err: 2
+0$0xff018000 printk.devkmsg=on qemu=1 androidboot.hardware=ranchu androidboot.serialno=EMULATOR31X1X4X0 android.bootanim=0 qemu.gles=1 qemu.settings.system.screen_off_timeout=2147483647 qemu.encrypt=1 qemu.vsync=60 qemu.gltransport=pipe qemu.gltransport.drawFlushInterval=800 qemu.opengles.version=196609 qemu.uirenderer=skiagl qemu.dalvik.vm.heapsize=384m androidboot.android_dt_dir=/sys/bus/platform/devices/ANDR0001:00/properties/android/ qemu.wifi=1 android.qemud=1 qemu.avd_name=Pixel_2_API_28"
+INFO    | 	 argv[65] = "-android-hw"
+INFO    | 	 argv[66] = "D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\hardware-qemu.ini"
+INFO    | Concatenated QEMU options: C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe -dns-server 100.64.0.1,fec0:0:0:ffff::1,fec0:0:0:ffff::2,fec0:0:0:ffff::3 -no-audio -mem-path D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\snapshots\default_boot\ram.img -serial null -android-ports 15302,15303 -device goldfish_pstore,addr=0xff018000,size=0x10000,file=D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\data\misc\pstore\pstore.bin -cpu android64 -enable-hax -smp cores=4 -m 1536 -lcd-density 420 -nodefaults -kernel C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\kernel-ranchu -initrd C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\ramdisk.img -drive if=none,index=0,id=system,if=none,file=C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\system.img,read-only -device virtio-blk-pci,drive=system,modern-pio-notify -drive if=none,index=1,id=cache,if=none,file=D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\cache.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=cache,modern-pio-notify -drive if=none,index=2,id=userdata,if=none,file=D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\userdata-qemu.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=userdata,modern-pio-notify -drive if=none,index=3,id=encrypt,if=none,file=D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\encryptionkey.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=encrypt,modern-pio-notify -drive if=none,index=4,id=vendor,if=none,file=C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\\vendor.img,read-only -device virtio-blk-pci,drive=vendor,modern-pio-notify -drive if=none,index=5,id=sdcard,if=none,file=D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\sdcard.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=sdcard,modern-pio-notify -netdev user,id=mynet -device virtio-net-pci,netdev=mynet -device virtio-rng-pci -show-cursor -L C:\Users\Kevin\AppData\Local\Android\Sdk\emulator/lib/pc-bios -soundhw hda -vga none -append "no_timer_check clocksource=pit no-kvmclock console=0 cma=288M@0-4G ndns=4 mac80211_hwsim.radios=2 mac80211_hwsim.channels=2 skip_initramfs rootwait ro init=/init root=/dev/vda1 loop.max_part=7 ramoops.mem_address=0xff018000 ramoops.mem_size=0x10000 memmap=0x10000$0xff018000 printk.devkmsg=on qemu=1 androidboot.hardware=ranchu androidboot.serialno=EMULATOR31X1X4X0 android.bootanim=0 qemu.gles=1 qemu.settings.system.screen_off_timeout=2147483647 qemu.encrypt=1 qemu.vsync=60 qemu.gltransport=pipe qemu.gltransport.drawFlushInterval=800 qemu.opengles.version=196609 qemu.uirenderer=skiagl qemu.dalvik.vm.heapsize=384m androidboot.android_dt_dir=/sys/bus/platform/devices/ANDR0001:00/properties/android/ qemu.wifi=1 android.qemud=1 qemu.avd_name=Pixel_2_API_28" -android-hw D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\hardware-qemu.ini
+VERBOSE | Android qemu version 31.1.4.0 (build_id 7920983) (CL:N/A)
+VERBOSE | Starting QEMU main loop
+VERBOSE | Adding boot property: 'ro.opengles.version' = '196609'
+VERBOSE | Adding boot property: 'qemu.sf.fake_camera' = 'front'
+VERBOSE | Adding boot property: 'dalvik.vm.heapsize' = '384m'
+VERBOSE | Adding boot property: 'qemu.hw.mainkeys' = '0'
+VERBOSE | Adding boot property: 'qemu.sf.lcd_density' = '420'
+HAX is working and emulator runs in fast virt mode.
+VERBOSE | goldfish_events.have-dpad: false
+VERBOSE | goldfish_events.have-trackball: false
+VERBOSE | goldfish_events.have-camera: true
+VERBOSE | goldfish_events.have-keyboard: true
+VERBOSE | goldfish_events.have-lidswitch: false
+VERBOSE | goldfish_events.have-tabletmode: false
+VERBOSE | goldfish_events.have-touch: false
+VERBOSE | goldfish_events.have-multitouch: true
+WARNING | Requested adb port (15303) is outside the recommended range [5555,5586]. ADB may not function properly for the emulator. See -help-port for details.
+VERBOSE | Not using any http proxy
+VERBOSE | Adding boot property: 'qemu.timezone' = 'America/New_York'
+VERBOSE | android_hw_fingerprint_init: fingerprint qemud listen service initialized
+VERBOSE | emulator_window_fb_rotate
+VERBOSE | Path:C:\Users\Kevin\AppData\Local\Android\Sdk\platform-tools\adb.exe protocol version: 41
+VERBOSE | No acpi ini file provided, using default
+VERBOSE | Path:C:\Users\Kevin\AppData\Local\Android\Sdk\platform-tools\adb.exe protocol version: 41
+VERBOSE | Path:C:\Users\Kevin\AppData\Local\Android\sdk\platform-tools\adb.exe protocol version: 41
+VERBOSE | Found: 3 adb executables
+VERBOSE | Adb: C:\Users\Kevin\AppData\Local\Android\Sdk\platform-tools\adb.exe
+VERBOSE | Adb: C:\Users\Kevin\AppData\Local\Android\Sdk\platform-tools\adb.exe
+VERBOSE | Adb: C:\Users\Kevin\AppData\Local\Android\sdk\platform-tools\adb.exe
+VERBOSE | Path:C:\Users\Kevin\AppData\Local\Android\Sdk\platform-tools\adb.exe protocol version: 41
+VERBOSE | Path:C:\Users\Kevin\AppData\Local\Android\Sdk\platform-tools\adb.exe protocol version: 41
+VERBOSE | Adding boot property: 'qemu.cmdline' = 'androidboot.logcat=*:V androidboot.consolepipe=qemu_pipe,pipe:logcat'
+VERBOSE | Adding boot property: 'qemu.logcat' = 'start'
+VERBOSE | Adding boot property: 'ro.opengles.version' = '196609'
+VERBOSE | Adding boot property: 'qemu.sf.fake_camera' = 'front'
+VERBOSE | Adding boot property: 'dalvik.vm.heapsize' = '384m'
+VERBOSE | Adding boot property: 'qemu.hw.mainkeys' = '0'
+VERBOSE | Adding boot property: 'qemu.sf.lcd_density' = '420'
+VERBOSE | Adding boot property: 'qemu.timezone' = 'America/New_York'
+VERBOSE | Path:C:\Users\Kevin\AppData\Local\Android\sdk\platform-tools\adb.exe protocol version: 41
+VERBOSE | _hwFingerprint_connect: connect finger print listen is called
+VERBOSE | onGuestSendCommand: [000002A6CA2A9930] Adb connected, start proxing data
+WARNING | Not saving state: RAM not mapped as shared
+VERBOSE | Done with QEMU main loop
+VERBOSE | User configuration saved to D:\AndroidStudio\SDK_HOME\.android\avd\Pixel_2_API_28.avd\emulator-user.ini
+VERBOSE | Adb transition disconnected -> disconnected
+INFO    | Android emulator version 31.1.4.0 (build_id 7920983) (CL:N/A)
+INFO    | Found AVD name 'Pixel_2_API_28'
+INFO    | Found AVD target architecture: x86_64
+INFO    | argv[0]: 'C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\emulator.EXE'; program directory: 'C:\Users\Kevin\AppData\Local\Android\Sdk\emulator'
+VERBOSE |  Found directory: C:\Users\Kevin\AppData\Local\Android\Sdk\system-images\android-28\default\x86_64\
+INFO    | emuDirName: 'C:\Users\Kevin\AppData\Local\Android\Sdk\emulator'
+INFO    | try dir C:\Users\Kevin\AppData\Local\Android\Sdk\emulator
+INFO    | Trying emulator path 'C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe'
+INFO    | Found target-specific 64-bit emulator binary: C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe
+INFO    | Adding library search path: 'C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\lib64'
+INFO    | Adding library search path: 'C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\lib64\gles_angle'
+INFO    | Adding library search path: 'C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\lib64\gles_angle9'
+INFO    | Adding library search path: 'C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\lib64\gles_angle11'
+INFO    | Adding library search path: 'C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\lib64\gles_swiftshader'
+VERBOSE | Adding library search path for Qt: 'C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\lib64\qt\lib'
+VERBOSE | Silencing all qWarning(); use qCWarning(...) instead: QT_LOGGING_RULES=default.warning=false
+VERBOSE | Setting Qt plugin search path: QT_QPA_PLATFORM_PLUGIN_PATH=C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\lib64\qt\plugins
+VERBOSE | Setting Qt to use software OpenGL: QT_OPENGL=software
+VERBOSE | Setting QML to use software QtQuick2D: QMLSCENE_DEVICE=softwarecontext
+VERBOSE | Overriding pre-existing bad Qt high dpi settings...
+INFO    | Quoted param: [C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe]
+INFO    | Quoted param: [-verbose]
+INFO    | Quoted param: [-no-audio]
+INFO    | Quoted param: [-no-boot-anim]
+INFO    | Quoted param: [-port]
+INFO    | Quoted param: [15302]
+INFO    | Quoted param: [@Pixel_2_API_28]
+VERBOSE | emulator: Running :C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe
+VERBOSE | qemu backend: argv[00] = "C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe"
+VERBOSE | qemu backend: argv[01] = "-verbose"
+VERBOSE | qemu backend: argv[02] = "-no-audio"
+VERBOSE | qemu backend: argv[03] = "-no-boot-anim"
+VERBOSE | qemu backend: argv[04] = "-port"
+VERBOSE | qemu backend: argv[05] = "15302"
+VERBOSE | qemu backend: argv[06] = "@Pixel_2_API_28"
+VERBOSE | Concatenated backend parameters:  C:\Users\Kevin\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe -verbose -no-audio -no-boot-anim -port 15302 @Pixel_2_API_28

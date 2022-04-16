@@ -148,7 +148,7 @@ export default class Friends extends Component {
                 color='#000000'
                 lightTheme
                 round
-                
+                testID='FriendSearchBar'
                 onChangeText={text => this.searchFilterFunction(text)}
                 value={this.state.value}
             />

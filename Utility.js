@@ -36,7 +36,9 @@ export function setScreen (s) {
 
 export function getUser () {
   if (currUser$ == null) { console.log('Null current user! (Error state)') }
+  console.log("Utility\User:" + currUser$.get().MiD)
   return currUser$.get()
+
 }
 
 export function getScreen () {
@@ -173,7 +175,7 @@ export const COLORS = {
   TEXT: CARLEIGH_GREEN.TEXT,
   DISLIKE_BUTTON: CARLEIGH_GREEN.DISLIKE_BUTTON,
   LIKE_BUTTON: CARLEIGH_GREEN.LIKE_BUTTON,
-  DELETE_BUTTON: '#A52A2A'
+  DELETE_BUTTON: '#ff0000'
 }
 
 // No more defining long-term colors inside the style sheet. Please.
