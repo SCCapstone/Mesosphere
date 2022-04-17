@@ -346,7 +346,8 @@ describe('Post and Networking', () => {
     await waitFor(element(by.text('Detox'))).toBeVisible().withTimeout(5000)
   })
 
-  test('View Friend\'s Post', async () => {
+  //Consider adding a rate check?
+  test('View & Score Friend\'s Post', async () => {
     await waitFor(element(by.text("Welcome back, Detox\'s Best Friend"))).toBeVisible().withTimeout(5000)
     await expect(element(by.id('AccountMiD'))).toBeVisible()
     await expect(element(by.id('NotificationsButton'))).toBeVisible()
@@ -368,6 +369,7 @@ describe('Post and Networking', () => {
     const jestExpect = require('expect')
     console.log(attributes.height)
     jestExpect(attributes.height > 300).toBe(true)
+    await expect(element(by.text('0'))).toBeVisible()
     await expect(element(by.id('bottomAccountButton'))).toBeVisible()
     await expect(element(by.id('bottomNetworkButton'))).toBeVisible()
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
@@ -396,6 +398,9 @@ describe('Post and Networking', () => {
     await waitFor(element(by.id('PostFlatlist'))).toBeVisible(20).withTimeout(5000)
     const attributes2 = await element(by.id('PostFlatlist')).getAttributes()
     jestExpect(attributes2.height > 300).toBe(true);
+    await waitFor(element(by.text("0"))).toBeVisible().withTimeout(5000)
+    await element(by.id('PostFlatlist')).tap({x:(150/3), y:(330/3)})
+    await waitFor(element(by.text("1"))).toBeVisible().withTimeout(5000)
     await expect(element(by.id('bottomAccountButton'))).toBeVisible()
     await expect(element(by.id('bottomNetworkButton'))).toBeVisible()
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
@@ -424,6 +429,9 @@ describe('Post and Networking', () => {
     await waitFor(element(by.id('PostFlatlist'))).toBeVisible(20).withTimeout(5000)
     const attributes3 = await element(by.id('PostFlatlist')).getAttributes()
     jestExpect(attributes3.height > 300).toBe(true);
+    await waitFor(element(by.text("1"))).toBeVisible().withTimeout(5000)
+    await element(by.id('PostFlatlist')).tap({x:(150/3), y:(330/3)})
+    await waitFor(element(by.text("2"))).toBeVisible().withTimeout(5000)
   })
 
   test('Remove a Friend', async () => {
