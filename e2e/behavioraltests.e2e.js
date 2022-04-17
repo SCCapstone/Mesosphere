@@ -1,5 +1,5 @@
 // const { reloadApp } = require('detox-expo-helpers');
-/*
+
 describe('LandingElements', () => {
   beforeAll(async () => {
     await device.launchApp({launchArgs: { detoxDebugVisibility: "YES",},})
@@ -154,7 +154,7 @@ describe('Account Tests', () => {
     await element(by.text('OK')).tap()
   })
 })
-*/
+
 describe('Post and Networking', () => {
   beforeAll(async () => {
     await device.launchApp({launchArgs: { detoxDebugVisibility: "YES",},})
@@ -164,8 +164,8 @@ describe('Post and Networking', () => {
     await device.reloadReactNative()
   })
 
+  
   test('View Local Posts', async () => {
-    
     await expect(element(by.id('RegisterButton'))).toBeVisible()
     await element(by.id('RegisterButton')).tap()
     await element(by.id('RegisterUserPrompt')).typeText('Testing')
@@ -189,9 +189,12 @@ describe('Post and Networking', () => {
     await waitFor(element(by.id('PostScreenComponent'))).toBeVisible(20).withTimeout(5000)
     await waitFor(element(by.id('PostFlatlist'))).toExist().withTimeout(5000)
     await waitFor(element(by.id('PostFlatlist'))).toBeVisible(20).withTimeout(5000)
-    await waitFor(element(by.text('Like'))).toBeVisible(20).withTimeout(5000)
+    const attributes = await element(by.id('PostFlatlist')).getAttributes()
+    const jestExpect = require('expect');
+    jestExpect(attributes.height > 300).toBe(true);
   })
 
+  
   test('Rating Local Post', async () => {
     await waitFor(element(by.text("Welcome back, Detox"))).toBeVisible().withTimeout(5000)
     await expect(element(by.id('NotificationsButton'))).toBeVisible()
@@ -202,20 +205,21 @@ describe('Post and Networking', () => {
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
     await expect(element(by.id('bottomPostButton'))).toBeVisible()
     await element(by.id('bottomNetworkButton')).tap()
-    await waitFor(element(by.text("Hello World!"))).toBeVisible().withTimeout(5000)
-    await expect(element(by.text('Detox'))).toBeVisible()
-    await expect(element(by.text('Like'))).toBeVisible()
-    await expect(element(by.text('Dislike'))).toBeVisible()
+    await waitFor(element(by.id('PostScreenComponent'))).toBeVisible(20).withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toExist().withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toBeVisible(20).withTimeout(5000)
+    const attributes = await element(by.id('PostFlatlist')).getAttributes()
+    const jestExpect = require('expect');
+    jestExpect(attributes.height > 200).toBe(true);
     await expect(element(by.text('0'))).toBeVisible()
-    await expect(element(by.text('Delete'))).toBeVisible()
-    await element(by.text('Like')).tap()
+    await element(by.id('PostFlatlist')).tap({x:(150/3), y:(330/3)})
     await waitFor(element(by.text("1"))).toBeVisible().withTimeout(5000)
-    await element(by.text('Dislike')).tap()
+    await element(by.id('PostFlatlist')).tap({x:(360/3), y:(330/3)})
     await waitFor(element(by.text("-1"))).toBeVisible().withTimeout(5000)
-    await element(by.text('Dislike')).tap()
+    await element(by.id('PostFlatlist')).tap({x:(360/3), y:(330/3)})
     await waitFor(element(by.text("0"))).toBeVisible().withTimeout(5000)
   })
-
+  
   test('Deleting Local Post', async () => {
     await waitFor(element(by.text("Welcome back, Detox"))).toBeVisible().withTimeout(5000)
     await expect(element(by.id('NotificationsButton'))).toBeVisible()
@@ -226,21 +230,20 @@ describe('Post and Networking', () => {
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
     await expect(element(by.id('bottomPostButton'))).toBeVisible()
     await element(by.id('bottomNetworkButton')).tap()
-    await waitFor(element(by.text("Hello World!"))).toBeVisible().withTimeout(5000)
-    await expect(element(by.text('Detox'))).toBeVisible()
-    await expect(element(by.text('Like'))).toBeVisible()
-    await expect(element(by.text('Dislike'))).toBeVisible()
-    await expect(element(by.text('0'))).toBeVisible()
-    await expect(element(by.text('Delete'))).toBeVisible()
-    await element(by.text('Delete')).tap()
-    await waitFor(element(by.text("Hello World!"))).not.toBeVisible().withTimeout(5000)
-    await expect(element(by.text('Detox'))).not.toBeVisible()
-    await expect(element(by.text('Like'))).not.toBeVisible()
-    await expect(element(by.text('Dislike'))).not.toBeVisible()
-    await expect(element(by.text('0'))).not.toBeVisible()
-    await expect(element(by.text('Delete'))).not.toBeVisible()
+    await waitFor(element(by.id('PostScreenComponent'))).toBeVisible(20).withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toExist().withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toBeVisible(20).withTimeout(5000)
+    const attributes = await element(by.id('PostFlatlist')).getAttributes()
+    const jestExpect = require('expect');
+    jestExpect(attributes.height > 200).toBe(true);
+    await element(by.id('PostFlatlist')).tap({x:(1000/3), y:(350/3)})
+    await waitFor(element(by.id('PostFlatlist'))).toExist().withTimeout(5000)
+    const attributes2 = await element(by.id('PostFlatlist')).getAttributes()
+    console.log(attributes2.height)
+    jestExpect(attributes2.height < 200).toBe(true);
   })
-
+  
+  
   test('Add a Friend', async () => {
     await waitFor(element(by.text("Welcome back, Detox"))).toBeVisible().withTimeout(5000)
     await expect(element(by.id('AccountMiD'))).toBeVisible()
@@ -257,7 +260,8 @@ describe('Post and Networking', () => {
     await element(by.id('RegisterNamePrompt')).typeText('Detox\'s Best Friend')
     await element(by.id('RegisterBioPrompt')).typeText('I\'m helping! :D')
     await element(by.id('MakeAccButton')).tap()
-    await waitFor(element(by.text("Welcome back, Detox\s Best Friend"))).toBeVisible().withTimeout(5000)
+    console.log("Checking for \'Welcome back, Detox\'s Best Friend\'")
+    await waitFor(element(by.text("Welcome back, Detox\'s Best Friend"))).toBeVisible().withTimeout(5000)
     await expect(element(by.id('AccountMiD'))).toBeVisible()
     await expect(element(by.id('NotificationsButton'))).toBeVisible()
     await expect(element(by.id('SettingsButton'))).toBeVisible()
@@ -272,7 +276,9 @@ describe('Post and Networking', () => {
     await expect(element(by.id('FriendSearchBar'))).toBeVisible()
     await element(by.id('FriendSearchBar')).typeText(DetoxId.text)
     await waitFor(element(by.text('Add Friend ' + DetoxId.text + '?'))).toBeVisible().withTimeout(5000)
-    await element(by.text('Add Friend ' + DetoxId.text + '?')).tap();
+    await element(by.text('Add Friend ' + DetoxId.text + '?')).tap()
+    await element(by.text('Add Friend ' + DetoxId.text + '?')).tap()
+    console.log("element tapped!")
     await waitFor(element(by.text('Are you sure you want to add ' + DetoxId.text + '?'))).toBeVisible().withTimeout(5000)
     await waitFor(element(by.text('OK'))).toBeVisible().withTimeout(5000)
     await element(by.text('OK')).tap()
@@ -299,7 +305,7 @@ describe('Post and Networking', () => {
     await element(by.id('NotificationsButton')).tap()
     await expect(element(by.text('The user ' + DetoxFriendId.text + ' wants to be your friend!'))).toBeVisible()
     await element(by.text('The user ' + DetoxFriendId.text + ' wants to be your friend!')).tap()
-    await waitFor(element(by.text('Would you like to add Detox\'s Best Friend (' + DetoxFriendId,text + ') back and become friends?'))).toBeVisible().withTimeout(5000)
+    await waitFor(element(by.text('Would you like to add Detox\'s Best Friend (' + DetoxFriendId.text + ') back and become friends?'))).toBeVisible().withTimeout(5000)
     await waitFor(element(by.text('Yes'))).toBeVisible().withTimeout(5000)
     await element(by.text('Yes')).tap()
     await waitFor(element(by.id('NotificationsBackButton'))).toBeVisible().withTimeout(5000)
@@ -340,7 +346,7 @@ describe('Post and Networking', () => {
     await waitFor(element(by.text('Detox'))).toBeVisible().withTimeout(5000)
   })
 
-  test('View & Score Friend\'s Post', async () => {
+  test('View Friend\'s Post', async () => {
     await waitFor(element(by.text("Welcome back, Detox\'s Best Friend"))).toBeVisible().withTimeout(5000)
     await expect(element(by.id('AccountMiD'))).toBeVisible()
     await expect(element(by.id('NotificationsButton'))).toBeVisible()
@@ -350,13 +356,18 @@ describe('Post and Networking', () => {
     await expect(element(by.id('bottomNetworkButton'))).toBeVisible()
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
     await expect(element(by.id('bottomPostButton'))).toBeVisible()
-    await element(by.id('bottomNetworkButton')).tap()
-    await waitFor(element(by.text('Hello Detox! :D'))).toBeVisible().withTimeout(5000)
-    await expect(element(by.text('Detox'))).toBeVisible()
-    await expect(element(by.text('Like'))).toBeVisible()
-    await expect(element(by.text('Dislike'))).toBeVisible()
-    await expect(element(by.text('0'))).toBeVisible()
-    await expect(element(by.text('Delete'))).toBeVisible()
+    await element(by.id('bottomPostButton')).tap()
+    await expect(element(by.id('MakePostTextField'))).toBeVisible()
+    await expect(element(by.id('MakePostSubmitButton'))).toBeVisible()
+    await element(by.id('MakePostTextField')).typeText('Hello Detox! :D')
+    await element(by.id('MakePostSubmitButton')).tap()
+    await waitFor(element(by.id('PostScreenComponent'))).toBeVisible(20).withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toExist().withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toBeVisible(20).withTimeout(5000)
+    const attributes = await element(by.id('PostFlatlist')).getAttributes()
+    const jestExpect = require('expect')
+    console.log(attributes.height)
+    jestExpect(attributes.height > 300).toBe(true)
     await expect(element(by.id('bottomAccountButton'))).toBeVisible()
     await expect(element(by.id('bottomNetworkButton'))).toBeVisible()
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
@@ -380,14 +391,11 @@ describe('Post and Networking', () => {
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
     await expect(element(by.id('bottomPostButton'))).toBeVisible()
     await element(by.id('bottomNetworkButton')).tap()
-    await waitFor(element(by.text('Hello Detox! :D'))).toBeVisible().withTimeout(5000)
-    await expect(element(by.text('Detox'))).toBeVisible()
-    await expect(element(by.text('Like'))).toBeVisible()
-    await expect(element(by.text('Dislike'))).toBeVisible()
-    await expect(element(by.text('0'))).toBeVisible()
-    await expect(element(by.text('Delete'))).not.toBeVisible()
-    await element(by.text('Like')).tap()
-    await waitFor(element(by.text('1'))).toBeVisible().withTimeout(5000)
+    await waitFor(element(by.id('PostScreenComponent'))).toBeVisible(20).withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toExist().withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toBeVisible(20).withTimeout(5000)
+    const attributes2 = await element(by.id('PostFlatlist')).getAttributes()
+    jestExpect(attributes2.height > 300).toBe(true);
     await expect(element(by.id('bottomAccountButton'))).toBeVisible()
     await expect(element(by.id('bottomNetworkButton'))).toBeVisible()
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
@@ -411,15 +419,11 @@ describe('Post and Networking', () => {
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
     await expect(element(by.id('bottomPostButton'))).toBeVisible()
     await element(by.id('bottomNetworkButton')).tap()
-    await waitFor(element(by.text('Hello Detox! :D'))).toBeVisible().withTimeout(5000)
-    await expect(element(by.text('Detox'))).toBeVisible()
-    await expect(element(by.text('Like'))).toBeVisible()
-    await expect(element(by.text('Dislike'))).toBeVisible()
-    await expect(element(by.text('0'))).not.toBeVisible()
-    await expect(element(by.text('1'))).toBeVisible()
-    await expect(element(by.text('Delete'))).toBeVisible()
-    await element(by.text('Like')).tap()
-    await waitFor(element(by.text('2'))).toBeVisible().withTimeout(5000)
+    await waitFor(element(by.id('PostScreenComponent'))).toBeVisible(20).withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toExist().withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toBeVisible(20).withTimeout(5000)
+    const attributes3 = await element(by.id('PostFlatlist')).getAttributes()
+    jestExpect(attributes3.height > 300).toBe(true);
   })
 
   test('Remove a Friend', async () => {
@@ -442,12 +446,12 @@ describe('Post and Networking', () => {
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
     await expect(element(by.id('bottomPostButton'))).toBeVisible()
     await element(by.id('bottomNetworkButton')).tap()
-    await waitFor(element(by.text('Hello Detox! :D'))).toBeVisible().withTimeout(5000)
-    await expect(element(by.text('Detox'))).toBeVisible()
-    await expect(element(by.text('Like'))).toBeVisible()
-    await expect(element(by.text('Dislike'))).toBeVisible()
-    await expect(element(by.text('2'))).toBeVisible()
-    await expect(element(by.text('Delete'))).not.toBeVisible()
+    await waitFor(element(by.id('PostScreenComponent'))).toBeVisible(20).withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toExist().withTimeout(5000)
+    await waitFor(element(by.id('PostFlatlist'))).toBeVisible(20).withTimeout(5000)
+    const attributes = await element(by.id('PostFlatlist')).getAttributes()
+    const jestExpect = require('expect');
+    jestExpect(attributes.height > 300).toBe(true);
     await expect(element(by.id('bottomAccountButton'))).toBeVisible()
     await expect(element(by.id('bottomNetworkButton'))).toBeVisible()
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
@@ -464,11 +468,10 @@ describe('Post and Networking', () => {
     await expect(element(by.id('bottomFriendsButton'))).toBeVisible()
     await expect(element(by.id('bottomPostButton'))).toBeVisible()
     await element(by.id('bottomNetworkButton')).tap()
-    await waitFor(element(by.text('Hello Detox! :D'))).not.toBeVisible().withTimeout(5000)
-    await expect(element(by.text('Detox'))).not.toBeVisible()
-    await expect(element(by.text('Like'))).not.toBeVisible()
-    await expect(element(by.text('Dislike'))).not.toBeVisible()
-    await expect(element(by.text('2'))).not.toBeVisible()
+    await waitFor(element(by.id('PostFlatlist'))).toExist().withTimeout(5000)
+    const attributes2 = await element(by.id('PostFlatlist')).getAttributes()
+    console.log(attributes2.height)
+    jestExpect(attributes2.height < 200).toBe(true);
   })
 
   test('Delete Both Accounts (Cleanup Test)', async () => {
@@ -499,4 +502,5 @@ describe('Post and Networking', () => {
     await expect(element(by.id('LoginButton'))).toBeVisible()
     await expect(element(by.id('RegisterButton'))).toBeVisible()
   })
+  
 })
