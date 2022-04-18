@@ -54,6 +54,12 @@ export async function savePost (text) {
       { text: 'OK.' })
     return
   }
+  if (text.length == 0) {
+    Alert.alert('Your post is too short',
+      'You gotta type at least something!  Just gimme, like, one letter.',
+      { text: 'OK.' })
+    return
+  }
   console.log('Saving post!')
   const u = getUser()
   console.log('Current user:' + u)
@@ -61,7 +67,7 @@ export async function savePost (text) {
     console.log('Current user is null! This is an error state.')
     return
   }
-  const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString().substring(0, 21))
+  const p = new Post(u.MiD, generatePostID(), null, text, 0, [], new Date().toString().substring(0, 24))
   u.addPost(p.postID)
   u.storeLocally()
   await pushPostToDatabase(p)

@@ -145,7 +145,7 @@ export default class PostComponent extends Component {
           }}
           />
           <Text style={styles.postContainerText}>{this.postObj.textContent} </Text>
-          <Text style={styles.postContainerText}>{this.postObj.timestamp} </Text>
+          <Text style={styles.postContainerText}>{this.postObj.timestamp.substring(16, 21) + ", " + this.postObj.timestamp.substring(0, 15)} </Text>
           <View style={styles.scoreButtonStyle}>
             <View style={styles.scoreButton} />
             <Button
