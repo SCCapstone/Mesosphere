@@ -27,7 +27,7 @@ After cloning the repo and installing the above software, users should run `npm 
 
 ## Running
 
-To run the project, run `react-native run android` in the terminal.  This will build and launch the app on an _already running_ emulated machine.
+To run the project, run `react-native run-android` in the terminal.  This will build and launch the app on an _already running_ emulated machine.
 
 # Deployment (Outdated)
 
