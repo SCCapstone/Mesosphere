@@ -21,13 +21,14 @@ export default class Notifications extends Component {
     async fetchNotifications() {
         const nlist = await pullNotifications(getUser());
         console.log(nlist);
-        console.log(nlist.size)
+        console.log(nlist.length)
         this.setState({loading: true});
         if(getUser() == null) {
             console.log("Null getUser! (This is an error state)");
             this.setState({error: 1});
         }
-        if (nlist == null) {
+        console.log("nlist sise: " + nlist.length);
+        if (nlist == null || nlist.length == 0) {
             this.setState({
                 loading: false,
                 notifs: [],
