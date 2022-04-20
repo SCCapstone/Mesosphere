@@ -4,7 +4,7 @@ Mesosphere is a social media network that uses IDs to connect people and build n
 
 For more information, see [here.](https://github.com/SCCapstone/Mesosphere/wiki/Project-Description)
 
-See our about page [here!](root/about.md)
+See our about page [here!](about.md)
 
 We will be programming in accordance with [JavaScript Standard Style](https://standardjs.com/index.html).
 
