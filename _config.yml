@@ -1,1 +1,6 @@
 theme: jekyll-theme-modernist
+relative_links:
+enabled: true
+include:
+README.md
+root/about.md
