@@ -8,4 +8,4 @@ Mesosphere was made by our brilliant team members:
 * [Divine Walker](https://github.com/DivineWalker)
 * [Kevin Prince](https://github.com/KTPrince)
 
-Be sure to check out the amazing work each of us does outside of Mesosphere!
+Be sure to check out the amazing work each of us does outside of Mesosphere by clicking on each name to go to their GitHub repos!
