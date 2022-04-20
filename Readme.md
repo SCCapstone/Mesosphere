@@ -13,11 +13,12 @@ PLACEHOLDER
 
 ## Features and Screenshots!
 
-          <img width="370" align="left" alt="Screen Shot 2022-04-19 at 9 23 33 PM" src="https://user-images.githubusercontent.com/18597672/164128590-a6397471-90c7-4bfe-aba2-f264df12e815.png">
-          <img width="370" align="left" alt="Screen Shot 2022-04-19 at 9 22 38 PM" src="https://user-images.githubusercontent.com/18597672/164128597-3aef81b2-05d1-4c90-8c9f-25fcdaa627e7.png">
-          <img width="370" align="left" alt="Screen Shot 2022-04-19 at 9 21 49 PM" src="https://user-images.githubusercontent.com/18597672/164128604-95ab194b-5f34-45a9-9de8-ffbe884315ec.png">
-          <img width="370" align="left" alt="Screen Shot 2022-04-19 at 9 21 49 PM" src="https://user-images.githubusercontent.com/18597672/164128751-f934b030-4ee6-49f8-9cda-23024cc89b96.png">
-          <img width="370" align="left" alt="Screen Shot 2022-04-19 at 9 21 36 PM" src="https://user-images.githubusercontent.com/18597672/164128615-c51a6f24-964c-42c3-97ef-7af99b604f54.png">
+<div float="left">
+<img width="370" alt="Screen Shot 2022-04-19 at 9 23 33 PM" src="https://user-images.githubusercontent.com/18597672/164128590-a6397471-90c7-4bfe-aba2-f264df12e815.png">
+<img width="370" alt="Screen Shot 2022-04-19 at 9 22 38 PM" src="https://user-images.githubusercontent.com/18597672/164128597-3aef81b2-05d1-4c90-8c9f-25fcdaa627e7.png">
+<img width="370" alt="Screen Shot 2022-04-19 at 9 21 49 PM" src="https://user-images.githubusercontent.com/18597672/164128604-95ab194b-5f34-45a9-9de8-ffbe884315ec.png">
+<img width="370" alt="Screen Shot 2022-04-19 at 9 21 36 PM" src="https://user-images.githubusercontent.com/18597672/164128615-c51a6f24-964c-42c3-97ef-7af99b604f54.png">
+</div>
 
 
 ## External Requirements
