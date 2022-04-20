@@ -1,5 +1,1 @@
 theme: jekyll-theme-modernist
-relative_links:
-enabled: true
-include:
-root/about.md
