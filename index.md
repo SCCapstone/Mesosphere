@@ -18,7 +18,7 @@ Mesosphere hopes to be an app where you can create your own network, free of bot
 |    :----:   |    :----:   |
 | <b>You retain full control of your account: You may change any aspect of it or delete it at any time.</b> | <b>Making a new post is simple and shares with your network instantly.</b> |
   
-| <img width="370" alt="meso-3" src="https://user-images.githubusercontent.com/18597672/164128604-95ab194b-5f34-45a9-9de8-ffbe884315ec.png"> | <img width="370" alt="meso-4" src="https://user-images.githubusercontent.com/18597672/164128615-c51a6f24-964c-42c3-97ef-7af99b604f54.png> |
+| <img width="370" alt="meso-3" src="https://user-images.githubusercontent.com/18597672/164128604-95ab194b-5f34-45a9-9de8-ffbe884315ec.png"> | <img width="370" alt="meso-4" src="https://user-images.githubusercontent.com/18597672/164128615-c51a6f24-964c-42c3-97ef-7af99b604f54.png"> |
 |    :----:   |    :----:   |
 | <b>    We hope to keep things simple by minizing clutter when we can.    </b> | <b>    Seamlessly sort, view, and filter posts from your network, with no interruptions.    </b> |
   
