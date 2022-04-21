@@ -534,7 +534,7 @@ export const styles = StyleSheet.create({
     height: 15
   },
   bigSpacing: {
-    width: '43%',
+    width: '41%',
     height: 15
   },
   moreSpacing: {
