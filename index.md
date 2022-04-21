@@ -22,7 +22,8 @@ Mesosphere hopes to be an app where you can create your own network, free of bot
 |    :----:   |    :----:   |
 | <b>You retain full control of your account: You may change any aspect of it or delete it at any time.</b> | <b>Making a new post is simple and shares with your network instantly.</b> |
   
-</div>
+</div>  
+  
 # Authors
 
 See our about page [here!](about.md)
