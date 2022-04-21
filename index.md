@@ -16,11 +16,13 @@ Mesosphere hopes to be an app where you can create your own network, free of bot
   
 | <img width="370" alt="meso-1" src="https://user-images.githubusercontent.com/18597672/164128590-a6397471-90c7-4bfe-aba2-f264df12e815.png"> |
 |:--:|
-| <div style="width:100px"><b>You retain full control of your account: You may change any aspect of it or delete it at any time.</b> </div>|  
+| <b>You retain full control of your account:  
+  You may change any aspect of it or delete it at any time.</b>|  
   
 | <img width="370" alt="meso-2" src="https://user-images.githubusercontent.com/18597672/164128597-3aef81b2-05d1-4c90-8c9f-25fcdaa627e7.png"> |
 |:--:|
-| <div style="width:200px"><b>Making a new post is simple and shares with your network instantly.</b> </div>|  
+| <b>
+  Making a new post is simple and shares with your network instantly.</b>|  
   
 | <img width="370" alt="meso-3" src="https://user-images.githubusercontent.com/18597672/164128604-95ab194b-5f34-45a9-9de8-ffbe884315ec.png"> |
 |:--:|
@@ -28,7 +30,8 @@ Mesosphere hopes to be an app where you can create your own network, free of bot
   
 | <img width="370" alt="meso-4" src="https://user-images.githubusercontent.com/18597672/164128615-c51a6f24-964c-42c3-97ef-7af99b604f54.png"> |
 |:--:|
-| <b>Seamlessly sort, view, and filter posts from your network, with no interruptions.</b>|  
+| <b>Seamlessly sort, view, and filter posts from your network, 
+    with no interruptions.</b>|  
   
 </div>
 
