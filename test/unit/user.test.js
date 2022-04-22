@@ -23,18 +23,16 @@ test('App reads account data - but false', async () => {
   expect(data).toBe(false)
 });
 
-/*
+
 test('App reads account data - but false', async () => {
-  makeAcc('someUsernameNotThereYet', '1234', 'No Names', 'bio')
+  await makeAcc('someUsernameNotThereYet', '1234', 'No Names', 'bio')
   const u = getUser()
   console.log(u)
   const data1 = await doesUsernameExist('someUsernameNotThereYet')
   expect(data1).toBe(true)
-  
   //removeAccountFromDatabase(u)
-
 });
-*/
+
 
 //Validation Checks
 test('Username Validation Check', async () => {
@@ -48,5 +46,3 @@ test('Display Name Validation Check', async () => {
   const data1 = await doesUsernameExist('actual')
   expect(data1).toBe(false)
 });
-
-
