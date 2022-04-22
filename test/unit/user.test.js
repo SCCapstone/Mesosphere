@@ -1,20 +1,52 @@
-import { checkLogin, makeAdminAcc, makeDemoAcc } from '../../User'
-import { getData, setUser } from '../../Utility'
+import { checkLogin, getUsername, deleteCurrUser, makeAcc, makeAdminAcc, makeDemoAcc } from '../../User'
+import { getData, setUser, getUser } from '../../Utility'
+import pushAccountToDatabase, { doesAccountExist, doesUsernameExist, removeAccountFromDatabase } from '../../firebaseConfig'
 
-describe('User', () => {
-  it('Demo account creation is successful.', () => {
-    makeDemoAcc()
-    return getData('meso-1').then(data => {
-      expect(data).toStrictEqual({ username: 'Demo', password: 'ccc9c73a37651c6b35de64c3a37858ccae045d285f57fffb409d251d', realName: 'VeryReal Nameson', biography: 'I do so enjoy my <activies>', MiD: 'meso-1', myPosts: [], myPeers: [] })
-    })
-  })
-  it('Admin account creation is successful.', () => {
-    makeAdminAcc()
-    return (getData('meso-0').then(data => {
-      expect(data).toStrictEqual({ username: 'admin', password: '8f95cfb66890ae8130f3ae7ec288d43ba0d898d60a0823788c6b3408', realName: 'Administrator', biography: "It's a Messosphere in here.", MiD: 'meso-0', myPosts: [], myPeers: [] })
-    }))
-  })
-  // it('Create user is successful.', () => {
+//Tests of database reading - using Kevin's acc as a base
+test('App reads data from the database', async () => {
+  const data = await doesUsernameExist('KTP')
+  expect(data).toBe(true)
+});
 
-  // })
-})
+test('App reads data from the database but false', async () => {
+  const data = await doesUsernameExist('IAmAUserThatDoesNotExist')
+  expect(data).toBe(false)
+});
+
+test('App reads account data from the database but false', async () => {
+  const data = await doesAccountExist('meso-22b1213fc7c')
+  expect(data).toBe(true)
+});
+
+test('App reads account data - but false', async () => {
+  const data = await doesAccountExist('meso-22b1213fc7cp')
+  expect(data).toBe(false)
+});
+
+/*
+test('App reads account data - but false', async () => {
+  makeAcc('someUsernameNotThereYet', '1234', 'No Names', 'bio')
+  const u = getUser()
+  console.log(u)
+  const data1 = await doesUsernameExist('someUsernameNotThereYet')
+  expect(data1).toBe(true)
+  
+  //removeAccountFromDatabase(u)
+
+});
+*/
+
+//Validation Checks
+test('Username Validation Check', async () => {
+  makeAcc('no', '1234', 'No Names', 'bio')
+  const data1 = await doesUsernameExist('no')
+  expect(data1).toBe(false)
+});
+
+test('Display Name Validation Check', async () => {
+  makeAcc('actual', '1234', 'No', 'bio')
+  const data1 = await doesUsernameExist('actual')
+  expect(data1).toBe(false)
+});
+
+
