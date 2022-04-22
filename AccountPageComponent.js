@@ -54,17 +54,18 @@ export default class AccountPageComponent extends Component {
       <View style={styles.container}>
         <Text style={styles.bigText}>Welcome back, {this.state.userRealName}</Text>
         <Text style={styles.text} testID='AccountMiD'>{this.state.userMiD}</Text>
-        <Text style={styles.NotifCountLoc}>{this.state.notifs}</Text>
-        <TouchableOpacity
-          style={styles.loginBtn}
-          onPress={() => {
-            setScreen(PAGES.NOTIFICATIONS)
-          }}
-          testID='NotificationsButton'
-        >
-          <Text style={styles.loginText}>Notifications</Text>
-        </TouchableOpacity>
-
+        <View style={{width: '100%', justifyContent: 'center', alignContent: 'center', alignItems: 'center'}}>
+          <Text style={styles.NotifCountLoc}>{this.state.notifs}</Text>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              setScreen(PAGES.NOTIFICATIONS)
+            }}
+            testID='NotificationsButton'
+          >
+            <Text style={styles.loginText}>Notifications</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={() => {

@@ -4,12 +4,22 @@ Mesosphere is a social media network that uses IDs to connect people and build n
 
 For more information, see [here.](https://github.com/SCCapstone/Mesosphere/wiki/Project-Description)
 
+See our about page [here!](about.md)
+
 We will be programming in accordance with [JavaScript Standard Style](https://standardjs.com/index.html).
 
 ## Final Demo Video
 PLACEHOLDER
 
 ## Features and Screenshots!
+
+<div float="left">
+<img width="370" alt="Screen Shot 2022-04-19 at 9 23 33 PM" src="https://user-images.githubusercontent.com/18597672/164128590-a6397471-90c7-4bfe-aba2-f264df12e815.png">
+<img width="370" alt="Screen Shot 2022-04-19 at 9 22 38 PM" src="https://user-images.githubusercontent.com/18597672/164128597-3aef81b2-05d1-4c90-8c9f-25fcdaa627e7.png">
+<img width="370" alt="Screen Shot 2022-04-19 at 9 21 49 PM" src="https://user-images.githubusercontent.com/18597672/164128604-95ab194b-5f34-45a9-9de8-ffbe884315ec.png">
+<img width="370" alt="Screen Shot 2022-04-19 at 9 21 36 PM" src="https://user-images.githubusercontent.com/18597672/164128615-c51a6f24-964c-42c3-97ef-7af99b604f54.png">
+</div>
+
 
 ## External Requirements
 
@@ -27,7 +37,7 @@ After cloning the repo and installing the above software, users should run `npm 
 
 ## Running
 
-To run the project, run `react-native run android` in the terminal.  This will build and launch the app on an _already running_ emulated machine.
+To run the project, run `react-native run-android` in the terminal.  This will build and launch the app on an _already running_ emulated machine.
 
 # Deployment (Outdated)
 

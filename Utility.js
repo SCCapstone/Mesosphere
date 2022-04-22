@@ -205,8 +205,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    top: 265,
-    right: 55,
+    top: '30%',
+    right: '12%',
     borderWidth: 2,
     elevation: 2,
     width: 20,
@@ -534,7 +534,7 @@ export const styles = StyleSheet.create({
     height: 15
   },
   bigSpacing: {
-    width: '43%',
+    width: '41%',
     height: 15
   },
   moreSpacing: {
