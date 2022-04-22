@@ -1,6 +1,6 @@
 import { checkLogin, getUsername, deleteCurrUser, makeAcc, makeAdminAcc, makeDemoAcc } from '../../User'
 import { getData, setUser, getUser } from '../../Utility'
-import pushAccountToDatabase, { doesAccountExist, doesUsernameExist, pushUsernameToDatabase, removeAccountFromDatabase } from '../../firebaseConfig'
+import pushAccountToDatabase, { doesAccountExist, doesUsernameExist, pushUsernameToDatabase, removeAccountFromDatabase, removeUsernameFromDatabase } from '../../firebaseConfig'
 import { atom } from 'elementos'
 
 const currUser$ = atom(null)
@@ -34,6 +34,7 @@ test('Push User Name to DB', async () => {
   const data = await doesUsernameExist('someUserName!')
 
   expect(data).toBe(true)
+  await removeUsernameFromDatabase('someUserName!')
 });
 
 
