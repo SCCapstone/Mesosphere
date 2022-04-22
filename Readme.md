@@ -39,11 +39,6 @@ After cloning the repo and installing the above software, users should run `npm 
 
 To run the project, run `react-native run-android` in the terminal.  This will build and launch the app on an _already running_ emulated machine.
 
-# Deployment (Outdated)
-
-To build an APK for the Android platform, run `expo build:android -t apk`, or to build an Android App Bundle, `expo build:android -t app-bundle`. 
-If building an Android App Bundle, ensure that Google Play App Signing is enabled for your project, more information can be found [here](https://developer.android.com/guide/app-bundle).
-
 # Testing
 
 The unit tests are in `/test/unit`.
