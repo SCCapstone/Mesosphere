@@ -1,6 +1,9 @@
 import { checkLogin, getUsername, deleteCurrUser, makeAcc, makeAdminAcc, makeDemoAcc } from '../../User'
 import { getData, setUser, getUser } from '../../Utility'
 import pushAccountToDatabase, { doesAccountExist, doesUsernameExist, removeAccountFromDatabase } from '../../firebaseConfig'
+import { atom } from 'elementos'
+
+const currUser$ = atom(null)
 
 //Tests of database reading - using Kevin's acc as a base
 test('App reads data from the database', async () => {
@@ -23,18 +26,18 @@ test('App reads account data - but false', async () => {
   expect(data).toBe(false)
 });
 
-/*
-test('App reads account data - but false', async () => {
-  makeAcc('someUsernameNotThereYet', '1234', 'No Names', 'bio')
+
+test('Check the account creation', async () => {
+  await makeAcc('someUsernameNotThereYetEver', '1234', 'No Names', 'bio')
   const u = getUser()
   console.log(u)
-  const data1 = await doesUsernameExist('someUsernameNotThereYet')
+  const data1 = await doesUsernameExist('someUsernameNotThereYetEver')
   expect(data1).toBe(true)
   
   //removeAccountFromDatabase(u)
 
 });
-*/
+
 
 //Validation Checks
 test('Username Validation Check', async () => {
