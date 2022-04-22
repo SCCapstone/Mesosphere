@@ -68,6 +68,12 @@ export async function pushUsernameToDatabase (username) {
   })
 }
 
+export async function removeUsernameFromDatabase (username) {
+  await updateDoc(usernameRef, {
+    usernames: arrayRemove(username)
+  })
+}
+
 export async function pushAccountToDatabase (u) {
   await setDoc(doc(database, 'accounts', u.MiD), {
     MID: u.MiD,
@@ -140,6 +146,14 @@ export async function pushPostToDatabase (p) {
 }
 
 export async function alterPostScore (u, postID, change) { // increment/decrement in units of 0.5; upvote: change = 0.5, downvote: change = -0.5
+  const postRef = doc(database, 'posts', postID)
+  await updateDoc(doc(database, 'posts', postID), {
+    score: increment(change)
+  })
+  // Post component handles interaction
+}
+
+export async function alterPostScoreClean (postID, change) {
   const postRef = doc(database, 'posts', postID)
   await updateDoc(doc(database, 'posts', postID), {
     score: increment(change)
