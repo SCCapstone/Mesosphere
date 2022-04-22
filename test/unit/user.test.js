@@ -36,6 +36,3 @@ test('Push User Name to DB', async () => {
   expect(data).toBe(true)
   await removeUsernameFromDatabase('someUserName!')
 });
-
-
-

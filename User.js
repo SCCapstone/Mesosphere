@@ -1,4 +1,4 @@
-// import { Alert, AsyncStorage } from 'react-native'
+import { Alert} from 'react-native'
 import { storeData, getData, removeValue, getUser, setScreen, setUser, PAGES, generateUniqueMID, getAllKeys } from './Utility'
 import { sha224 } from 'js-sha256'
 import { pushAccountToDatabase, pushUsernameToDatabase, removeAccountFromDatabase, addPeerToDatabase, removePeerFromDatabase, doesUsernameExist, parseRemoteLogin, parseRemoteLoginEncrypted, pullAccountFromDatabase, sendNotification, removeNotification, removePostFromDatabase } from './firebaseConfig'
@@ -109,7 +109,7 @@ export async function checkLogin (username, password) {
   console.log('Passed MID: ' + passedID)
 
   if (passedID === '') {
-    alert('Incorrect username and/or password.')
+    Alert.alert('Error','Incorrect username and/or password.')
     return
   }
   if (passedID !== '') {
@@ -122,15 +122,15 @@ export async function checkLogin (username, password) {
 
 export async function makeAcc (username, password, realName, bio) {
   if (username.length < 3 || password.length < 3 || username.length > 25 || password.length > 25) {
-    alert('Your username or password must be between 3 and 25 characters.')
+    Alert.alert('Error','Your username or password must be between 3 and 25 characters.')
     return
   }
   if (realName.length > 25 || realName.length < 3) {
-    alert('You must enter a display name between 3 and 25 characters.')
+    Alert.alert('Error','You must enter a display name between 3 and 25 characters.')
     return
   }
   if (await doesUsernameExist(username) === true) {
-    alert('This username already exists, please choose a different one.')
+    Alert.alert('Error','This username already exists, please choose a different one.')
     return
   }
   const u = new User(username, String(sha224(String(password))), realName, bio, 'new', 'new', 'new', 'new')
@@ -143,7 +143,7 @@ export async function makeAcc (username, password, realName, bio) {
 }
 
 export function changeRealName () {
-  alert(this.MiD)
+  Alert.alert('Error',(this.MiD))
 }
 
 export async function deleteCurrUser () {
@@ -180,7 +180,7 @@ export async function lru () {
       console.log('Passed MID: ' + passedID)
 
       if (passedID === '') {
-        alert('Incorrect username and/or password.');
+        Alert.alert('Error',('Incorrect username and/or password.'))
         return
       }
       if (passedID !== '') {

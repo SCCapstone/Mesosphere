@@ -35,7 +35,7 @@ export function setScreen (s) {
 }
 
 export function getUser () {
-  if (currUser$ == null) { console.log('Null current user! (Error state)') }
+  if (currUser$.get() == null) { console.log('Null current user! (Error state)'); return null }
   console.log("Utility\User:" + currUser$.get().MiD)
   return currUser$.get()
 
