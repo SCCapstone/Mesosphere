@@ -4,11 +4,11 @@ Mesosphere is a social media network that uses IDs to connect people and build n
 
 For more information, see [here.](https://github.com/SCCapstone/Mesosphere/wiki/Project-Description)
 
-See our about page [here!](about.md)
-
-
 ## Final Demo Video
-PLACEHOLDER
+
+https://user-images.githubusercontent.com/18597672/165010414-be7fdbd3-4ded-42e7-94b0-14912646c2b7.mov
+
+[Alternative YouTube Link](https://www.youtube.com/watch?v=HFnO_inM3I0)
 
 ## Features and Screenshots!
 Mesosphere hopes to be an app where you can create your own network, free of bots, ads, or any unwanted content.  Other social media spheres are so clogged with machines vying for your attention, we hope to provide a scene where you decide exactly who and what you see.  To get started, simply download the apk, create an account, and add friends who you'd like to stay in touch with.  They'll have to add you back, but don't worry - you won't see anyone's posts but theirs.  This allows everyone to have thier own feed, customized to exactly their friendship circles.  
