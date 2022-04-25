@@ -9,7 +9,9 @@ See our about page [here!](about.md)
 We will be programming in accordance with [JavaScript Standard Style](https://standardjs.com/index.html).
 
 ## Final Demo Video
-PLACEHOLDER
+[Youtube Link](https://www.youtube.com/watch?v=HFnO_inM3I0)
+
+[Direct Download](https://user-images.githubusercontent.com/18597672/165010414-be7fdbd3-4ded-42e7-94b0-14912646c2b7.mov)
 
 ## Features and Screenshots!
 
